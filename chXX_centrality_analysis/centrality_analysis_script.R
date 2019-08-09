@@ -46,18 +46,14 @@ ess <- read.table("ecoli_proteins_essentiality_Baba2006MSB.txt",header=T)
 
 # degree centrality
 nprop <- data.frame(V(g)$name,degree(g))
-# clustering coefficient
-nprop <- data.frame(V(g)$name,transitivity(g,type="local",isolates="zero"))
-# closeness centrality
-nprop <- data.frame(V(g)$name,closeness(g))
-# Katz centrality
-nprop <- data.frame(V(g)$name,alpha_centrality(g,alpha = 0.5))
-# betweenness centrality
-nprop <- data.frame(V(g)$name,betweenness(g))
 # eigenvector centraliry
 nprop <- data.frame(V(g)$name,evcent(g)$vector)
 # page rank
 nprop <- data.frame(V(g)$name,page.rank(g)$vector)
+# closeness centrality
+nprop <- data.frame(V(g)$name,closeness(g))
+# betweenness centrality
+nprop <- data.frame(V(g)$name,betweenness(g))
 
 # assign the labels
 names(nprop) <- c("gene","nodal_property")
