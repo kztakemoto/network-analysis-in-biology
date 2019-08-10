@@ -5,7 +5,7 @@
 
 ## 使い方
 ```
-% Rscript centrality_analysis_script.R | tee -a result.txt
+% Rscript centrality_analysis_script.R | tee result.txt
 ```
 
 * ``result.txt``: 統計分析の結果
