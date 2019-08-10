@@ -5,7 +5,7 @@
 [R](https://www.r-project.org)のネットワーク解析用パッケージのひとつである[igraph](https://igraph.org/r/)を主に使います。
 
 スクリプトを実行するだけですべての解析は完了するように作られていますが，自分の解析に沿うようにスクリプトを改変するためにはRとigraphの基本的な使い方を習得しておく必要があります。
-以下が参考になりますので，適時ご覧ください。
+以下が参考になりますので，適時ご参照ください。
 * [Rとigraphの基本的な使い方](http://www.nemotos.net/igraph-tutorial/NetSciX_2016_Workshop_ja.html)
 
 ## 目次
