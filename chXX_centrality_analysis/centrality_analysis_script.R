@@ -70,23 +70,23 @@ ess_nprop <- d[d$essential=="E",]
 noness_nprop <- d[d$essential=="N",]
 
 # wilcoxon test
-cat("次数中心性（degree centrality）\n")
+cat("## 次数中心性（degree centrality）\n")
 cat("中央値　必須：",median(ess_nprop$degree),"非必須：",median(noness_nprop$degree),"\n")
 wilcox.test(ess_nprop$degree,noness_nprop$degree)
 
-cat("固有ベクトル中心性（eigenvector centraliry）\n")
+cat("## 固有ベクトル中心性（eigenvector centraliry）\n")
 cat("中央値　必須：",median(ess_nprop$eigen),"非必須：",median(noness_nprop$eigen),"\n")
 wilcox.test(ess_nprop$eigen,noness_nprop$eigen)
 
-cat("PageRank\n")
+cat("## PageRank\n")
 cat("中央値　必須：",median(ess_nprop$page),"非必須：",median(noness_nprop$page),"\n")
 wilcox.test(ess_nprop$page,noness_nprop$page)
 
-cat("近接中心性（closeness centrality）\n")
+cat("## 近接中心性（closeness centrality）\n")
 cat("中央値　必須：",median(ess_nprop$closen),"非必須：",median(noness_nprop$closen),"\n")
 wilcox.test(ess_nprop$closen,noness_nprop$closen)
 
-cat("媒介中心性（betweenness centrality）\n")
+cat("## 媒介中心性（betweenness centrality）\n")
 cat("中央値　必須：",median(ess_nprop$between),"非必須：",median(noness_nprop$between),"\n")
 wilcox.test(ess_nprop$between,noness_nprop$between)
 
