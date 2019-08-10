@@ -1,13 +1,21 @@
 # 生物ネットワーク解析
 
-Rを使って生物ネットワーク解析を行うためのサンプルスクリプトが利用可能です。
+## はじめに
+[R](https://www.r-project.org)を使って生物ネットワーク解析を行うためのサンプルスクリプトが利用可能です。
+[R](https://www.r-project.org)のネットワーク解析用パッケージのひとつである[igraph](https://igraph.org/r/)を主に使います。
 
+スクリプトを実行するだけですべての解析は完了するように作られていますが，自分の解析に沿うようにスクリプトを改変するためにはRとigraphの基本的な使い方を習得しておく必要があります。
+以下が参考になりますので，適時ご覧ください。
+* [Rとigraphの基本的な使い方](http://www.nemotos.net/igraph-tutorial/NetSciX_2016_Workshop_ja.html)
+
+## 目次
 以下のトピックを扱います。
 * [中心性解析](chXX_centrality_analysis)
 * コミュニティ検出
 * ネットワーク可制御性（ドライバノードの同定）
 * 相関ネットワーク分析
 
-[Network Repository. An Interactive Scientific Network Data Repository](http://networkrepository.com/index.php)
+## 連絡
+質問などは以下からお気軽に。
+* [@kztakemoto](https://twitter.com/kztakemoto)
 
-サンプルスクリプトなどが公開されます。
