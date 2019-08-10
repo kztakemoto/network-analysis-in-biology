@@ -1,0 +1,35 @@
+
+	Wilcoxon rank sum test with continuity correction
+
+data:  ess_nprop$degree and noness_nprop$degree
+W = 171775, p-value < 2.2e-16
+alternative hypothesis: true location shift is not equal to 0
+
+
+	Wilcoxon rank sum test with continuity correction
+
+data:  ess_nprop$eigen and noness_nprop$degree
+W = 0, p-value < 2.2e-16
+alternative hypothesis: true location shift is not equal to 0
+
+
+	Wilcoxon rank sum test with continuity correction
+
+data:  ess_nprop$page and noness_nprop$degree
+W = 0, p-value < 2.2e-16
+alternative hypothesis: true location shift is not equal to 0
+
+
+	Wilcoxon rank sum test with continuity correction
+
+data:  ess_nprop$closen and noness_nprop$degree
+W = 0, p-value < 2.2e-16
+alternative hypothesis: true location shift is not equal to 0
+
+
+	Wilcoxon rank sum test with continuity correction
+
+data:  ess_nprop$between and noness_nprop$degree
+W = 194407, p-value < 2.2e-16
+alternative hypothesis: true location shift is not equal to 0
+
