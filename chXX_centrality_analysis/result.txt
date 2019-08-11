@@ -13,7 +13,7 @@ alternative hypothesis: true location shift is not equal to 0
 	Wilcoxon rank sum test with continuity correction
 
 data:  ess_nprop$eigen and noness_nprop$eigen
-W = 173688, p-value < 2.2e-16
+W = 173684, p-value < 2.2e-16
 alternative hypothesis: true location shift is not equal to 0
 
 ## PageRank

@@ -5,9 +5,11 @@
 # * 単一の中心性指標を用いて必須タンパク質を判別する。
 #######################################################################
 
-# igraph パッケージ のインストール（もしインストールされていないなら）
+# 図の出力先（引数として与える）
+pdf("plots.pdf")
+
+# igraphパッケージの読み込み（ないならインストールする）
 if(!require(igraph)) install.packages("igraph")
-# igraphパッケージの読み込み
 library(igraph)
 
 ## 大腸菌のタンパク質相互作用ネットワークの読み込み
@@ -106,10 +108,9 @@ wilcox.test(ess_nprop$subgraph,noness_nprop$subgraph)
 # 必須なら1，非必須なら0とする。
 ess_score <- ifelse(d$essential == "E",1,0)
 
-# ROCカーブを書くためのパッケージを読み込む
+# ROCカーブを書くためのパッケージを読み込む（ないならインストールする）
 if(!require(pROC)) install.packages("pROC")
 library(pROC)
-
 # ROCカーブをプロットする。
 layout(matrix(1:6, ncol=3))
 # 次数中心性（degree centrality）
@@ -124,24 +125,3 @@ plot.roc(ess_score,d$closen,print.auc=T,main="Closeness")
 plot.roc(ess_score,d$between,print.auc=T,main="Betweenness")
 # サブグラフ中心性（Subgraph centrality）
 plot.roc(ess_score,d$subgraph,print.auc=T,main="Subgraph")
-
-acc_set <- c()
-for(i in 1:100){
-    idx <- which(d$essential=="E")
-    idx <- c(idx,sample(which(d$essential=="N"),dim(d[d$essential=="E",])[[1]]))
-    d_sub <- d[idx,]
-    ess_score <- ifelse(d_sub$essential == "E",1,0)
-    val <- d_sub$subgraph
-
-    acc_max <- 0
-    for(th in sort(val)){
-        pred <- ifelse(d_sub$subgraph > th,1,0)
-        ctab <- table(ess_score,pred)
-        acc <- sum(diag(ctab))/sum(ctab)
-        if(acc_max < acc){
-            acc_max <- acc
-        }
-    }
-    acc_set <- c(acc_set, acc_max)
-}
-cat(mean(acc_set),"\n")

@@ -32,13 +32,24 @@ for(idx in folds){
   # 検証データ
   test <- d2[idx,]
   # random forest
-  #model <- train(essential~., data = train, method="rf", trControl = trainControl(method = "repeatedcv", number = 5), tuneLength = 5)
+  #model <- train(essential~., data = train, method="rf", trControl = trainControl(method = "repeatedcv", number = 5), tuneLength = 20)
 
   # gradient boosting model
-	model <- train(essential~., data = train, method="gbm", trControl = trainControl(method = "repeatedcv", number = 5), tuneLength = 10)
+	#model <- train(essential~., data = train, method="gbm", trControl = trainControl(method = "repeatedcv", number = 5), tuneLength = 10)
 
   # xgboost
   #model <- train(essential~., data = train, method="xgbTree", trControl = trainControl(method = "repeatedcv", number = 5), tuneLength = 5)
+
+  # SVM
+	fitControl <- trainControl(method = "repeatedcv", number = 5, repeats =10, classProbs=TRUE)
+	tGrid <- expand.grid(sigma=(1:10)*0.01, C= (1:10)*1)
+	model <- train(
+		essential~.,
+		data=train, method="svmRadial",
+		trControl = fitControl,
+		tuneGrid = tGrid,
+		preProc = c("center", "scale")
+	)
 
   # 予測
   pred <- predict(model, test, type="prob")
