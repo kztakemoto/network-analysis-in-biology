@@ -30,10 +30,10 @@
 % Rscript network_clustering_modularity_nonoverlap.R [method]
 ```
 #### 手法を指定する引数 \[method\]
-* ``edgebet``: [エッジ媒介性（Edge betweenness）に基づく方法](http://samoa.santafe.edu/media/workingpapers/01-12-077.pdf){:target="_blank"}
-* ``greedy``: [貪欲アルゴリズムに基づく方法](https://arxiv.org/abs/cond-mat/0408187){:target="_blank"}
-* ``eigen``: [スペクトル法（固有ベクトルに基づく方法）に基づく方法](https://arxiv.org/abs/physics/0602124){:target="_blank"}
-* ``SA``: [焼きなまし法に基づく方法](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2175124/){:target="_blank"}
+* ``edgebet``: [エッジ媒介性（Edge betweenness）に基づく方法](http://samoa.santafe.edu/media/workingpapers/01-12-077.pdf)
+* ``greedy``: [貪欲アルゴリズムに基づく方法](https://arxiv.org/abs/cond-mat/0408187)
+* ``eigen``: [スペクトル法（固有ベクトルに基づく方法）に基づく方法](https://arxiv.org/abs/physics/0602124)
+* ``SA``: [焼きなまし法に基づく方法](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2175124/)
 
 #### 出力ファイル
 * ``figures/network_clustering_modularity_nonoverlap_[method].R``: 出力された図
@@ -43,8 +43,8 @@
 % Rscript network_clustering_modularity_overlap.R [method]
 ```
 #### 手法を指定する引数 \[method\]
-* ``linkcomm``: [Link Communityアルゴリズムによる方法](https://arxiv.org/abs/0903.3178){:target="_blank"}
-* ``ocg``: [Overlapping Cluster Generator (OCG) アルゴリズムに基づく方法](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3244771/){:target="_blank"}
+* ``linkcomm``: [Link Communityアルゴリズムによる方法](https://arxiv.org/abs/0903.3178)
+* ``ocg``: [Overlapping Cluster Generator (OCG) アルゴリズムに基づく方法](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3244771/)
 
 #### 出力ファイル
 * ``figures/network_clustering_modularity_overlap_[method].R``: 出力された図

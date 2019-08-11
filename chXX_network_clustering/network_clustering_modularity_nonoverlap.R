@@ -34,21 +34,21 @@ if(method == "edgebet"){
     g <- delete_edge_attr(g, "weight")
     # エッジ媒介性（Edge betweenness）に基づく手法
     # http://samoa.santafe.edu/media/workingpapers/01-12-077.pdf
-    data <- edge.betweenness.community(g)
+    data <- cluster_edge_betweenness(g)
     # デンドログラムをプロット
     dendPlot(data)
 
 } else if(method == "greedy"){
     # 貪欲アルゴリズムに基づく方法
     # https://arxiv.org/abs/cond-mat/0408187
-    data <- fastgreedy.community(g)
+    data <- cluster_fast_greedy(g)
     # デンドログラムをプロット
     dendPlot(data)
 
 } else if(method == "eigen"){
     # スペクトル法（固有ベクトルに基づく方法）に基づく方法
     # https://arxiv.org/abs/physics/0602124
-    data <- leading.eigenvector.community(g,options=list(maxiter=1000000, ncv=5))
+    data <- cluster_leading_eigen(g,options=list(maxiter=1000000, ncv=5))
     # デンドログラムをプロット
     dendPlot(data)
 
