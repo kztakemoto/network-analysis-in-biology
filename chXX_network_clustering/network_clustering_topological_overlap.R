@@ -15,7 +15,7 @@ library(igraph)
 
 ## ネットワークの読み込み
 # 空手クラブのネットワークを読み込む
-g <- read.graph("karate.GraphML",format="graphml")
+g <- read.graph("network_data/karate.GraphML",format="graphml")
 
 ## Topological overlap score matrixの計算
 # 隣接行列（Aij）を得る

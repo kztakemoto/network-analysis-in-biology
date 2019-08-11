@@ -26,7 +26,7 @@ library(rnetcarto)
 
 ## ネットワークの読み込み
 # 空手クラブのネットワークを読み込む
-g <- read.graph("karate.GraphML",format="graphml")
+g <- read.graph("network_data/karate.GraphML",format="graphml")
 
 ## モジュラリティ最大化に基づくネットワーククラスタリング
 if(method == "edgebet"){

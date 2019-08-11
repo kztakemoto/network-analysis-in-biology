@@ -24,7 +24,7 @@ library(linkcomm)
 
 ## ネットワークの読み込み
 # 空手クラブのネットワークを読み込む
-g <- read.graph("karate.GraphML",format="graphml")
+g <- read.graph("network_data/karate.GraphML",format="graphml")
 # 後のわかりやすさのためノードに実際のコミュニティ番号を追加
 V(g)$name <- paste(V(g)$name,V(g)$Faction,sep=":")
 # エッジリストを取得

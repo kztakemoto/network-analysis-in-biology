@@ -7,14 +7,14 @@
 
 ## ネットワークデータ
   * 空手クラブネットワーク
-    * ``karate.GraphML``
+    * ``network_data/karate.GraphML``
     * GraphML形式
   * 大腸菌の代謝ネットワークの一部
-    * ``eco_EM+TCA.txt``
+    * ``network_data/eco_EM+TCA.txt``
     * エッジリスト形式
   * コミュニティ検出の解像度限界を見るためのサンプルネットワーク
-    * ``large.graphml``
-    * ``small.graphml``
+    * ``network_data/large.graphml``
+    * ``network_data/small.graphml``
     * GraphML形式
 
 ## 使い方
