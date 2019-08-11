@@ -2,7 +2,7 @@
 # 中心性解析（Centrality analysis） 
 # タンパク質相互作用ネットワークの中心性指標とタンパク質の必須性の関係を調査する。
 # * 必須タンパク質と非必須タンパク質を中心性指標の比較と差の統計分析
-# * 単一の中心性指標をに基づく必須タンパク質予測の性能評価
+# * 単一の中心性指標を用いた必須タンパク質を判別する。
 #######################################################################
 
 # igraph パッケージ のインストール（もしインストールされていないなら）
@@ -35,9 +35,11 @@ page <- page.rank(g)$vector
 closen <- closeness(g)
 # 媒介中心性（betweenness centrality）
 between <- betweenness(g)
+# サブグラフ中心性（betweenness centrality）
+subgraph <- subgraph.centrality(g)
 
 ## データフレームにまとめる
-nprop <- data.frame(V(g)$name,degree,eigen,page,closen,between)
+nprop <- data.frame(V(g)$name,degree,eigen,page,closen,between,subgraph)
 names(nprop)[[1]] <- "gene"
 
 ## タンパク質の必須性のデータを読み込む
@@ -49,6 +51,9 @@ ess <- read.table("ecoli_proteins_essentiality_Baba2006MSB.txt",header=T)
 
 ## 中心性指標のデータと必須性のデータをマージする
 d <- merge(ess,nprop,by="gene")
+# unknownの遺伝子を除外する。
+d <- d[d$essential!="u",]
+levels(d$essential)[[3]] <- NA
 
 ## Boxplot
 layout(matrix(1:6, ncol=3))
@@ -62,6 +67,8 @@ boxplot(log(d$page)~d$essential,xlab="Essentiality",ylab="PageRank")
 boxplot(d$closen~d$essential,xlab="Essentiality",ylab="Closeness")
 # 媒介中心性（betweenness centrality）
 boxplot(log(d$between+1)~d$essential,xlab="Essentiality",ylab="Betweenness")
+# サブグラフ中心性（subgraph centrality）
+boxplot(log(d$subgraph)~d$essential,xlab="Essentiality",ylab="Subgraph")
 
 ## 必須タンパク質と非必須タンパク質の中心性指標の差を統計検定する。
 # 必須タンパク質の中心性指標
@@ -90,11 +97,14 @@ cat("## 媒介中心性（betweenness centrality）\n")
 cat("中央値　必須：",median(ess_nprop$between),"非必須：",median(noness_nprop$between),"\n")
 wilcox.test(ess_nprop$between,noness_nprop$between)
 
-## 単一の中心性指標を使って必須性を予測する。
-# unknownの遺伝子を除外する。
-d2 <- d[d$essential!="n",]
+cat("## サブグラフ中心性（subgraph centrality）\n")
+cat("中央値　必須：",median(ess_nprop$subgraph),"非必須：",median(noness_nprop$subgraph),"\n")
+wilcox.test(ess_nprop$subgraph,noness_nprop$subgraph)
+
+## 単一の中心性指標を用いた必須タンパク質を判別する。
+# データの前準備
 # 必須なら1，非必須なら0とする。
-d2$essential <- ifelse(d2$essential == "E",1,0)
+ess_score <- ifelse(d$essential == "E",1,0)
 
 # ROCカーブを書くためのパッケージを読み込む
 if(!require(pROC)) install.packages("pROC")
@@ -103,13 +113,15 @@ library(pROC)
 # ROCカーブをプロットする。
 layout(matrix(1:6, ncol=3))
 # 次数中心性（degree centrality）
-plot.roc(d2$essential,d2$degree,print.auc=T,main="Degree")
+plot.roc(ess_score,d$degree,print.auc=T,main="Degree")
 # 固有ベクトル中心性（eigenvector centraliry）
-plot.roc(d2$essential,d2$eigen,print.auc=T,main="Eigenvector")
+plot.roc(ess_score,d$eigen,print.auc=T,main="Eigenvector")
 # PageRank
-plot.roc(d2$essential,d2$page,print.auc=T,main="PageRank")
+plot.roc(ess_score,d$page,print.auc=T,main="PageRank")
 # 近接中心性（closeness centrality）
-plot.roc(d2$essential,d2$closen,print.auc=T,main="Closeness")
+plot.roc(ess_score,d$closen,print.auc=T,main="Closeness")
 # 媒介中心性（betweenness centrality）
-plot.roc(d2$essential,d2$between,print.auc=T,main="Betweenness")
+plot.roc(ess_score,d$between,print.auc=T,main="Betweenness")
+# サブグラフ中心性（Subgraph centrality）
+plot.roc(ess_score,d$subgraph,print.auc=T,main="Subgraph")
 

@@ -13,7 +13,7 @@ alternative hypothesis: true location shift is not equal to 0
 	Wilcoxon rank sum test with continuity correction
 
 data:  ess_nprop$eigen and noness_nprop$eigen
-W = 173690, p-value < 2.2e-16
+W = 173688, p-value < 2.2e-16
 alternative hypothesis: true location shift is not equal to 0
 
 ## PageRank
@@ -41,5 +41,14 @@ alternative hypothesis: true location shift is not equal to 0
 
 data:  ess_nprop$between and noness_nprop$between
 W = 166378, p-value < 2.2e-16
+alternative hypothesis: true location shift is not equal to 0
+
+## サブグラフ中心性（subgraph centrality）
+中央値　必須： 6.05615e+11 非必須： 8949452569 
+
+	Wilcoxon rank sum test with continuity correction
+
+data:  ess_nprop$subgraph and noness_nprop$subgraph
+W = 173687, p-value < 2.2e-16
 alternative hypothesis: true location shift is not equal to 0
 
