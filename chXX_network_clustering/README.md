@@ -23,7 +23,7 @@
 % Rscript network_clustering_topological_overlap.R 
 ```
 #### 出力ファイル
-* ``plots_topological_overlap.pdf``: 出力された図
+* ``figures/plots_topological_overlap.pdf``: 出力された図
 
 ### モジュラリティ最大化に基づくネットワーククラスタリング（コミュニティの重複を考慮しない場合）
 ```
