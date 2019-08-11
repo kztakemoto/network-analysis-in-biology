@@ -1,9 +1,9 @@
 # ネットワーククラスタリング（コミュニティ検出）
-サンプルネットワークをクラスタリングします。
+ネットワークをクラスタリングします。
 * Topological Overlap Matrixに基づいてネットワークをクラスタリングします。
 * モジュラリティ最大化に基づいてネットワークをクラスタリングします（コミュニティの重複を考えません）。
 * モジュラリティ最大化に基づいてネットワークをクラスタリングします（コミュニティの重複を考えます）。
-* コミュニティ抽出の解像度限界を見てみましょう。
+* コミュニティ検出の解像度限界を見てみましょう。
 
 ## ネットワークデータ
   * 空手クラブネットワーク
@@ -12,7 +12,7 @@
   * 大腸菌の代謝ネットワークの一部
     * ``eco_EM+TCA.txt``
     * エッジリスト形式
-  * コミュニティ抽出の解像度限界を見るためのサンプルネットワーク
+  * コミュニティ検出の解像度限界を見るためのサンプルネットワーク
     * ``large.graphml``
     * ``small.graphml``
     * GraphML形式
@@ -30,10 +30,10 @@
 % Rscript network_clustering_modularity_nonoverlap.R [method]
 ```
 #### 手法を指定する引数 \[method\]
-* ``edgebet``: [エッジ媒介性（Edge betweenness）に基づく方法](http://samoa.santafe.edu/media/workingpapers/01-12-077.pdf)
-* ``greedy``: [貪欲アルゴリズムに基づく方法](https://arxiv.org/abs/cond-mat/0408187)
-* ``eigen``: [スペクトル法（固有ベクトルに基づく方法）に基づく方法](https://arxiv.org/abs/physics/0602124)
-* ``SA``: [焼きなまし法に基づく方法](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2175124/)
+* ``edgebet``: [エッジ媒介性（Edge betweenness）に基づく方法](http://samoa.santafe.edu/media/workingpapers/01-12-077.pdf){:target="_blank"}
+* ``greedy``: [貪欲アルゴリズムに基づく方法](https://arxiv.org/abs/cond-mat/0408187){:target="_blank"}
+* ``eigen``: [スペクトル法（固有ベクトルに基づく方法）に基づく方法](https://arxiv.org/abs/physics/0602124){:target="_blank"}
+* ``SA``: [焼きなまし法に基づく方法](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2175124/){:target="_blank"}
 
 #### 出力ファイル
 * ``figures/network_clustering_modularity_nonoverlap_[method].R``: 出力された図
@@ -43,13 +43,13 @@
 % Rscript network_clustering_modularity_overlap.R [method]
 ```
 #### 手法を指定する引数 \[method\]
-* ``linkcomm``: [Link Communityアルゴリズムによる方法](https://arxiv.org/abs/0903.3178)
-* ``ocg``: [Overlapping Cluster Generator (OCG) アルゴリズムに基づく方法](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3244771/)
+* ``linkcomm``: [Link Communityアルゴリズムによる方法](https://arxiv.org/abs/0903.3178){:target="_blank"}
+* ``ocg``: [Overlapping Cluster Generator (OCG) アルゴリズムに基づく方法](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3244771/){:target="_blank"}
 
 #### 出力ファイル
 * ``figures/network_clustering_modularity_overlap_[method].R``: 出力された図
 
-### コミュニティ抽出の解像度限界
+### コミュニティ検出の解像度限界
 ```
 % Rscript resolution_limit.R
 ```
