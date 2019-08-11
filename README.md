@@ -18,5 +18,3 @@
 ## 連絡
 質問などは以下からお気軽に。
 * [@kztakemoto](https://twitter.com/kztakemoto)
-
-# kztakemoto.github.io
