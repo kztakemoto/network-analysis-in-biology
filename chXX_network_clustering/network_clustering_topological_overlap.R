@@ -3,7 +3,7 @@
 ###########################################################
 
 # 図の出力先
-pdf("plots_topological_overlap.pdf")
+pdf("figures/plots_topological_overlap.pdf")
 
 # igraphパッケージの読み込み（ないならインストールする）
 if(!require(igraph)) install.packages("igraph")

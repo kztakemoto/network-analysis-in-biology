@@ -12,7 +12,7 @@ method <- commandArgs(trailingOnly=TRUE)[1]
 
 # 図の出力先
 if(method %in% c("edgebet","eigen","greedy","SA")){
-    outputfilename <- paste("plots_modularity_nonoverlap_",method,".pdf",sep="")
+    outputfilename <- paste("figures/plots_modularity_nonoverlap_",method,".pdf",sep="")
     pdf(outputfilename)
 }
 

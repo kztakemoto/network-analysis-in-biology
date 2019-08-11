@@ -10,7 +10,7 @@ method <- commandArgs(trailingOnly=TRUE)[1]
 
 # 図の出力先
 if(method %in% c("linkcomm","ocg")){
-    outputfilename <- paste("plots_modularity_overlap_",method,".pdf",sep="")
+    outputfilename <- paste("figures/plots_modularity_overlap_",method,".pdf",sep="")
     pdf(outputfilename)
 }
 

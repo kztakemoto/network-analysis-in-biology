@@ -4,7 +4,7 @@
 ########################################################
 
 # 図の出力先
-pdf("plots_resolution_limit.pdf")
+pdf("figures/plots_resolution_limit.pdf")
 
 # igraphパッケージの読み込み（ないならインストールする）
 if(!require(igraph)) install.packages("igraph")

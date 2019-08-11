@@ -36,7 +36,7 @@
 * ``SA``: [焼きなまし法に基づく方法](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2175124/)
 
 #### 出力ファイル
-* ``network_clustering_modularity_nonoverlap_[method].R``: 出力された図
+* ``figures/network_clustering_modularity_nonoverlap_[method].R``: 出力された図
 
 ### モジュラリティ最大化に基づくネットワーククラスタリング（コミュニティの重複を考慮する場合）
 ```
@@ -47,11 +47,11 @@
 * ``ocg``: [Overlapping Cluster Generator (OCG) アルゴリズムに基づく方法](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3244771/)
 
 #### 出力ファイル
-* ``network_clustering_modularity_overlap_[method].R``: 出力された図
+* ``figures/network_clustering_modularity_overlap_[method].R``: 出力された図
 
 ### コミュニティ抽出の解像度限界
 ```
 % Rscript resolution_limit.R
 ```
 #### 出力ファイル
-* ``network_clustering_modularity_overlap_[method].R``: 出力された図
+* ``figures/network_clustering_modularity_overlap_[method].R``: 出力された図
