@@ -125,3 +125,23 @@ plot.roc(ess_score,d$between,print.auc=T,main="Betweenness")
 # サブグラフ中心性（Subgraph centrality）
 plot.roc(ess_score,d$subgraph,print.auc=T,main="Subgraph")
 
+acc_set <- c()
+for(i in 1:100){
+    idx <- which(d$essential=="E")
+    idx <- c(idx,sample(which(d$essential=="N"),dim(d[d$essential=="E",])[[1]]))
+    d_sub <- d[idx,]
+    ess_score <- ifelse(d_sub$essential == "E",1,0)
+    val <- d_sub$subgraph
+
+    acc_max <- 0
+    for(th in sort(val)){
+        pred <- ifelse(d_sub$subgraph > th,1,0)
+        ctab <- table(ess_score,pred)
+        acc <- sum(diag(ctab))/sum(ctab)
+        if(acc_max < acc){
+            acc_max <- acc
+        }
+    }
+    acc_set <- c(acc_set, acc_max)
+}
+cat(mean(acc_set),"\n")

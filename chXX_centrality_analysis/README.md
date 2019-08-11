@@ -11,7 +11,7 @@
   * 大腸菌のタンパク質（遺伝子）の必須性
     * ``ecoli_proteins_essentiality_Baba2006MSB.txt``
     * 必須（E），非必須（N），不明（u）
-    * Baba T, Ara T, Hasegawa M, Takai Y, Okumura Y, Baba M, Datsenko KA, Tomita M, Wanner BL, Mori H (2006) Construction of Escherichia coli K-12 in-frame, single-gene knockout mutants: the Keio collection. Mol Syst Biol. 2, 2006.0008. doi: [10.1038/msb4100050](https://doi.org/10.1038/msb4100050)
+    * Baba T et al. (2006) Construction of Escherichia coli K-12 in-frame, single-gene knockout mutants: the Keio collection. Mol Syst Biol. 2, 2006.0008. doi: [10.1038/msb4100050](https://doi.org/10.1038/msb4100050)
 
 ## 使い方
 ```
