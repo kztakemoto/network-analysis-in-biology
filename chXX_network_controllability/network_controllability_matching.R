@@ -31,7 +31,7 @@ mds[[3]]
 
 ## 結果を表示する。
 ## ドライバノードはオレンジで色付けされる。
-plot(g, vertex.size=5, edge.arrow.size=0.7, vertex.color=c("white","orange")[mds[[2]]+1])
+plot(g, vertex.size=10, edge.arrow.size=0.7, vertex.color=c("white","orange")[mds[[2]]+1])
 
 
 ### 最大マッチングに基づくネットワーク可制御性に基づくいてノードを分類する
@@ -48,4 +48,4 @@ V(g)$color[V(g)$node_class=="indispensable"] <- "pink"
 
 # ネットワークを描画
 # 灰：不必要（dispensable）ノード，水色：中立（neutral）ノード，桃：不可欠（indispensable）ノード
-plot(g, vertex.size=5, edge.arrow.size=0.7)
+plot(g, vertex.size=10, edge.arrow.size=0.7)
