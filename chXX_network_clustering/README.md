@@ -28,11 +28,10 @@
 ## 使い方
 ### Topological Overlap Matrixに基づくネットワーククラスタリング
 ```
-% Rscript network_clustering_modularity_nonoverlap.R | tee result.txt
+% Rscript network_clustering_topological_overlap.R
 ```
 #### 出力ファイル
 * ``figures/plots_topological_overlap.pdf``: 出力された図
-* ``result.txt``: モジュラリティスコアやコミュニティの数
 
 ### モジュラリティ最大化に基づくネットワーククラスタリング（コミュニティの重複を考慮しない場合）
 ```

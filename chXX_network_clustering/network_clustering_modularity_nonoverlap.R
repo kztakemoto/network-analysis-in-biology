@@ -20,7 +20,6 @@ g <- as.undirected(read.graph("data/karate.GraphML",format="graphml"))
 # エッジの重みがあれば無効にする（一部のアルゴリズムが重み付きネットワークに対応していないため）
 if(!is.null(get.edge.attribute(g,"weight"))) g <- delete_edge_attr(g, "weight")
 
-
 #### モジュラリティ最大化に基づくネットワーククラスタリング
 # 出力の定義
 par(family = "Japan1GothicBBB")

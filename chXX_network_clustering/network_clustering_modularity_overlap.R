@@ -24,8 +24,6 @@ el <- get.edgelist(g)
 # スペースをアンダーバーに置き換え（linkcommパッケージはスペースを許さない）
 el <- gsub(" ","_",el)
 
-# プロットのためのパラメータ
-par(mai=c(.8,.8,1,2))
 ###  ネットワーククラスタリング
 ## Link Communityアルゴリズムによる方法
 # https://arxiv.org/abs/0903.3178
