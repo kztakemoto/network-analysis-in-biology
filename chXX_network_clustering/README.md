@@ -28,41 +28,42 @@
 ## 使い方
 ### Topological Overlap Matrixに基づくネットワーククラスタリング
 ```
-% Rscript network_clustering_topological_overlap.R 
+% Rscript network_clustering_modularity_nonoverlap.R | tee result.txt
 ```
 #### 出力ファイル
 * ``figures/plots_topological_overlap.pdf``: 出力された図
+* ``result.txt``: モジュラリティスコアやコミュニティの数
 
 ### モジュラリティ最大化に基づくネットワーククラスタリング（コミュニティの重複を考慮しない場合）
 ```
-% Rscript network_clustering_modularity_nonoverlap.R [method]
+% Rscript network_clustering_modularity_nonoverlap.R
 ```
-#### 手法を指定する引数 \[method\]
-* ``edgebet``: [エッジ媒介性（Edge betweenness）に基づく方法](http://samoa.santafe.edu/media/workingpapers/01-12-077.pdf)
-* ``greedy``: [貪欲アルゴリズムに基づく方法](https://arxiv.org/abs/cond-mat/0408187)
-* ``eigen``: [スペクトル法（固有ベクトルに基づく方法）に基づく方法](https://arxiv.org/abs/physics/0602124)
-* ``SA``: [焼きなまし法に基づく方法](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2175124/)
+#### ここで使う手法
+* [エッジ媒介性（Edge betweenness）に基づく方法](http://samoa.santafe.edu/media/workingpapers/01-12-077.pdf)
+* [貪欲アルゴリズムに基づく方法](https://arxiv.org/abs/cond-mat/0408187)
+* [スペクトル法（固有ベクトルに基づく方法）に基づく方法](https://arxiv.org/abs/physics/0602124)
+* [焼きなまし法に基づく方法](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2175124/)
 
 #### 出力ファイル
-* ``figures/network_clustering_modularity_nonoverlap_[method].R``: 出力された図
+* ``figures/network_clustering_modularity_nonoverlap.R``: 出力された図
 
 ### モジュラリティ最大化に基づくネットワーククラスタリング（コミュニティの重複を考慮する場合）
 ```
-% Rscript network_clustering_modularity_overlap.R [method]
+% Rscript network_clustering_modularity_overlap.R
 ```
-#### 手法を指定する引数 \[method\]
-* ``linkcomm``: [Link Communityアルゴリズムによる方法](https://arxiv.org/abs/0903.3178)
-* ``ocg``: [Overlapping Cluster Generator (OCG) アルゴリズムに基づく方法](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3244771/)
+#### ここで使う手法
+* [Link Communityアルゴリズムによる方法](https://arxiv.org/abs/0903.3178)
+* [Overlapping Cluster Generator (OCG) アルゴリズムに基づく方法](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3244771/)
 
 #### 出力ファイル
-* ``figures/network_clustering_modularity_overlap_[method].R``: 出力された図
+* ``figures/network_clustering_modularity_overlap.R``: 出力された図
 
 ### コミュニティ検出の解像度限界
 ```
 % Rscript resolution_limit.R
 ```
 #### 出力ファイル
-* ``figures/network_clustering_modularity_overlap_[method].R``: 出力された図
+* ``figures/plots_resolution_limit.pdf``: 出力された図
 
 ## やってみよう
 Rスクリプトは空手クラブのネットワークを例にして作成されています。

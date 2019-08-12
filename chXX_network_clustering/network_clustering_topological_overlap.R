@@ -52,4 +52,4 @@ mem <- cutree(res,h=0.9)
 # クラスタのメンバシップにしたがってノードを色付け
 V(g)$color <- mem
 # ネットワークを描画。ノードの形が実際のメンバーシップに対応する。
-plot(g,vertex.size=5,vertex.label=V(g)$name, vertex.shape=c("circle","square")[V(g)$Faction])
+plot(g,vertex.size=10, vertex.label=V(g)$name, vertex.shape=c("circle","square")[V(g)$Faction])
