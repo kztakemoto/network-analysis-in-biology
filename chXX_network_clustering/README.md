@@ -10,10 +10,12 @@
     * ``data/karate.GraphML``
     * GraphML形式
     * ノード属性``Faction``は実際のグループ分けに対応
+    * Zachary WW (1977) An information flow model for conflict and fission in small Groups. J Anthropol Res 33, 452-473. [http://www.jstor.org/stable/3629752](http://www.jstor.org/stable/3629752)
   * 大腸菌の代謝ネットワークの一部
     * ``data/ecoli_metabolic_KEGG.graphml``
     * GraphML形式
     * ノード属性``Faction``はKEGG PATHWAYの定義に対応
+    * Kanehisa M et al. (2019) New approach for understanding genome variations in KEGG. Nucleic Acids Res. 47, D590-D595. doi: [10.1093/nar/gky962](https://doi.org/10.1093/nar/gky962)
   * コミュニティ検出の解像度限界を見るためのサンプルネットワーク
     * ``data/large.graphml``
     * ``data/small.graphml``
