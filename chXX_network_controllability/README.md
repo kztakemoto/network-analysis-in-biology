@@ -20,7 +20,7 @@
   * アメリカ食品医薬品局が承認した（FDA-approved）薬剤標的タンパク質のリスト
     * ``drug_target_proteins.csv``
     * 引用はネットワークのものと同じ。
-  * 乳がんに対する必須タンパク質のリスト
+  * 乳がんにおける必須タンパク質のリスト
     * ``breast_cancer_essential_proteins.csv``
     * 引用はネットワークのものと同じ。
 

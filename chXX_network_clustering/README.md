@@ -36,7 +36,7 @@
 
 ### モジュラリティ最大化に基づくネットワーククラスタリング（コミュニティの重複を考慮しない場合）
 ```
-% Rscript network_clustering_modularity_nonoverlap.R
+% Rscript network_clustering_modularity_nonoverlap.R | tee result.txt
 ```
 #### ここで使う手法
 * [エッジ媒介性（Edge betweenness）に基づく方法](http://samoa.santafe.edu/media/workingpapers/01-12-077.pdf)
@@ -46,6 +46,7 @@
 
 #### 出力ファイル
 * ``figures/network_clustering_modularity_nonoverlap.R``: 出力された図
+* ``result.txt``: モジュラリティスコアやコミュニティ数
 
 ### モジュラリティ最大化に基づくネットワーククラスタリング（コミュニティの重複を考慮する場合）
 ```
