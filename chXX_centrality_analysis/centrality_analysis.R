@@ -18,7 +18,7 @@ library(igraph)
 # PLoS Biol. 2009 Apr 28;7(4):e96. doi: 10.1371/journal.pbio.1000096.
 
 # エッジリストの読み込み
-d <- read.table("ecoli_ppi_Hu_etal_2009.txt")
+d <- read.table("data/ecoli_ppi_Hu_etal_2009.txt")
 # グラフオブジェクトの作成
 g <- simplify(graph.data.frame(d,directed=F),remove.multiple=T,remove.loops=T)
 
@@ -48,7 +48,7 @@ names(nprop)[[1]] <- "gene"
 # Baba T, Ara T, Hasegawa M, Takai Y, Okumura Y, Baba M, Datsenko KA, Tomita M, Wanner BL, Mori H
 # Construction of Escherichia coli K-12 in-frame, single-gene knockout mutants: the Keio collection.
 # Mol Syst Biol. 2006;2:2006.0008. Epub 2006 Feb 21. doi: 10.1038/msb4100050
-ess <- read.table("ecoli_proteins_essentiality_Baba2006MSB.txt",header=T)
+ess <- read.table("data/ecoli_proteins_essentiality_Baba2006MSB.txt",header=T)
 # 必須（E），非必須（N），不明（u）
 
 ## 中心性指標のデータと必須性のデータをマージする

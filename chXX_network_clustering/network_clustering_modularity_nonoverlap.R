@@ -25,13 +25,13 @@ if(!require(rnetcarto)) install.packages("rnetcarto")
 library(rnetcarto)
 
 ## ネットワークの読み込み
-# 空手クラブのネットワークを読み込む
-g <- read.graph("network_data/karate.GraphML",format="graphml")
+# 空手クラブのネットワークを（無向きなしネットワーク）で読み込む
+g <- as.undirected(read.graph("data/karate.GraphML",format="graphml"))
+# エッジの重みがあれば無効にする（一部のアルゴリズムが重み付きネットワークに対応していないため）
+if(!is.null(get.edge.attribute(g,"weight"))) g <- delete_edge_attr(g, "weight")
 
 ## モジュラリティ最大化に基づくネットワーククラスタリング
 if(method == "edgebet"){
-    # エッジの重みは無効にする
-    g <- delete_edge_attr(g, "weight")
     # エッジ媒介性（Edge betweenness）に基づく手法
     # http://samoa.santafe.edu/media/workingpapers/01-12-077.pdf
     data <- cluster_edge_betweenness(g)
@@ -56,22 +56,25 @@ if(method == "edgebet"){
     # 焼きなまし法に基づく方法（rnetcartoパッケージで計算する）
     # https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2175124/
     # 隣接行列を取得
-    mtx <- get.adjacency(g, sparse=F, attr = "weight")
+    mtx <- get.adjacency(g, sparse=F)
     # コミュニティ抽出を実行
     res <- netcarto(mtx)
     # igraphの出力結果と一致するように出力を調整
-    data <- as.data.frame(res[[1]])
-    names(data)[[2]] <- "membership"
-    data$membership <- data$membership + 1
-    row.names(data) <- data$name
-    data <- data[V(g)$name,]
+    table <- as.data.frame(res[[1]])
+    table$module <- table$module + 1
+    row.names(table) <- table$name
+    table <- table[V(g)$name,]
+    data <- list(membership = table$module, modularity=c(res[[2]]))
 
 } else {
     stop("その引数は無効です。")
 }
 
+cat("最大モジュラリティスコア",max(data$modularity),"\n")
+cat("コミュニティの数",max(data$membership),"\n")
+
 ## 結果を表示
 # クラスタのメンバシップにしたがってノードを色付け
 V(g)$color <- data$membership
 # ネットワークを描画。ノードの形が実際のメンバーシップに対応する。
-plot(g,vertex.size=10,vertex.label=V(g)$name, vertex.shape=c("circle","square")[V(g)$Faction])
+plot(g,vertex.size=5,vertex.label=V(g)$name, vertex.shape=c("circle","square")[V(g)$Faction])

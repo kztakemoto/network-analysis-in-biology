@@ -5,16 +5,18 @@
 * モジュラリティ最大化に基づいてネットワークをクラスタリングします（コミュニティの重複を考えます）。
 * コミュニティ検出の解像度限界を見てみましょう。
 
-## ネットワークデータ
+## データ
   * 空手クラブネットワーク
-    * ``network_data/karate.GraphML``
+    * ``data/karate.GraphML``
     * GraphML形式
+    * ノード属性``Faction``は実際のグループ分けに対応
   * 大腸菌の代謝ネットワークの一部
-    * ``network_data/eco_EM+TCA.txt``
-    * エッジリスト形式
+    * ``data/ecoli_metabolic_KEGG.graphml``
+    * GraphML形式
+    * ノード属性``Faction``はKEGG PATHWAYの定義に対応
   * コミュニティ検出の解像度限界を見るためのサンプルネットワーク
-    * ``network_data/large.graphml``
-    * ``network_data/small.graphml``
+    * ``data/large.graphml``
+    * ``data/small.graphml``
     * GraphML形式
 
 ## 使い方
@@ -55,3 +57,7 @@
 ```
 #### 出力ファイル
 * ``figures/network_clustering_modularity_overlap_[method].R``: 出力された図
+
+## やってみよう
+Rスクリプトは空手クラブのネットワークを解析するためのものである。
+このスクリプトを参考に大腸菌の代謝ネットワークを解析してみよう。

@@ -1,6 +1,6 @@
-###########################################################
-# Topological Overlap Matrixを用いたネットワーククラスタリング
-###########################################################
+####################################################
+# Topological Overlapを用いたネットワーククラスタリング
+####################################################
 
 # 図の出力先
 pdf("figures/plots_topological_overlap.pdf")
@@ -14,8 +14,10 @@ library(igraph)
 # library(WGCNA)
 
 ## ネットワークの読み込み
-# 空手クラブのネットワークを読み込む
-g <- read.graph("network_data/karate.GraphML",format="graphml")
+# 空手クラブのネットワークを（無向きなしネットワーク）で読み込む
+g <- as.undirected(read.graph("data/karate.GraphML",format="graphml"))
+# エッジの重みがあれば無効にする（アルゴリズムが重み付きネットワークに対応していないため）
+if(!is.null(get.edge.attribute(g,"weight"))) g <- delete_edge_attr(g, "weight")
 
 ## Topological overlap score matrixの計算
 # 隣接行列（Aij）を得る
@@ -44,10 +46,10 @@ res <- hclust(dist, method="average")
 # デンドログラムをプロット
 plot(res)
 # 適当な閾値でクラスタを決める
-mem <- cutree(res,h=0.8)
+mem <- cutree(res,h=0.9)
 
 ## 結果を表示
 # クラスタのメンバシップにしたがってノードを色付け
 V(g)$color <- mem
 # ネットワークを描画。ノードの形が実際のメンバーシップに対応する。
-plot(g,vertex.size=10,vertex.label=V(g)$name, vertex.shape=c("circle","square")[V(g)$Faction])
+plot(g,vertex.size=5,vertex.label=V(g)$name, vertex.shape=c("circle","square")[V(g)$Faction])

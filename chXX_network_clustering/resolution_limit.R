@@ -15,10 +15,10 @@ if(!require(rnetcarto)) install.packages("rnetcarto")
 library(rnetcarto)
 
 # 小さなネットワークの読み込み
-g_s <- as.undirected(read.graph("network_data/small.graphml",format="graphml"))
+g_s <- as.undirected(read.graph("data/small.graphml",format="graphml"))
 V(g_s)$name <- 1:vcount(g_s)
 # 大きなネットワークの読み込み
-g_l <- as.undirected(read.graph("network_data/large.graphml",format="graphml"))
+g_l <- as.undirected(read.graph("data/large.graphml",format="graphml"))
 V(g_l)$name <- 1:vcount(g_l)
 
 ## 同じサイズのコミュニティを考える場合
