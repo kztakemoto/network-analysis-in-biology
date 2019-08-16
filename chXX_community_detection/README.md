@@ -1,4 +1,4 @@
-# ネットワーククラスタリング（コミュニティ検出）
+# コミュニティ抽出
 ネットワークをクラスタリングします。
 * Topological Overlap Matrixに基づいてネットワークをクラスタリングします。
 * モジュラリティ最大化に基づいてネットワークをクラスタリングします（コミュニティの重複を考えません）。
@@ -27,14 +27,14 @@
 ## 使い方
 ### Topological Overlap Matrixに基づくネットワーククラスタリング
 ```
-% Rscript network_clustering_topological_overlap.R
+% Rscript community_detection_topological_overlap.R
 ```
 #### 出力ファイル
 * ``figures/plots_topological_overlap.pdf``: 出力された図
 
 ### モジュラリティ最大化に基づくネットワーククラスタリング（コミュニティの重複を考慮しない場合）
 ```
-% Rscript network_clustering_modularity_nonoverlap.R | tee result.txt
+% Rscript community_detection_modularity_nonoverlap.R | tee result.txt
 ```
 #### ここで使う手法
 * [エッジ媒介性（Edge betweenness）に基づく方法](http://samoa.santafe.edu/media/workingpapers/01-12-077.pdf)
@@ -43,19 +43,19 @@
 * [焼きなまし法に基づく方法](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2175124/)
 
 #### 出力ファイル
-* ``figures/network_clustering_modularity_nonoverlap.R``: 出力された図
+* ``figures/plots_modularity_nonoverlap.pdf``: 出力された図
 * ``result.txt``: モジュラリティスコアやコミュニティ数
 
 ### モジュラリティ最大化に基づくネットワーククラスタリング（コミュニティの重複を考慮する場合）
 ```
-% Rscript network_clustering_modularity_overlap.R
+% Rscript community_detection_modularity_overlap.R
 ```
 #### ここで使う手法
 * [Link Communityアルゴリズムによる方法](https://arxiv.org/abs/0903.3178)
 * [Overlapping Cluster Generator (OCG) アルゴリズムに基づく方法](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3244771/)
 
 #### 出力ファイル
-* ``figures/network_clustering_modularity_overlap.R``: 出力された図
+* ``figures/plots_modularity_overlap.pdf``: 出力された図
 
 ### コミュニティ検出の解像度限界
 ```

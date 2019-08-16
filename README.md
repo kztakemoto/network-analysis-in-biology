@@ -11,9 +11,9 @@
 ## 目次
 以下のトピックを扱います。
 
-* [中心性解析](chXX_centrality_analysis)
-* [ネットワーククラスタリング（コミュニティ検出）](chXX_network_clustering)
-* [ネットワーク可制御性（ドライバノードの同定）](chXX_network_controllability)
+* [中心性解析](chXX_centrality_analysis)：重要なノードを見つける
+* [コミュニティ検出](chXX_network_clustering)：ネットワークをクラスタリングする
+* [ネットワーク可制御性解析](chXX_network_controllability)：ドライバノードを同定する
 * 相関ネットワーク解析
 
 ## 連絡
