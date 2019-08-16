@@ -1,5 +1,5 @@
 #################################################
-# モジュラリティ最大化に基づくネットワーククラスタリング
+# モジュラリティ最大化に基づくコミュニティ抽出
 #（コミュニティの重複を考慮する場合）
 #################################################
 
@@ -24,7 +24,7 @@ el <- get.edgelist(g)
 # スペースをアンダーバーに置き換え（linkcommパッケージはスペースを許さない）
 el <- gsub(" ","_",el)
 
-###  ネットワーククラスタリング
+### コミュニティ抽出
 ## Link Communityアルゴリズムによる方法
 # https://arxiv.org/abs/0903.3178
 # Link Communityアルゴリズムを実行（内部で使用され階層的クラスタリングはWard法を使用）
@@ -37,7 +37,7 @@ text(0.95*par("usr")[1],0.95*par("usr")[4],label="LinkComm",pos=4)
 plot(linkcomm, type="members")
 text(0.95*par("usr")[1],0.95*par("usr")[4],label="LinkComm",pos=4)
 
-# 適当な閾値でクラスタを決定する。
+# 適当な閾値でコミュニティ抽出（クラスタ）を決定する。
 linkcomm_at <- newLinkCommsAt(linkcomm, cutat=2.2)
 # クラスタリング結果を表示
 plot(linkcomm_at, type="graph")

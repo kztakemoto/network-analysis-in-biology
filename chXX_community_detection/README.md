@@ -5,8 +5,9 @@
 * モジュラリティ最大化に基づいてネットワークをクラスタリングします（コミュニティの重複を考えます）。
 * コミュニティ検出の解像度限界を見てみましょう。
 
-## ネットワーククラスタリング
-ネットワーククラスタリングとは，ネットワークを構造に従っていくつかのサブネットワークに分割することです。
+## コミュニティ抽出
+コミュニティ抽出とは，ネットワークを構造に従っていくつかのコミュニティ（サブネットワーク）に分割することです。
+ネットワークをクラスタリングすることに対応します。
 より詳しい内容については[SlideShareに公開されるスライドの43枚目から](https://www.slideshare.net/kztakemoto/r-seminar-on-igraph)をご覧ください。
 
 ## データ
@@ -25,14 +26,14 @@
     * GraphML形式
 
 ## 使い方
-### Topological Overlap Matrixに基づくネットワーククラスタリング
+### Topological Overlap Matrixに基づくコミュニティ抽出
 ```
 % Rscript community_detection_topological_overlap.R
 ```
 #### 出力ファイル
 * ``figures/plots_topological_overlap.pdf``: 出力された図
 
-### モジュラリティ最大化に基づくネットワーククラスタリング（コミュニティの重複を考慮しない場合）
+### モジュラリティ最大化に基づくコミュニティ抽出（コミュニティの重複を考慮しない場合）
 ```
 % Rscript community_detection_modularity_nonoverlap.R | tee result.txt
 ```
@@ -46,7 +47,7 @@
 * ``figures/plots_modularity_nonoverlap.pdf``: 出力された図
 * ``result.txt``: モジュラリティスコアやコミュニティ数
 
-### モジュラリティ最大化に基づくネットワーククラスタリング（コミュニティの重複を考慮する場合）
+### モジュラリティ最大化に基づくコミュニティ抽出（コミュニティの重複を考慮する場合）
 ```
 % Rscript community_detection_modularity_overlap.R
 ```
