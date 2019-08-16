@@ -15,7 +15,7 @@ if(!require(linkcomm)) install.packages("linkcomm")
 library(linkcomm)
 
 ## ネットワークの読み込み
-# 空手クラブのネットワークを（無向きなしネットワーク）で読み込む
+# 空手クラブのネットワークを（無向きなしネットワークで）読み込む
 g <- as.undirected(read.graph("data/karate.GraphML",format="graphml"))
 # 後のわかりやすさのためノードに実際のコミュニティ番号を追加
 V(g)$name <- paste(V(g)$name,V(g)$Faction,sep=":")

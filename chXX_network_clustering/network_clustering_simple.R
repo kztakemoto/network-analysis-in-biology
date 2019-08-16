@@ -14,33 +14,35 @@ library(igraph)
 # library(WGCNA)
 
 ## ネットワークの読み込み
-# 空手クラブのネットワークを（無向きなしネットワークで）読み込む
+# 空手クラブのネットワークを（無向ネットワークで）で読み込む
 g <- as.undirected(read.graph("data/karate.GraphML",format="graphml"))
 # エッジの重みがあれば無効にする（アルゴリズムが重み付きネットワークに対応していないため）
 if(!is.null(get.edge.attribute(g,"weight"))) g <- delete_edge_attr(g, "weight")
 
-## Topological overlap score matrixの計算
+# 代謝ネットワークを（無向ネットワークで）読み込む
+d <- read.table("data/ecoli_metabolic_KEGG.txt")
+g <- simplify(graph.data.frame(d, directed=F), remove.loops=T, remove.multiple=T)
+
+## 隣接行列をk-meansでクラスタリング
 # 隣接行列（Aij）を得る
 A_ij <- get.adjacency(g,sparse=F)
-# Jijの計算
-J_ij <- cocitation(g)
-# min(ki,kj)の計算
-deg <- degree(g)
-deg_mtx <- matrix(0,nrow=vcount(g),ncol=vcount(g))
-for(i in 1:vcount(g)){
-	for(j in 1:vcount(g)){
-		deg_mtx[i,j] <- min(deg[[i]],deg[[j]])
-	}
-}
-# Topological overlap score matrixを得る
-overlap_mtx <- (J_ij + A_ij) / (deg_mtx + 1 - A_ij)
-diag(overlap_mtx) <- 1
-# WGCNAパッケージを使ったTopological overlap score matrixの計算
-# overlap_mtx <- TOMsimilarity(A_ij)
+# 対角成分を1にする。
+diag(A_ij) <- 1
+# 2個のコミュニティ（クラスタ）となるようにk-meansを実行
+res <- kmeans(A_ij, 2)
 
-## 階層的クラスタリングの実行
-# 距離行列(dissimilarity score matrix)に変換
-dist <- as.dist(1 - overlap_mtx)
+## 結果を表示
+# コミュニティのメンバシップにしたがってノードを色付け
+V(g)$color <- res$cluster
+# ネットワークを描画。ノードの形が実際のメンバーシップに対応する。
+plot(g,vertex.size=10, vertex.label=V(g)$name)
+
+
+## 階層的クラスタリング
+# 隣接行列を使って距離行列を求める。
+dist <- dist(A_ij,method="binary")
+# 最短距離行列(dissimilarity score matrix)に変換
+dist <- as.dist(distances(g))
 # 群平均法に基づいて階層的クラスタリング
 res <- hclust(dist, method="average")
 # デンドログラムをプロット
@@ -54,4 +56,4 @@ mem <- cutree(res, k=2)
 # コミュニティのメンバシップにしたがってノードを色付け
 V(g)$color <- mem
 # ネットワークを描画。ノードの形が実際のメンバーシップに対応する。
-plot(g,vertex.size=10, vertex.label=V(g)$name, vertex.shape=c("circle","square")[V(g)$Faction])
+plot(g,vertex.size=10, vertex.label=V(g)$name)

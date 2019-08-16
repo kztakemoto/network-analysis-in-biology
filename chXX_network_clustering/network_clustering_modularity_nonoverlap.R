@@ -15,7 +15,7 @@ if(!require(rnetcarto)) install.packages("rnetcarto")
 library(rnetcarto)
 
 ## ネットワークの読み込み
-# 空手クラブのネットワークを（無向きなしネットワーク）で読み込む
+# 空手クラブのネットワークを（無向きなしネットワークで）読み込む
 g <- as.undirected(read.graph("data/karate.GraphML",format="graphml"))
 # エッジの重みがあれば無効にする（一部のアルゴリズムが重み付きネットワークに対応していないため）
 if(!is.null(get.edge.attribute(g,"weight"))) g <- delete_edge_attr(g, "weight")
@@ -28,7 +28,7 @@ output <- function(g,data,method){
     cat("\n### ",method,"に基づく手法\n",sep="")
     cat("最大モジュラリティスコア",max(data$modularity),"\n")
     cat("コミュニティの数",max(data$membership),"\n")
-    # クラスタのメンバシップにしたがってノードを色付けして，ネットワークを描画。ノードの形が実際のメンバーシップに対応する。
+    # コミュニティのメンバシップにしたがってノードを色付けして，ネットワークを描画。ノードの形が実際のメンバーシップに対応する。
     V(g)$color <- data$membership
     plot(g,vertex.size=10, vertex.label=V(g)$name, vertex.shape=c("circle","square")[V(g)$Faction], main=method)
 }
