@@ -1,78 +1,63 @@
-# igraphパッケージの読み込み（ないならインストールする）
-if(!require(igraph)) install.packages("igraph")
-library(igraph)
-# fdrtoolパッケージの読み込み（ないならインストールする）
-if(!require(fdrtool)) install.packages("fdrtool")
-library(fdrtool)
 # Matrixパッケージの読み込み（ないならインストールする）
 if(!require(Matrix)) install.packages("Matrix")
 library(Matrix)
-
-# Hmiscパッケージの読み込み（ないならインストールする）for rcorr
+# Hmiscパッケージの読み込み（ないならインストールする）
 if(!require(Hmisc)) install.packages("Hmisc") 
 library(Hmisc)
-
-source("utils.R")
+# ppcorパッケージの読み込み（ないならインストールする）
+if(!require(ppcor)) install.packages("ppcor") 
+library(ppcor)
+# P値で閾値化するための関数を読み込む
+source("thresholding.p.value.R")
+# ランダム行列理論で閾値化するための関数を読み込む
 source("thresholding.RMT.R")
+# その他必要な関数を読み込む
+source("utils.R")
 
-# 擬似データセットの生成
-nn <- 250 # ノード数
-k_ave <- 4 # 平均次数
-n_samp <- 300 # サンプル数
-
-data <- generate_covariance_matrix(nn, k_ave, type.network="sf", positive.ratio = 0.5)
-# @param nn number of nodes
+## 擬似データセットの作成
+# 人工的な正解ネットワークを作成し，そのネットワーク構造に従って分散共分散行列を作る。
+data <- generate_covariance_matrix(nn=250, k_ave=4, type.network="sf")
+# @param nn ノード数
 # @param k_ave average degree (number of edges per node)
-# @param type.network network structure
-#               random: random networks
-#                   sf: scale-free networks
-#                   sw: small-world networks
-#                   bipar: random bipartite networks
-# @param sd.min the minimum value for uniform distribution
-# @param sd.max the maximum value for uniform distribution
-# @param positive.ratio the occurence probability of positive covariance
+# @param type.network ネットワーク構造
+#               random: ランダムネットワーク
+#                   sf: スケールフリーネットワーク
+#                   sw: スモールワールドネットワーク
 
-# get adjacency matrix
-Aij_real <- data[[1]]
-g_real <- graph.adjacency(net_real, mode="undirected")
-# extract the lower trianglar part
-net_real <- net_real[lower.tri(net_real)]
-# get covariance (correlation) matrix
-x.cor <- tmp[[2]] 
-
-# generate abusolute data
-x <- mvrnorm(n_samp, rep(0,nn), Sigma=nearPD(x.cor, corr = T, keepDiag = T)$mat)
+# 正解ネットワークのグラフオブジェクトを得る。
+g_real <- data[[1]]
+# 分散共分散行列を得る。
+x.cor <- data[[2]] 
+# 分散共分散行列に従い，多変量正規分布で相関した乱数をサンプル数300で作成する。
+x <- mvrnorm(300, rep(0,dim(x.cor)[[1]]), Sigma=nearPD(x.cor, corr = T, keepDiag = T)$mat)
 
 
-## ピアソン相関の場合
-net_pred <- rcorr(as.matrix(x))$P
-# extract the lower trianglar part
-net_pred <- net_pred[lower.tri(net_pred)]
-# p-value correction using Benjamini-Hochberg method (if needed)
-#net_pred <- p.adjust(net_pred, method="none")
-# local FDR
-#net_pred <- fdrtool(net_pred, statistic="pvalue")$lfdr
-# binarization
-net_pred_bin <- ifelse(net_pred < 0.05, 1, 0)
-# confusion table
-table(net_pred_bin, net_real)
+## ペアワイズ相関検定によるネットワーク推定
+# ピアソン相関の場合
+cormtx <- rcorr(x, type="pearson")
+# スピアマン相関の場合
+#cormtx <- rcorr(x, type="spearman")
 
-thresholding.p.value <- function(pmtx, p.th=0.05, method="lfdr"){
-    # extract the lower trianglar part
-    n <- dim(pmtx)[[1]]
-    pmtx <- pmtx[lower.tri(pmtx)]
-    if(method == "lfdr"){
-        pmtx <- fdrtool(pmtx, statistic="pvalue")$lfdr
-    } else if(method %in% p.adjust.methods){
-        pmtx <- p.adjust(pmtx, method=method)
-    } else if(method == F){
-        stop("method is invalid")
-    }
-    pmtx_bin <- ifelse(pmtx < p.th, 1, 0)
+# 相関係数行列の取得
+rmtx <- cormtx$r
+# P値行列の取得
+pmtx <- cormtx$P
 
-    mtx_bin <- matrix(0, n, n)
-    mtx_bin[lower.tri(mtx_bin)] <- pmtx_bin
+cat("## P値に基づく閾値化\n")
+# 補正なし
+cat("# 補正なし\n")
+g_pred <- thresholding.p.value(pmtx, method="none")
+network_prediction_performance(g_real, g_pred)
+cat("# Bonferroni\n")
+g_pred <- thresholding.p.value(pmtx, method="bonferroni")
+network_prediction_performance(g_real, g_pred)
+cat("# Benjamini-Hochberg\n")
+g_pred <- thresholding.p.value(pmtx, method="BH")
+network_prediction_performance(g_real, g_pred)
+cat("# local FDR\n")
+g_pred <- thresholding.p.value(pmtx, method="lfdr")
+network_prediction_performance(g_real, g_pred)
 
-    g <- graph.adjacency(mtx_bin, mode="undirected")
-	return(g)
-}
+cat("## ランダム行列理論による閾値化\n")
+g_pred <- thresholding.RMT(rmtx)
+network_prediction_performance(g_real, g_pred)

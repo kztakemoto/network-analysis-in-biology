@@ -1,0 +1,89 @@
+## P値に基づく閾値化
+補正なし
+$`confusion matrix`
+        aij_pred
+aij_real     0     1
+       0 28503  2122
+       1     2   498
+
+$accuracy
+[1] 0.931759
+
+$precision
+[1] 0.1900763
+
+$recall
+[1] 0.996
+
+Bonferroni
+$`confusion matrix`
+        aij_pred
+aij_real     0     1
+       0 30623     2
+       1    70   430
+
+$accuracy
+[1] 0.9976867
+
+$precision
+[1] 0.9953704
+
+$recall
+[1] 0.86
+
+Benjamini-Hochberg
+$`confusion matrix`
+        aij_pred
+aij_real     0     1
+       0 30520   105
+       1    18   482
+
+$accuracy
+[1] 0.9960482
+
+$precision
+[1] 0.8211244
+
+$recall
+[1] 0.964
+
+local FDR
+Step 1... determine cutoff point
+Step 2... estimate parameters of null distribution and eta0
+Step 3... compute p-values and estimate empirical PDF/CDF
+Step 4... compute q-values and local fdr
+Step 5... prepare for plotting
+
+$`confusion matrix`
+        aij_pred
+aij_real     0     1
+       0 30618     7
+       1    46   454
+
+$accuracy
+[1] 0.9982972
+
+$precision
+[1] 0.9848156
+
+$recall
+[1] 0.908
+
+## ランダム行列理論による閾値化
+Optimal threshold value = 0.2
+KS distance = 0.1074141 (p = 0.006392229)
+$`confusion matrix`
+        aij_pred
+aij_real     0     1
+       0 30550    75
+       1    20   480
+
+$accuracy
+[1] 0.9969478
+
+$precision
+[1] 0.8648649
+
+$recall
+[1] 0.96
+

@@ -2,9 +2,15 @@
 # MASSパッケージの読み込み（ないならインストールする）
 if(!require(MASS)) install.packages("MASS")
 library(MASS)
+# igraphパッケージの読み込み（ないならインストールする）
+if(!require(igraph)) install.packages("igraph")
+library(igraph)
+# fdrtoolパッケージの読み込み（ないならインストールする）
+if(!require(fdrtool)) install.packages("fdrtool")
+library(fdrtool)
 
 ##########################################################################
-generate_covariance_matrix <- function(nn,k_ave,type.network="random",sd.min=0.5,sd.max=1,positive.ratio=0.5){
+generate_covariance_matrix <- function(nn=100,k_ave=4,type.network="random",sd.min=0.5,sd.max=1,positive.ratio=0.5){
   # @param nn number of nodes
   # @param k_ave average degree (number of edges per node)
   # @param type.network network structure
@@ -28,9 +34,6 @@ generate_covariance_matrix <- function(nn,k_ave,type.network="random",sd.min=0.5
   } else {
     stop("netwotk type is invalid")
   }
-
-  #get adjacency matrix
-  mtx_g <- as.matrix(get.adjacency(g))
   # get edge list
   edgelist <- get.edgelist(g)
 
@@ -46,108 +49,7 @@ generate_covariance_matrix <- function(nn,k_ave,type.network="random",sd.min=0.5
     A[edgelist[i,2],edgelist[i,1]] <- val
   }
 
-  return(list(mtx_g, A))
-}
-
-##########################################################################
-generateM_specific_type <- function(nn,k_ave,type.network="random",type.interact="random",interact.str.max=0.5,mix.compt.ratio=0.5){
-  # @param nn number of nodes
-  # @param k_ave average degree (number of edges per node)
-  # @param type.network network structure
-  #               random: random networks
-  #                   sf: scale-free networks
-  #                   sw: small-world networks
-  #                bipar: random bipartite networks
-  # @param type.interact interaction type
-  #               random: random
-  #               mutual: mutalism (+/+ interaction)
-  #                compt: competition (-/- interaction)
-  #                   pp: predator-prey (+/- or -/+ interaction)
-  #                  mix: mixture of mutualism and competition
-  #                 mix2: mixture of competitive and predator-prey interactions
-  # @param interact.str.max maximum interaction strength
-  # @param mix.compt.ratio the ratio of competitive interactions to all intereactions (this parameter is only used for type.interact="mix" or ="mix2")
-
-  # number of edges
-  nl <- round(k_ave * nn / 2)
-  if(type.network == "random"){
-    g <- erdos.renyi.game(nn,nl,type="gnm")
-  } else if(type.network == "sf"){
-    g <- static.power.law.game(nn,nl,2.1,-1,loops = F,multiple = F,finite.size.correction = T)
-  } else if(type.network == "sw") {
-    g <- sample_smallworld(1, nn, round(k_ave / 2), 0.05, loops=F, multiple=F)
-  } else if(type.network == "bipar") {
-    g <- sample_bipartite(nn/2,nn/2,type="gnm",m=nl,directed=F)
-  } else {
-    stop("netwotk type is invalid")
-  }
-
-  # get adjacency matrix
-  mtx_g <- as.matrix(get.adjacency(g))
-  # get edge list
-  edgelist <- get.edgelist(g)
-
-  # generate an interaction matrix for the GLV model
-  A <- matrix(0,nrow=nn,ncol = nn)
-
-  if(type.interact == "random"){
-    for(i in 1:nl){
-      A[edgelist[i,1],edgelist[i,2]] <- runif(1,min=-interact.str.max,max=interact.str.max)
-      A[edgelist[i,2],edgelist[i,1]] <- runif(1,min=-interact.str.max,max=interact.str.max)
-    }
-  } else if(type.interact == "mutual") {
-    for(i in 1:nl){
-      A[edgelist[i,1],edgelist[i,2]] <- runif(1,max=interact.str.max)
-      A[edgelist[i,2],edgelist[i,1]] <- runif(1,max=interact.str.max)
-    }
-  } else if(type.interact == "compt"){
-    for(i in 1:nl){
-      A[edgelist[i,1],edgelist[i,2]] <- -runif(1,max=interact.str.max)
-      A[edgelist[i,2],edgelist[i,1]] <- -runif(1,max=interact.str.max)
-    }
-  } else if(type.interact == "pp") {
-    for(i in 1:nl){
-      if(runif(1) < 0.5){
-        A[edgelist[i,1],edgelist[i,2]] <- runif(1,max=interact.str.max)
-        A[edgelist[i,2],edgelist[i,1]] <- -runif(1,max=interact.str.max)
-      } else {
-        A[edgelist[i,1],edgelist[i,2]] <- -runif(1,max=interact.str.max)
-        A[edgelist[i,2],edgelist[i,1]] <- runif(1,max=interact.str.max)
-      }
-    }
-  } else if(type.interact == "mix") {
-    for(i in 1:nl){
-      if(runif(1) < mix.compt.ratio){
-        A[edgelist[i,1],edgelist[i,2]] <- -runif(1,max=interact.str.max)
-        A[edgelist[i,2],edgelist[i,1]] <- -runif(1,max=interact.str.max)
-      } else {
-        A[edgelist[i,1],edgelist[i,2]] <- runif(1,max=interact.str.max)
-        A[edgelist[i,2],edgelist[i,1]] <- runif(1,max=interact.str.max)
-      }
-    }
-  } else if(type.interact == "mix2"){
-    for(i in 1:nl){
-      if(runif(1) < mix.compt.ratio){
-        A[edgelist[i,1],edgelist[i,2]] <- -runif(1,max=interact.str.max)
-        A[edgelist[i,2],edgelist[i,1]] <- -runif(1,max=interact.str.max)
-      } else {
-        if(runif(1) < 0.5){
-          A[edgelist[i,1],edgelist[i,2]] <- runif(1,max=interact.str.max)
-          A[edgelist[i,2],edgelist[i,1]] <- -runif(1,max=interact.str.max)
-        } else {
-          A[edgelist[i,1],edgelist[i,2]] <- -runif(1,max=interact.str.max)
-          A[edgelist[i,2],edgelist[i,1]] <- runif(1,max=interact.str.max)
-        }
-      }
-    }
-  } else {
-    stop("interaction type is invalid")
-  }
-
-  # diagonal elements
-  diag(A) <- -1
-
-  return(list(mtx_g,A))
+  return(list(g, A))
 }
 
 ##########################################################################
@@ -204,114 +106,19 @@ random.rewiring.correlation.mtx <- function(x.cor, niter = 10, sd.min=0.3, sd.ma
 	return(list(net, x.cor.mod))
 }
 
-##########################################################################
-random.rewiring.interaction.mtx <- function(Mij, niter = 10, type.interact="random",interact.str.max=0.5,mix.compt.ratio=0.5){
-  # Mij the original interaction matrix
-  # @param type.interact interaction type
-  #               random: random
-  #               mutual: mutalism (+/+ interaction)
-  #                compt: competition (-/- interaction)
-  #                   pp: predator-prey (+/- or -/+ interaction)
-  #                  mix: mixture of mutualism and competition
-  #                 mix2: mixture of competitive and predator-prey interactions
-  # @param interact.str.max maximum interaction strength
-  # @param mix.compt.ratio the ratio of competitive interactions to all intereactions (this parameter is only used for type.interact="mix" or ="mix2")
+############################################################################
+network_prediction_performance <- function(g_real,g_pred){
+    aij_real <- get.adjacency(g_real, type="both", sparse=F)
+    aij_pred <- get.adjacency(g_pred, type="both", sparse=F)
 
-	diag(Mij) <- 0
-  Mij.original <- Mij
-	nn <- dim(Mij)[[1]]
-  Mij.mod <- matrix(0, nn, nn)
+    aij_real <- aij_real[lower.tri(aij_real)]
+    aij_pred <- aij_pred[lower.tri(aij_pred)]
 
-	for(n in 1:niter){
-		flag <- 0
-		while(flag == 0){
-			source_id <- sample(1:nn, 1)
-			target_id_set <- which(abs(Mij[source_id,]) > 0)
-			if(length(target_id_set) > 0){
-				flag <- 1
-			}
-		}
-    if(length(target_id_set) == 1){
-      target_id <- target_id_set[[1]]
-    } else {
-      target_id <- sample(target_id_set, 1)
-    }
-		Mij[source_id, target_id] <- 0
-		Mij[target_id, source_id] <- 0
-
-		flag <- 0
-		while(flag == 0){
-			new_target_id <- sample(1:nn, 1)
-			if(Mij.mod[source_id, new_target_id] == 0 && new_target_id != source_id && Mij.original[source_id, new_target_id] == 0){
-				flag <- 1
-			}
-		}
-
-    if(type.interact == "random"){
-      Mij.mod[source_id, new_target_id] <- runif(1,min=-interact.str.max,max=interact.str.max)
-      Mij.mod[new_target_id, source_id] <- runif(1,min=-interact.str.max,max=interact.str.max)
-    } else if(type.interact == "mutual") {
-      Mij.mod[source_id, new_target_id] <- runif(1,max=interact.str.max)
-      Mij.mod[new_target_id, source_id] <- runif(1,max=interact.str.max)
-    } else if(type.interact == "compt"){
-      Mij.mod[new_target_id, source_id] <- -runif(1,max=interact.str.max)
-      Mij.mod[source_id, new_target_id] <- -runif(1,max=interact.str.max)
-    } else if(type.interact == "pp") {
-      if(runif(1) < 0.5){
-        Mij.mod[source_id, new_target_id] <- runif(1,max=interact.str.max)
-        Mij.mod[new_target_id, source_id] <- -runif(1,max=interact.str.max)
-      } else {
-        Mij.mod[source_id, new_target_id] <- -runif(1,max=interact.str.max)
-        Mij.mod[new_target_id, source_id] <- runif(1,max=interact.str.max)
-      }
-    } else if(type.interact == "mix") {
-      if(runif(1) < mix.compt.ratio){
-        Mij.mod[source_id, new_target_id] <- -runif(1,max=interact.str.max)
-        Mij.mod[new_target_id, source_id] <- -runif(1,max=interact.str.max)
-      } else {
-        Mij.mod[source_id, new_target_id] <- runif(1,max=interact.str.max)
-        Mij.mod[new_target_id, source_id] <- runif(1,max=interact.str.max)
-      }
-    } else if(type.interact == "mix2"){
-      if(runif(1) < mix.compt.ratio){
-        Mij.mod[source_id, new_target_id] <- -runif(1,max=interact.str.max)
-        Mij.mod[new_target_id, source_id] <- -runif(1,max=interact.str.max)
-      } else {
-        if(runif(1) < 0.5){
-          Mij.mod[source_id, new_target_id] <- runif(1,max=interact.str.max)
-          Mij.mod[new_target_id, source_id] <- -runif(1,max=interact.str.max)
-        } else {
-          Mij.mod[source_id, new_target_id] <- -runif(1,max=interact.str.max)
-          Mij.mod[new_target_id, source_id] <- runif(1,max=interact.str.max)
-        }
-      }
-    } else {
-      stop("interaction type is invalid")
-    }
-	}
-
-  Mij.mod <- Mij.mod + Mij
-
-	net <- ifelse(abs(Mij.mod) > 0, 1, 0)
-	diag(Mij.mod) <- -1
-	return(list(net, Mij.mod))
-}
-
-##########################################################################
-thresholding <- function(mtx, th){
-  # mtx confidence score matrix
-  # @param th number of node pairs accepeted as edge
-	diag(mtx) <- 0
-	g <- graph.adjacency(mtx, mode="undirected", weighted=T)
-	score <- sort(E(g)$weight, decreasing=T)
-	adj <- ifelse(mtx >= score[th], 1, 0)
-	g <- graph.adjacency(adj, mode="undirected")
-	return(g)
-}
-
-##########################################################################
-mk.weighted.graph.obj <- function(mtx){
-  diag(mtx) <- 0
-  g <- graph.adjacency(mtx, mode="undirected", weighted=T)
-  return(g)
+    table <- table(aij_real,aij_pred)
+    accuracy <- sum(diag(table)) / sum(table)
+    precision <- table[2,2] / (table[2,2] + table[1,2])
+    recall <- table[2,2] / (table[2,2] + table[2,1])
+    sum <- list(table,accuracy,precision,recall)
+    names(sum) <- c("confusion matrix","accuracy","precision","recall")
+    return(sum)
 }
