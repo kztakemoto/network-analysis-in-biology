@@ -7,7 +7,7 @@
 if(!require(lpSolve)) install.packages("lpSolve")
 library(lpSolve)
 
-# finding minimum driver node set (network controllability based on matching)
+# finding minimum driver node set (network controllability based on maximum matching)
 get_mds_matching <- function(g, relax = F){
 	if(length(E(g)$weight) != ecount(g)){
 		E(g)$weight <- numeric(ecount(g)) + 1
@@ -71,7 +71,7 @@ get_mds_domination <- function(g, relax = F){
 }
 
 # node classifoication based on controllability analysis
-node_classification_controllability <- function(g, get_mds = get_med_matching, relax = F){
+node_classification_controllability <- function(g, get_mds = get_mds_matching, relax = F){
 	node_class <- c()
 	mds_original <- get_mds(g, relax)[[1]]
 	for(v in 1:vcount(g)){
