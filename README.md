@@ -12,9 +12,9 @@
 以下のトピックを扱います。
 
 * [中心性解析](chXX_centrality_analysis)：重要なノードを見つける
-* [コミュニティ検出](chXX_network_clustering)：ネットワークをクラスタリングする
+* [コミュニティ検出](chXX_community_detection)：ネットワークをクラスタリングする
 * [ネットワーク可制御性解析](chXX_network_controllability)：ドライバノードを同定する
-* 相関ネットワーク解析
+* [相関ネットワーク解析](chXX_correlation_networks)：データの相関からネットワーク作成する
 
 ## 連絡
 質問などは以下からお気軽に。
