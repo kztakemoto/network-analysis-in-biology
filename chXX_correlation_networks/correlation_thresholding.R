@@ -44,18 +44,18 @@ rmtx <- cormtx$r
 pmtx <- cormtx$P
 
 cat("## P値に基づく閾値化\n")
-# 補正なし
+# p値の閾値（p.th）を0.05とする
 cat("# 補正なし\n")
-g_pred <- thresholding.p.value(pmtx, method="none")
+g_pred <- thresholding.p.value(pmtx, p.th=0.05, method="none")
 network_prediction_performance(g_real, g_pred)
 cat("# Bonferroni\n")
-g_pred <- thresholding.p.value(pmtx, method="bonferroni")
+g_pred <- thresholding.p.value(pmtx, p.th=0.05, method="bonferroni")
 network_prediction_performance(g_real, g_pred)
 cat("# Benjamini-Hochberg\n")
-g_pred <- thresholding.p.value(pmtx, method="BH")
+g_pred <- thresholding.p.value(pmtx, p.th=0.05, method="BH")
 network_prediction_performance(g_real, g_pred)
 cat("# local FDR\n")
-g_pred <- thresholding.p.value(pmtx, method="lfdr")
+g_pred <- thresholding.p.value(pmtx, p.th=0.05, method="lfdr")
 network_prediction_performance(g_real, g_pred)
 
 cat("## ランダム行列理論による閾値化\n")
