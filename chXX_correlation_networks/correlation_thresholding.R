@@ -16,9 +16,9 @@ source("utils.R")
 
 ## 擬似データセットの作成
 # 人工的な正解ネットワークを作成し，そのネットワーク構造に従って分散共分散行列を作る。
-data <- generate_covariance_matrix(nn=250, k_ave=4, type.network="sf")
+data <- generate_covariance_matrix(nn=30, k_ave=4, type.network="sf")
 # @param nn ノード数
-# @param k_ave average degree (number of edges per node)
+# @param k_ave 平均次数
 # @param type.network ネットワーク構造
 #               random: ランダムネットワーク
 #                   sf: スケールフリーネットワーク
@@ -29,7 +29,7 @@ g_real <- data[[1]]
 # 分散共分散行列を得る。
 x.cor <- data[[2]] 
 # 分散共分散行列に従い，多変量正規分布で相関した乱数をサンプル数300で作成する。
-x <- mvrnorm(300, rep(0,dim(x.cor)[[1]]), Sigma=nearPD(x.cor, corr = T, keepDiag = T)$mat)
+x <- mvrnorm(300, rep(5,dim(x.cor)[[1]]), Sigma=nearPD(x.cor, corr = T, keepDiag = T)$mat)
 
 
 ## ペアワイズ相関検定によるネットワーク推定

@@ -2,50 +2,50 @@
 # 補正なし
 $`confusion matrix`
         aij_pred
-aij_real     0     1
-       0 28519  2106
-       1     3   497
+aij_real   0   1
+       0 314  61
+       1   0  60
 
 $accuracy
-[1] 0.932241
+[1] 0.8597701
 
 $precision
-[1] 0.1909335
+[1] 0.4958678
 
 $recall
-[1] 0.994
+[1] 1
 
 # Bonferroni
 $`confusion matrix`
         aij_pred
-aij_real     0     1
-       0 30623     2
-       1    60   440
+aij_real   0   1
+       0 367   8
+       1   1  59
 
 $accuracy
-[1] 0.998008
+[1] 0.9793103
 
 $precision
-[1] 0.9954751
+[1] 0.880597
 
 $recall
-[1] 0.88
+[1] 0.9833333
 
 # Benjamini-Hochberg
 $`confusion matrix`
         aij_pred
-aij_real     0     1
-       0 30516   109
-       1    14   486
+aij_real   0   1
+       0 348  27
+       1   0  60
 
 $accuracy
-[1] 0.9960482
+[1] 0.937931
 
 $precision
-[1] 0.8168067
+[1] 0.6896552
 
 $recall
-[1] 0.972
+[1] 1
 
 # local FDR
 Step 1... determine cutoff point
@@ -56,34 +56,34 @@ Step 5... prepare for plotting
 
 $`confusion matrix`
         aij_pred
-aij_real     0     1
-       0 30613    12
-       1    29   471
+aij_real   0   1
+       0 360  15
+       1   0  60
 
 $accuracy
-[1] 0.9986827
+[1] 0.9655172
 
 $precision
-[1] 0.9751553
+[1] 0.8
 
 $recall
-[1] 0.942
+[1] 1
 
 ## ランダム行列理論による閾値化
-Optimal threshold value = 0.2
-KS distance = 0.1079641 (p = 0.006026027)
+Optimal threshold value = 0.4
+KS distance = 0.1398972 (p = 0.5735883)
 $`confusion matrix`
         aij_pred
-aij_real     0     1
-       0 30556    69
-       1    17   483
+aij_real   0   1
+       0 375   0
+       1  15  45
 
 $accuracy
-[1] 0.9972369
+[1] 0.9655172
 
 $precision
-[1] 0.875
+[1] 1
 
 $recall
-[1] 0.966
+[1] 0.75
 
