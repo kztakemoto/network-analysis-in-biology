@@ -36,14 +36,10 @@ x_abs <- mvrnorm(300, rep(5,dim(x.cor)[[1]]), Sigma=nearPD(x.cor, corr = T, keep
 # 相対データに変換
 x_rel <- x_abs / apply(x_abs,1,sum)
 
-## ペアワイズ相関検定によるネットワーク推定
-# ピアソン相関の場合
+cat("### ピアソン相関を使ったネットワーク推定\n")
+# ピアソン相関
 cormtx_abs <- rcorr(x_abs, type="pearson")
 cormtx_rel <- rcorr(x_rel, type="pearson")
-# スピアマン相関の場合
-#cormtx_abs <- rcorr(x_abs, type="spearman")
-#cormtx_rel <- rcorr(x_rel, type="spearman")
-
 # 相関係数行列の取得
 rmtx_abs <- cormtx_abs$r
 rmtx_rel <- cormtx_rel$r
@@ -68,7 +64,7 @@ cat("# 相対量データの場合\n")
 g_pred_rel <- thresholding.RMT(rmtx_rel)
 network_prediction_performance(g_real, g_pred_rel)
 
-## SparCCを使ったネットワーク推定
+cat("### SparCCを使ったネットワーク推定\n")
 spboot <- sparccboot(x_abs, R=100, ncpus=2)
 # @param R Bootstrap数
 # @param ncpus 並列に使うCPUの数

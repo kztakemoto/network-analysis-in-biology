@@ -10,10 +10,18 @@
 ## 使い方
 ### 閾値化による相関ネットワークの作成と相関ネットワークの予測性能評価（絶対量データを用いる場合）
 ```
-% Rscript correlation_thresholding.R | tee result.txt
+% Rscript correlation_thresholding.R | tee result_thresholding.txt
 ```
 #### 出力ファイル
-* ``result.txt``: 各閾値化法に対する予測性能
+* ``result_thresholding.txt``: 各閾値化法に対する予測性能
+
+### 閾値化による相関ネットワークの作成と相関ネットワークの予測性能評価（相対量データを用いる場合）
+Bootstrapのため少し時間がかかります。
+```
+% Rscript correlation_compositional.R | tee result_compositional.txt
+```
+#### 出力ファイル
+* ``result_compositional.txt``: 各閾値化法に対する予測性能
 
 ## やってみよう
 * スクリプトを参考に自分のデータを解析してみましょう。
