@@ -31,12 +31,10 @@ data <- generate_covariance_matrix(nn=30, k_ave=4, type.network="sf")
 g_real <- data[[1]]
 # 分散共分散行列を得る。
 x.cor <- data[[2]] 
-# 分散共分散行列に従い，多変量ポアソン分布で相関した乱数をサンプル数300で作成する。
+# 分散共分散行列に従い，多変量正規分布で相関した乱数をサンプル数300で作成する。
 x_abs <- mvrnorm(300, rep(5,dim(x.cor)[[1]]), Sigma=nearPD(x.cor, corr = T, keepDiag = T)$mat)
 # 相対データに変換
 x_rel <- x_abs / apply(x_abs,1,sum)
-
-
 
 ## ペアワイズ相関検定によるネットワーク推定
 # ピアソン相関の場合
@@ -53,35 +51,48 @@ rmtx_rel <- cormtx_rel$r
 pmtx_abs <- cormtx_abs$P
 pmtx_rel <- cormtx_rel$P
 
-cat("## P値に基づく閾値化\n")
+cat("## P値に基づく閾値化（local FDRによる補正有り）\n")
 # p値の閾値（p.th）を0.05とする
-cat("# local FDR\n")
+cat("# 絶対量データの場合\n")
 g_pred_abs <- thresholding.p.value(pmtx_abs, p.th=0.05, method="lfdr")
 network_prediction_performance(g_real, g_pred_abs)
-
+cat("# 相対量データの場合\n")
 g_pred_rel <- thresholding.p.value(pmtx_rel, p.th=0.05, method="lfdr")
 network_prediction_performance(g_real, g_pred_rel)
 
 cat("## ランダム行列理論による閾値化\n")
-g_pred_abs <- thresholding.RMT(rmtx_ab)s
+cat("# 絶対量データの場合\n")
+g_pred_abs <- thresholding.RMT(rmtx_abs)
 network_prediction_performance(g_real, g_pred_abs)
-
+cat("# 相対量データの場合\n")
 g_pred_rel <- thresholding.RMT(rmtx_rel)
 network_prediction_performance(g_real, g_pred_rel)
 
-# R: Bootstrapの数（繰り返し回数）。大きければ大きいほど良いが、計算時間と相談して決める。
-spboot <- sparccboot(x_abs, R=100)
+## SparCCを使ったネットワーク推定
+spboot <- sparccboot(x_abs, R=100, ncpus=2)
+# @param R Bootstrap数
+# @param ncpus 並列に使うCPUの数
 
+cat("## P値に基づく閾値化\n")
 # P値行列の作成
 n <- dim(x_rel)[[2]]
 m <- matrix(0, n, n)
 m[upper.tri(m)] <- pval.sparccboot(spboot)$pvals
 m <- m + t(m)
 diag(m) <- 1
-m <- ifelse(is.nan(m),0,m)
-
+m <- ifelse(is.nan(m),1,m)
+# p値の閾値（p.th）を0.05とする
 g_pred_rel <- thresholding.p.value(m, p.th=0.05, method="none")
 network_prediction_performance(g_real, g_pred_rel)
 
-g_pred_rel <- thresholding.p.value(m, p.th=0.05, method="lfdr")
+cat("## ランダム行列理論による閾値化\n")
+# 相関係数行列の作成
+n <- dim(x_rel)[[2]]
+m <- matrix(0, n, n)
+m[upper.tri(m)] <- pval.sparccboot(spboot)$cors
+m <- m + t(m)
+diag(m) <- 1
+m <- ifelse(is.nan(m),0,m)
+
+g_pred_rel <- thresholding.RMT(rmtx_rel)
 network_prediction_performance(g_real, g_pred_rel)
