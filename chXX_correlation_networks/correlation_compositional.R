@@ -69,7 +69,7 @@ spboot <- sparccboot(x_abs, R=100, ncpus=2)
 # @param R Bootstrap数
 # @param ncpus 並列に使うCPUの数
 
-cat("## P値に基づく閾値化\n")
+cat("## P値に基づく閾値化（補正あり）\n")
 # P値行列の作成
 n <- dim(x_rel)[[2]]
 m <- matrix(0, n, n)
@@ -78,7 +78,7 @@ m <- m + t(m)
 diag(m) <- 1
 m <- ifelse(is.nan(m),1,m)
 # p値の閾値（p.th）を0.05とする
-g_pred_rel <- thresholding.p.value(m, p.th=0.05, method="none")
+g_pred_rel <- thresholding.p.value(m, p.th=0.05, method="BH")
 network_prediction_performance(g_real, g_pred_rel)
 
 cat("## ランダム行列理論による閾値化\n")

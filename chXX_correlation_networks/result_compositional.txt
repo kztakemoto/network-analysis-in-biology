@@ -10,14 +10,14 @@ Step 5... prepare for plotting
 $`confusion matrix`
         aij_pred
 aij_real   0   1
-       0 350  25
+       0 364  11
        1   1  59
 
 $accuracy
-[1] 0.9402299
+[1] 0.9724138
 
 $precision
-[1] 0.702381
+[1] 0.8428571
 
 $recall
 [1] 0.9833333
@@ -32,87 +32,84 @@ Step 5... prepare for plotting
 $`confusion matrix`
         aij_pred
 aij_real   0   1
-       0 331  44
+       0 322  53
        1   1  59
 
 $accuracy
-[1] 0.8965517
+[1] 0.8758621
 
 $precision
-[1] 0.5728155
+[1] 0.5267857
 
 $recall
 [1] 0.9833333
 
 ## ランダム行列理論による閾値化
 # 絶対量データの場合
-Optimal threshold value = 0.15
-KS distance = 0.1243482 (p = 0.7149416)
-$`confusion matrix`
-        aij_pred
-aij_real   0   1
-       0 340  35
-       1   1  59
-
-$accuracy
-[1] 0.9172414
-
-$precision
-[1] 0.6276596
-
-$recall
-[1] 0.9833333
-
-# 相対量データの場合
-Optimal threshold value = 0.45
-KS distance = 0.1089048 (p = 0.8452402)
+KS distance = 0.101083 (p = 0.8995406)
 $`confusion matrix`
         aij_pred
 aij_real   0   1
        0 375   0
-       1  26  34
+       1  35  25
 
 $accuracy
-[1] 0.9402299
+[1] 0.9195402
 
 $precision
 [1] 1
 
 $recall
-[1] 0.5666667
+[1] 0.4166667
+
+# 相対量データの場合
+KS distance = 0.09195459 (p = 0.9480936)
+$`confusion matrix`
+        aij_pred
+aij_real   0   1
+       0 375   0
+       1  32  28
+
+$accuracy
+[1] 0.9264368
+
+$precision
+[1] 1
+
+$recall
+[1] 0.4666667
 
 ### SparCCを使ったネットワーク推定
 ## P値に基づく閾値化
 $`confusion matrix`
         aij_pred
 aij_real   0   1
-       0 364  11
-       1   2  58
-
-$accuracy
-[1] 0.9701149
-
-$precision
-[1] 0.8405797
-
-$recall
-[1] 0.9666667
-
-## ランダム行列理論による閾値化
-Optimal threshold value = 0.45
-KS distance = 0.1089048 (p = 0.8452402)
-$`confusion matrix`
-        aij_pred
-aij_real   0   1
        0 375   0
-       1  26  34
+       1   6  54
 
 $accuracy
-[1] 0.9402299
+[1] 0.9862069
 
 $precision
 [1] 1
 
 $recall
-[1] 0.5666667
+[1] 0.9
+
+## ランダム行列理論による閾値化
+KS distance = 0.09195459 (p = 0.9480936)
+$`confusion matrix`
+        aij_pred
+aij_real   0   1
+       0 375   0
+       1  32  28
+
+$accuracy
+[1] 0.9264368
+
+$precision
+[1] 1
+
+$recall
+[1] 0.4666667
 
