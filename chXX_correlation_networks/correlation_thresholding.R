@@ -61,3 +61,22 @@ network_prediction_performance(g_real, g_pred)
 cat("## ランダム行列理論による閾値化\n")
 g_pred <- thresholding.RMT(rmtx)
 network_prediction_performance(g_real, g_pred)
+
+
+### 偏相関ネットワーク解析
+pcormtx <- pcor(x)
+pmtx_pcor <- pcormtx$p.value
+g_pred <- thresholding.p.value(pmtx_pcor, p.th=0.05, method="lfdr")
+network_prediction_performance(g_real, g_pred)
+
+rmtx_pcor <- pcormtx$estimate
+g_pred <- thresholding.RMT(rmtx_pcor)
+network_prediction_performance(g_real, g_pred)
+
+net <- estimateNetwork(x, default="LoGo")
+boots <- bootnet(net, nBoots=100, nCores=2)
+net_th <- bootThreshold(boots, alpha = 0.05)
+g_pred <- graph.adjacency(ifelse(abs(net_th$graph)>0, 1, 0),mode="undirected",weighted=NULL)
+network_prediction_performance(g_real, g_pred)
+
+g_pred <- thresholding.RMT(net_th$graph)

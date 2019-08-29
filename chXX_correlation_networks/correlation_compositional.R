@@ -71,7 +71,7 @@ spboot <- sparccboot(x_abs, R=100, ncpus=2)
 
 cat("## P値に基づく閾値化（補正あり）\n")
 # P値行列の作成
-n <- dim(x_rel)[[2]]
+n <- dim(x_abs)[[2]]
 m <- matrix(0, n, n)
 m[upper.tri(m)] <- pval.sparccboot(spboot)$pvals
 m <- m + t(m)
@@ -91,4 +91,10 @@ diag(m) <- 1
 m <- ifelse(is.nan(m),0,m)
 
 g_pred_rel <- thresholding.RMT(rmtx_rel)
+network_prediction_performance(g_real, g_pred_rel)
+
+
+cat("### SpiecEasiを使ったネットワーク推定\n")
+se <- spiec.easi(x_abs, method="mb")
+g_pred_rel <- adj2igraph(getRefit(se))
 network_prediction_performance(g_real, g_pred_rel)
