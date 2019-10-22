@@ -7,6 +7,9 @@ library(Hmisc)
 # ppcorパッケージの読み込み（ないならインストールする）
 if(!require(ppcor)) install.packages("ppcor") 
 library(ppcor)
+# ppcorパッケージの読み込み（ないならインストールする）
+if(!require(bootnet))) install.packages("bootnet") 
+library(bootnet)
 # P値で閾値化するための関数を読み込む
 source("thresholding.p.value.R")
 # ランダム行列理論で閾値化するための関数を読み込む
@@ -65,18 +68,22 @@ network_prediction_performance(g_real, g_pred)
 
 ### 偏相関ネットワーク解析
 pcormtx <- pcor(x)
+
+cat("## P値に基づく閾値化\n")
+# p値の閾値（p.th）を0.05とする
 pmtx_pcor <- pcormtx$p.value
 g_pred <- thresholding.p.value(pmtx_pcor, p.th=0.05, method="lfdr")
 network_prediction_performance(g_real, g_pred)
 
+cat("## ランダム行列理論による閾値化\n")
 rmtx_pcor <- pcormtx$estimate
 g_pred <- thresholding.RMT(rmtx_pcor)
 network_prediction_performance(g_real, g_pred)
 
+cat("## ブートストラップ法（行の値の再標本化）を通した閾値化\n")
 net <- estimateNetwork(x, default="LoGo")
 boots <- bootnet(net, nBoots=100, nCores=2)
-net_th <- bootThreshold(boots, alpha = 0.05)
+net_th <- bootThreshold(boots, alpha = 0.2)
 g_pred <- graph.adjacency(ifelse(abs(net_th$graph)>0, 1, 0),mode="undirected",weighted=NULL)
 network_prediction_performance(g_real, g_pred)
 
-g_pred <- thresholding.RMT(net_th$graph)
