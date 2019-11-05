@@ -8,6 +8,7 @@
 以下が参考になりますので，適時ご参照ください。
 * [Rとigraphの基本的な使い方](http://www.nemotos.net/igraph-tutorial/NetSciX_2016_Workshop_ja.html)
 * [igraphの基本的な使い方](https://sites.google.com/site/kztakemoto/r-seminar-on-igraph---supplementary-information)
+  * [スライド](https://www.slideshare.net/kztakemoto/r-seminar-on-igraph)
 
 ## 目次
 以下のトピックを扱います。
