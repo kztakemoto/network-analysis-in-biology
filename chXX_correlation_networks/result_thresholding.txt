@@ -3,46 +3,46 @@
 $`confusion matrix`
         aij_pred
 aij_real   0   1
-       0 303  72
-       1   1  59
+       0 311  64
+       1   0  60
 
 $accuracy
-[1] 0.8321839
+[1] 0.8528736
 
 $precision
-[1] 0.4503817
+[1] 0.483871
 
 $recall
-[1] 0.9833333
+[1] 1
 
 # Bonferroni
 $`confusion matrix`
         aij_pred
 aij_real   0   1
-       0 371   4
-       1   2  58
+       0 368   7
+       1   1  59
 
 $accuracy
-[1] 0.9862069
+[1] 0.9816092
 
 $precision
-[1] 0.9354839
+[1] 0.8939394
 
 $recall
-[1] 0.9666667
+[1] 0.9833333
 
 # Benjamini-Hochberg
 $`confusion matrix`
         aij_pred
 aij_real   0   1
-       0 335  40
+       0 348  27
        1   1  59
 
 $accuracy
-[1] 0.9057471
+[1] 0.9356322
 
 $precision
-[1] 0.5959596
+[1] 0.6860465
 
 $recall
 [1] 0.9833333
@@ -57,32 +57,87 @@ Step 5... prepare for plotting
 $`confusion matrix`
         aij_pred
 aij_real   0   1
-       0 353  22
+       0 362  13
        1   1  59
 
 $accuracy
-[1] 0.9471264
+[1] 0.9678161
 
 $precision
-[1] 0.7283951
+[1] 0.8194444
 
 $recall
 [1] 0.9833333
 
 ## ランダム行列理論による閾値化
-KS distance = 0.1262571 (p = 0.6976775)
+KS distance = 0.1310779 (p = 0.6537182)
 $`confusion matrix`
         aij_pred
 aij_real   0   1
-       0 375   0
-       1  10  50
+       0 374   1
+       1   6  54
 
 $accuracy
-[1] 0.9770115
+[1] 0.983908
 
 $precision
-[1] 1
+[1] 0.9818182
 
 $recall
-[1] 0.8333333
+[1] 0.9
+
+## P値に基づく閾値化
+Step 1... determine cutoff point
+Step 2... estimate parameters of null distribution and eta0
+Step 3... compute p-values and estimate empirical PDF/CDF
+Step 4... compute q-values and local fdr
+Step 5... prepare for plotting
+
+$`confusion matrix`
+        aij_pred
+aij_real   0   1
+       0  77 298
+       1   9  51
+
+$accuracy
+[1] 0.2942529
+
+$precision
+[1] 0.1461318
+
+$recall
+[1] 0.85
+
+## ランダム行列理論による閾値化
+KS distance = 0.3622849 (p = 0.0006450824)
+$`confusion matrix`
+        aij_pred
+aij_real   0   1
+       0 301  74
+       1  36  24
+
+$accuracy
+[1] 0.7471264
+
+$precision
+[1] 0.244898
+
+$recall
+[1] 0.4
+
+## ブートストラップ法（行の値の再標本化）を通した閾値化
+$`confusion matrix`
+        aij_pred
+aij_real   0   1
+       0 370   5
+       1  40  20
+
+$accuracy
+[1] 0.8965517
+
+$precision
+[1] 0.8
+
+$recall
+[1] 0.3333333
 

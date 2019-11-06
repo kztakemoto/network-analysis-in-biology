@@ -8,7 +8,7 @@ library(Hmisc)
 if(!require(ppcor)) install.packages("ppcor") 
 library(ppcor)
 # ppcorパッケージの読み込み（ないならインストールする）
-if(!require(bootnet))) install.packages("bootnet") 
+if(!require(bootnet)) install.packages("bootnet") 
 library(bootnet)
 # P値で閾値化するための関数を読み込む
 source("thresholding.p.value.R")
