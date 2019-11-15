@@ -90,7 +90,7 @@ m <- m + t(m)
 diag(m) <- 1
 m <- ifelse(is.nan(m),0,m)
 
-g_pred_rel <- thresholding.RMT(rmtx_rel)
+g_pred_rel <- thresholding.RMT(m)
 network_prediction_performance(g_real, g_pred_rel)
 
 
