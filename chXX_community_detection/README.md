@@ -2,6 +2,7 @@
 ネットワークをクラスタリングします。
 * Topological Overlap Matrixに基づいてネットワークをクラスタリングします。
 * モジュラリティ最大化に基づいてネットワークをクラスタリングします（コミュニティの重複を考えません）。
+  * この文脈で，[機能地図作成（Functional cartography）](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2175124/)を行います。
 * モジュラリティ最大化に基づいてネットワークをクラスタリングします（コミュニティの重複を考えます）。
 * コミュニティ検出の解像度限界を見てみましょう。
 
@@ -35,6 +36,7 @@
 * ``figures/plots_topological_overlap.pdf``: 出力された図
 
 ### モジュラリティ最大化に基づくコミュニティ抽出（コミュニティの重複を考慮しない場合）
+併せて，機能地図作成も実行します。
 ```
 % Rscript community_detection_modularity_nonoverlap.R | tee result.txt
 ```

@@ -29,8 +29,13 @@ output <- function(g,data,method){
     cat("最大モジュラリティスコア",max(data$modularity),"\n")
     cat("コミュニティの数",max(data$membership),"\n")
     # コミュニティのメンバシップにしたがってノードを色付けして，ネットワークを描画。ノードの形が実際のメンバーシップに対応する。
-    V(g)$color <- data$membership
-    plot(g,vertex.size=10, vertex.label=V(g)$name, vertex.shape=c("circle","square")[V(g)$Faction], main=method)
+    if(method == "焼きなまし法"){
+        V(g)$community <- data$membership
+        colrs <- adjustcolor( c("gray50", "tomato", "gold", "yellowgreen"), alpha=.6)
+        plot(g, vertex.color=colrs[V(g)$community], main=method)
+    } else {
+        plot(data, g, main=method)
+    }
 }
 
 ## 辺媒介性（Edge betweenness）に基づく手法
@@ -72,3 +77,16 @@ data <- list(membership = table$module, modularity=c(res[[2]]))
 # 結果を表示
 output(g,data,"焼きなまし法")
 
+# Functional Cartographyを表示
+cat("\n### 焼きなまし法で検出されたコミュニティに基づくFunctional Cartographyの結果\n",sep="")
+cat("Ultra-peripheral: connectivity<2.5 and participation<0.05\n")
+cat("Peripheral: connectivity<2.5 and 0.05<=participation<0.625\n")
+cat("Non-hub connector: connectivity<2.5 and 0.625<=participation<0.8\n")
+cat("Non-hub kinless: connectivity<2.5 and participation>=0.8\n")
+cat("Provincial hub: connectivity>=2.5 and participation<0.3\n")
+cat("Connector hub: connectivity>=2.5 and 0.3<=participation<0.75\n")
+cat("Kinless hub: connectivity>=2.5 and participation>=0.75\n")
+table
+# 結果を表示
+# ノードの形がコミュニティを，ノードの色がノード分類を表す。
+plot(g, vertex.color=as.numeric(table$role), main="Functional Cartography", vertex.shape=c("circle","square","sphere","pie")[table$module])

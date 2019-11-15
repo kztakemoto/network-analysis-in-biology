@@ -1,4 +1,4 @@
-thresholding.RMT <- function(mtx, cutVector = seq(0.05,1.0,by = 0.05)){
+thresholding.RMT <- function(mtx){
     mtx <- abs(mtx)
     n <- dim(mtx)[[1]]
 
