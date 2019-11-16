@@ -37,7 +37,7 @@ page <- page.rank(g)$vector
 closen <- closeness(g)
 # 媒介中心性（betweenness centrality）
 between <- betweenness(g)
-# サブグラフ中心性（betweenness centrality）
+# サブグラフ中心性（subgraph centrality）
 subgraph <- subgraph.centrality(g)
 
 ## データフレームにまとめる
