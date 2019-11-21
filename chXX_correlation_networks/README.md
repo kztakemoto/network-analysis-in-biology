@@ -7,6 +7,12 @@
 ## 相関ネットワーク解析
 相関ネットワークとは，データの相関から作成されたネットワークのことを指します。
 
+## データ
+* シロイヌナズナのメタボロームデータ
+  * ``AraMetLeaves.csv``
+  * 野生株（``Col-``），mto1変異株（``mto1-``），tt4変異株（``tt4-``）のデータが格納されています。
+  * Kusano M et al (2007) Unbiased characterization of genotype-dependent metabolic regulations by metabolomic approach in Arabidopsis thaliana. BMC Syst Biol 1, 53. doi: [10.1186/1752-0509-1-53](https://doi.org/10.1186/1752-0509-1-53) 
+
 ## 使い方
 ### 閾値化による相関ネットワークの作成と相関ネットワークの予測性能評価（絶対量データを用いる場合）
 ```
@@ -24,4 +30,11 @@ Bootstrapのため少し時間がかかります。
 * ``result_compositional.txt``: 各閾値化法に対する予測性能
 
 ## やってみよう
+* シロイヌナズナのメタボロームデータを使って相関ネットワークを作成してみましょう。
+* 腸内細菌のデータを使って相関ネットワークを作成してみましょう。
+  * SpiecEasiパッケージで利用可能なデータを使ってみましょう。
+```
+library(SpiecEasi)
+data(amgut1.filt)
+```
 * スクリプトを参考に自分のデータを解析してみましょう。

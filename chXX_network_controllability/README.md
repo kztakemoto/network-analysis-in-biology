@@ -13,15 +13,15 @@
 
 ## データ
   * 乳がんタンパク質相互作用ネットワーク
-    * ``breast_cancer_directed_ppi_Kanhaiya_etal_2017.csv``
+    * ``data/breast_cancer_directed_ppi_Kanhaiya_etal_2017.csv``
     * エッジリスト形式
     * 有向ネットワーク
     * Kanhaiya K, Czeizler E, Gratie C, Petre I (2017) Controlling directed protein interaction networks in cancer. Sci Rep 7, 10327. doi: [10.1038/s41598-017-10491-y](https://doi.org/10.1038/s41598-017-10491-y)
   * アメリカ食品医薬品局が承認した（FDA-approved）薬剤標的タンパク質のリスト
-    * ``drug_target_proteins.csv``
+    * ``data/drug_target_proteins.csv``
     * 引用はネットワークのものと同じ。
   * 乳がんにおける必須タンパク質のリスト
-    * ``breast_cancer_essential_proteins.csv``
+    * ``data/breast_cancer_essential_proteins.csv``
     * 引用はネットワークのものと同じ。
 
 ## 使い方
