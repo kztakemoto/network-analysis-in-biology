@@ -27,9 +27,9 @@ el <- gsub(" ","_",el)
 ### コミュニティ抽出
 ## Link Communityアルゴリズムによる方法
 # https://arxiv.org/abs/0903.3178
-# Link Communityアルゴリズムを実行（内部で使用され階層的クラスタリングはWard法を使用）
+# Link Communityアルゴリズムを実行（内部で使用され階層的クラスタリングはAverage法を使用）
 # デンドログラムも表示する
-linkcomm <- getLinkCommunities(el, hcmethod="ward.D2")
+linkcomm <- getLinkCommunities(el, hcmethod="average", use.all.edges=T)
 # クラスタリング結果を表示
 plot(linkcomm, type="graph")
 text(0.95*par("usr")[1],0.95*par("usr")[4],label="LinkComm",pos=4)
@@ -38,7 +38,7 @@ plot(linkcomm, type="members")
 text(0.95*par("usr")[1],0.95*par("usr")[4],label="LinkComm",pos=4)
 
 # 適当な閾値でコミュニティ抽出（クラスタ）を決定する。
-linkcomm_at <- newLinkCommsAt(linkcomm, cutat=2.2)
+linkcomm_at <- newLinkCommsAt(linkcomm, cutat=0.9)
 # クラスタリング結果を表示
 plot(linkcomm_at, type="graph")
 text(0.95*par("usr")[1],0.95*par("usr")[4],label="LinkComm",pos=4)
