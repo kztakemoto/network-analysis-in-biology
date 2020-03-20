@@ -9,41 +9,43 @@ pdf("figures/plots_resolution_limit.pdf")
 # igraphパッケージの読み込み（ないならインストールする）
 if(!require(igraph)) install.packages("igraph")
 library(igraph)
+# 配色パッケージの読み込み
+library(RColorBrewer)
 
-# rnetcartoパッケージの読み込み（ないならインストールする）
-if(!require(rnetcarto)) install.packages("rnetcarto")
-library(rnetcarto)
+# ネットワークの読み込み
+g_6 <- as.undirected(read.graph("data/6_3-node_cliques.graphml",format="graphml"))
+g_9 <- as.undirected(read.graph("data/9_3-node_cliques.graphml",format="graphml"))
 
-# 小さなネットワークの読み込み
-g_s <- as.undirected(read.graph("data/small.graphml",format="graphml"))
-V(g_s)$name <- 1:vcount(g_s)
-# 大きなネットワークの読み込み
-g_l <- as.undirected(read.graph("data/large.graphml",format="graphml"))
-V(g_l)$name <- 1:vcount(g_l)
+# 描画の設定
+par(mfrow=c(2,2))
+cols <- brewer.pal(9,"Set3")
 
-## 同じサイズのコミュニティを考える場合
-## 小さなネットワークではコミュニティを見つけることができる。
-# ネットワーククラスタリング
-data_s <- fastgreedy.community(g_s)
-# 結果の出力
-plot(g_s,vertex.color=data_s$membership)
+# コミュニティに対応する3ノードの完全グラフが円環上につながったネットワークを考える。
+# このようなネットワークからモジュラリティ最大化に基づいてコミュニティを検出する場合，
+# コミュニティの数がある閾値よりも多くなるとコミュニティを見逃す場合がある。
+# この場合理論的に閾値は8である。
 
-## しかし大きなネットワークではコミュニティを見逃す場合がある。
-# ネットワーククラスタリング
-data_l <- fastgreedy.community(g_l)
-# 結果の出力
-plot(g_l,vertex.color=data_l$membership)
+## 閾値（8）より小さな数のコミュニティで構成されるネットワークでは
+## コミュニティを見つけることができる
+##（コミュニティが併合したとしてもモジュラリティは小さくならない）。
+mem <- c(1,1,1,2,2,2,3,3,3,4,4,4,5,5,5,6,6,6) # 割り当て
+modularity(g_6, mem)
+set.seed(123)
+plot(g_6, vertex.color=cols[mem], main=paste("Q=",modularity(g_6, mem),sep=""))
 
-## 焼きなまし法などを用いれば見逃しを軽減できる
-mtx <- get.adjacency(g_l, sparse=F)
-# ネットワーククラスタリングを実行
-res <- netcarto(mtx)
-# igraphの出力結果と一致するように出力を調整
-data_l <- as.data.frame(res[[1]])
-names(data_l)[[2]] <- "membership"
-data_l$membership <- data_l$membership + 1
-row.names(data_l) <- data_l$name
-data_l <- data_l[V(g_l)$name,]
-# 結果の出力
-plot(g_l,vertex.color=data_l$membership)
+mem <- c(1,1,1,1,1,1,2,2,2,3,3,3,4,4,4,5,5,5) # 割り当て
+modularity(g_6, mem)
+set.seed(123)
+plot(g_6, vertex.color=cols[mem], main=paste("Q=",modularity(g_6, mem),sep=""))
 
+## コミュニティの数が閾値（8）より大きい場合、コミュニティを見逃す
+##（コミュニティが併合した方がモジュラリティQが大きくなる）。
+mem <- c(1,1,1,2,2,2,3,3,3,4,4,4,5,5,5,6,6,6,7,7,7,8,8,8,9,9,9) # 割り当て
+modularity(g_9, mem)
+set.seed(123)
+plot(g_9, vertex.color=cols[mem], main=paste("Q=",modularity(g_9, mem),sep=""))
+
+mem <- c(1,1,1,1,1,1,2,2,2,3,3,3,4,4,4,5,5,5,6,6,6,7,7,7,8,8,8) # 割り当て
+modularity(g_9, mem)
+set.seed(123)
+plot(g_9, vertex.color=cols[mem], main=paste("Q=",modularity(g_9, mem),sep=""))
