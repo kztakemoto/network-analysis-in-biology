@@ -1,0 +1,71 @@
+---
+title: "モジュラリティ最大化に基づくコミュニティ抽出（コミュニティの重複を考慮する場合）"
+output: html_notebook
+---
+
+空手クラブのネットワークを例にして，コミュニティ検出を行います。
+
+  + ``../data/karate.GraphML``
+  + GraphML形式
+  + ノード属性Factionは実際のグループ分けに対応
+  + Zachary WW (1977) An information flow model for conflict and fission in small Groups. J Anthropol Res 33, 452-473. http://www.jstor.org/stable/3629752
+
+```{r}
+# パッケージの読み込み
+library(igraph)
+library(linkcomm)
+```
+
+### ネットワークの読み込み
+```{r}
+# 空手クラブのネットワークを（無向きなしネットワークで）読み込む
+g <- as.undirected(read.graph("../data/karate.GraphML",format="graphml"))
+# エッジの重みを無効にする（ここでは使わないため）
+if(!is.null(get.edge.attribute(g,"weight"))) g <- delete_edge_attr(g, "weight")
+# 後のわかりやすさのためノードに実際のコミュニティ番号を追加
+V(g)$name <- paste(V(g)$name,V(g)$Faction,sep=":")
+# エッジリストを取得
+el <- get.edgelist(g)
+# スペースをアンダーバーに置き換え（linkcommパッケージはスペースを許さない）
+el <- gsub(" ","_",el)
+```
+
+## Link Communityアルゴリズムによる方法
+#### アルゴリズム実行とデンドログラムの表示
+```{r}
+# ここでは階層的クラスタリングにおいて群平均法を使用
+linkcomm <- getLinkCommunities(el, hcmethod="average", use.all.edges=T)
+```
+#### コミュニティ検出の結果を表示
+```{r}
+plot(linkcomm, type="graph")
+```
+#### メンバーシップを表示。ひとつのコミュニティのみに属すエッジは出力されないことに注意。
+```{r}
+plot(linkcomm, type="members")
+```
+### 適当な閾値でコミュニティ抽出（クラスタ）を決定する場合
+```{r}
+linkcomm_at <- newLinkCommsAt(linkcomm, cutat=0.9)
+```
+
+## Overlapping Cluster Generator (OCG) アルゴリズムに基づく方法
+#### OCGアルゴリズムの実行
+```{r}
+ocg <- getOCG.clusters(el)
+```
+
+#### クラスタリング結果を表示
+```{r}
+plot(ocg, type="graph")
+```
+
+#### メンバーシップを表示。
+```{r}
+#ひとつのコミュニティのみに属すエッジは出力されないことに注意。
+plot(ocg, type="members")
+```
+
+# やってみよう
+  + このNotebookを参考にして，生物ネットワークを解析してみよう（``data``に様々ある）。
+  + Notebookを参考に自分のデータを解析してみよう。

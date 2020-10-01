@@ -1,0 +1,71 @@
+---
+title: "ネットワーク可制御性（最小支配集合に基づく）"
+output: html_notebook
+---
+
+
+```{r}
+# igraphパッケージの読み込み
+library(igraph)
+```
+
+### ネットワーク可制御性のための関数を読み込む
+```{r}
+source("../src/functions_network_controllability.R")
+```
+
+### ネットワークの読み込み
+```{r}
+# モデルネットワークを例にする。
+g <- static.power.law.game(50,70,2.1,2.1)
+# ネットワークの表示
+plot(g, vertex.size=10, edge.arrow.size=0.5, vertex.label=NA)
+```
+## ネットワークのドライバ（支配）ノードを見つける。
+
+### 最小支配集合（minimum dominating set）を得る
+```{r}
+mds <- get_mds_domination(g, relax = F)
+# @param relax: 論理値，バイナリ整数計画問題を線形計画緩和するかどうか。デフォルトはF（しない）。
+```
+
+### 結果にアクセスする
+```{r}
+# 最小支配集合のサイズ（ドライバ（支配）ノードの数）
+mds[[1]]
+# ドライバノードメンバーシップ: ドライバノードである (1) でない (0)
+mds[[2]]
+```
+
+### 結果を表示する。
+```{r}
+# ドライバノードはオレンジで色付けされる。
+plot(g, vertex.size=10, edge.arrow.size=0.5, vertex.label=NA, vertex.color=c("white","orange")[mds[[2]]+1])
+```
+
+## ネットワーク可制御性に基づいてノードを「不必要」「中立」「不可欠」に分類する。
+### 分類を得る
+```{r}
+V(g)$node_class <- node_classification_controllability(g, get_mds = get_mds_domination, relax = F)
+# @param relax: 論理値，バイナリ整数計画問題を線形計画緩和するかどうか。デフォルトはF（しない）。
+# @param get_mds: 最小ノード集合を得るための関数
+```
+
+### 結果を表示する
+
+```{r}
+# 色付けの準備
+V(g)$color[V(g)$node_class=="dispensable"] <- "gray"
+V(g)$color[V(g)$node_class=="neutral"] <- "skyblue"
+V(g)$color[V(g)$node_class=="indispensable"] <- "pink"
+```
+
+```{r}
+# ネットワークを描画
+# 灰：不必要（dispensable）ノード，水色：中立（neutral）ノード，桃：不可欠（indispensable）ノード
+plot(g, vertex.size=10, edge.arrow.size=0.5, vertex.label=NA)
+```
+
+# やってみよう
+  + このNotebookを参考にして，生物ネットワークを解析してみよう（``data``に様々ある）。
+  + Notebookを参考に自分のデータを解析してみよう。

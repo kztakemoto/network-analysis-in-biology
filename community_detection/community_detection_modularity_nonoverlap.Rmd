@@ -1,0 +1,93 @@
+---
+title: "モジュラリティ最大化に基づくコミュニティ抽出（コミュニティの重複を考慮しない場合）"
+output: html_notebook
+---
+
+空手クラブのネットワークを例にして，コミュニティ検出を行います。
+
+  + ``../data/karate.GraphML``
+  + GraphML形式
+  + ノード属性Factionは実際のグループ分けに対応
+  + Zachary WW (1977) An information flow model for conflict and fission in small Groups. J Anthropol Res 33, 452-473. http://www.jstor.org/stable/3629752
+
+```{r}
+# パッケージの読み込み
+library(igraph)
+library(rnetcarto)
+```
+
+### ネットワークの読み込み
+```{r}
+# 空手クラブのネットワークを（無向きなしネットワークで）読み込む
+g <- as.undirected(read.graph("../data/karate.GraphML",format="graphml"))
+# エッジの重みを無効にする（ここでは使わないため）
+if(!is.null(get.edge.attribute(g,"weight"))) g <- delete_edge_attr(g, "weight")
+```
+
+### 貪欲アルゴリズムに基づく方法
+```{r}
+# アルゴリズムの実行
+data <- cluster_fast_greedy(g)
+# メンバーシップの表示
+data$membership
+```
+
+```{r}
+# デンドログラムの表示
+dendPlot(data)
+# コミュニティ検出の結果
+plot(data, g)
+```
+### スペクトル法（固有ベクトルに基づく方法）に基づく方法
+```{r}
+# アルゴリズムの実行
+data <- cluster_leading_eigen(g,options=list(maxiter=1000000, ncv=5))
+# メンバーシップの表示
+data$membership
+```
+
+```{r}
+# デンドログラムをプロット
+dendPlot(data)
+# コミュニティ検出の結果
+plot(data, g)
+```
+### 焼きなまし法に基づく方法（rnetcartoパッケージで計算）
+```{r}
+# 隣接行列を取得
+mtx <- get.adjacency(g, sparse=F)
+# コミュニティ抽出を実行
+res <- netcarto(mtx)
+# 出力結果
+res
+```
+
+```{r}
+# igraphの出力結果と一致するように出力を調整
+table <- as.data.frame(res[[1]])
+table$module <- table$module + 1
+row.names(table) <- table$name
+table <- table[V(g)$name,]
+data <- list(membership = table$module, modularity=c(res[[2]]))
+# ネットワークを表示
+V(g)$community <- data$membership
+colrs <- adjustcolor( c("gray50", "tomato", "gold", "yellowgreen"), alpha=.6) # 色付け
+plot(g, vertex.color=colrs[V(g)$community])
+```
+
+### Functional Cartographyによるノード分類へのアクセス
+```{r}
+table$role
+```
+
+### [参考] 他の方法（igraphパッケージ）
+  + 辺媒介性に基づくアルゴリズム ``edge.betweenness.community(g)``（[Girvan & Newman, 2002](https://arxiv.org/abs/cond-mat/0112110)）
+  + ランダムウォークに基づくアルゴリズム ``walktrap.community(g, modularity=TRUE)``（[Pons & Latapy, 2006](http://www.leonidzhukov.net/hse/2015/sna/papers/PonsLatapy2006.10.2.pdf)）
+  + 多段階最適化に基づくアルゴリズム ``multilevel.community(g)``（[Blondel et al., 2008](https://arxiv.org/abs/0803.0476)）
+  + スピングラスに基づくアルゴリズム ``spinglass.community(g)``（[Reichardt & Bornholdt, 2006](http://www.itp.uni-bremen.de/complex/pdf/pre016110.pdf)）
+  + ラベル伝播法に基づくアルゴリズム ``label.propagation.community(g)``（[Raghavan et al., 2007](https://arxiv.org/abs/0709.2938)）
+  + Infomap法に基づくアルゴリズム ``infomap.community(g)``（[Rosvall & Bergstorm, 2008](https://arxiv.org/abs/0707.0609)）
+  
+# やってみよう
+  + このNotebookを参考にして，生物ネットワークを解析してみよう（``data``に様々ある）。
+  + Notebookを参考に自分のデータを解析してみよう。

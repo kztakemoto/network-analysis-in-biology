@@ -1,0 +1,132 @@
+---
+title: "閾値化による相関ネットワークの作成と相関ネットワークの予測性能評価（絶対量データを用いる場合）"
+output: html_notebook
+---
+
+
+### パッケージの読み込み
+```{r}
+library(Matrix)
+library(Hmisc)
+library(ppcor)
+library(bootnet)
+```
+
+### 関数の読み込み
+```{r}
+# P値で閾値化するための関数を読み込む
+source("../src/thresholding.p.value.R")
+# ランダム行列理論で閾値化するための関数を読み込む
+source("../src/thresholding.RMT.R")
+# その他必要な関数を読み込む
+source("../src/correlation_utils.R")
+```
+
+### 人工的な正解ネットワークを作成し，そのネットワーク構造に従って分散共分散行列を作る。
+```{r}
+# 人工的な正解ネットワークを作成し，そのネットワーク構造に従って分散共分散行列を作る。
+data <- generate_covariance_matrix(nn=30, k_ave=4, type.network="sf")
+# @param nn ノード数
+# @param k_ave 平均次数
+# @param type.network ネットワーク構造
+#               random: ランダムネットワーク
+#                   sf: スケールフリーネットワーク
+#                   sw: スモールワールドネットワーク
+# 正解ネットワークのグラフオブジェクトを得る。
+g_real <- data[[1]]
+```
+
+### 擬似データセットの作成
+```{r}
+# 分散共分散行列を得る。
+x.cor <- data[[2]] 
+# 分散共分散行列に従い，多変量正規分布で相関した乱数をサンプル数300で作成する。
+x <- mvrnorm(300, rep(5,dim(x.cor)[[1]]), Sigma=nearPD(x.cor, corr = T, keepDiag = T)$mat)
+```
+
+# ペアワイズ相関検定によるネットワーク推定
+```{r}
+# ピアソン相関の場合
+cormtx <- rcorr(x, type="pearson")
+# スピアマン相関の場合
+#cormtx <- rcorr(x, type="spearman")
+```
+
+### 推定結果の取得
+```{r}
+# 相関係数行列の取得
+rmtx <- cormtx$r
+# P値行列の取得
+pmtx <- cormtx$P
+```
+
+
+### P値に基づく閾値化
+p値の閾値（p.th）を0.05とする。
+
+#### 補正なし
+```{r}
+g_pred <- thresholding.p.value(pmtx, p.th=0.05, method="none")
+network_prediction_performance(g_real, g_pred)
+```
+
+#### Bonferroni
+```{r}
+g_pred <- thresholding.p.value(pmtx, p.th=0.05, method="bonferroni")
+network_prediction_performance(g_real, g_pred)
+```
+
+#### Benjamini-Hochberg
+```{r}
+g_pred <- thresholding.p.value(pmtx, p.th=0.05, method="BH")
+network_prediction_performance(g_real, g_pred)
+```
+
+
+#### local FDR
+```{r}
+g_pred <- thresholding.p.value(pmtx, p.th=0.05, method="lfdr")
+network_prediction_performance(g_real, g_pred)
+```
+### ランダム行列理論による閾値化
+```{r}
+g_pred <- thresholding.RMT(rmtx)
+network_prediction_performance(g_real, g_pred)
+```
+
+# 偏相関ネットワーク解析
+```{r}
+pcormtx <- pcor(x)
+```
+
+### P値に基づく閾値化
+p値の閾値（p.th）を0.05とする
+```{r}
+pmtx_pcor <- pcormtx$p.value
+g_pred <- thresholding.p.value(pmtx_pcor, p.th=0.05, method="lfdr")
+network_prediction_performance(g_real, g_pred)
+```
+
+### ランダム行列理論による閾値化
+```{r}
+rmtx_pcor <- pcormtx$estimate
+g_pred <- thresholding.RMT(rmtx_pcor)
+network_prediction_performance(g_real, g_pred)
+```
+
+### ブートストラップ法（行の値の再標本化）を通した閾値化
+```{r}
+net <- estimateNetwork(x, default="LoGo")
+boots <- bootnet(net, nBoots=100, nCores=2)
+net_th <- bootThreshold(boots, alpha = 0.2)
+g_pred <- graph.adjacency(ifelse(abs(net_th$graph)>0, 1, 0),mode="undirected",weighted=NULL)
+network_prediction_performance(g_real, g_pred)
+```
+
+# やってみよう
+  + シロイヌナズナのメタボロームデータを使って相関ネットワークを作成してみよう（正解はないので，正解との比較は行わなくて良い）。
+    + ``../data/AraMetLeaves.csv``
+    + 野生株（``Col-``），mto1変異株（``mto1-``），tt4変異株（``tt4-``）のデータが格納されています。
+    + Kusano M et al (2007) Unbiased characterization of genotype-dependent metabolic regulations by metabolomic approach in *Arabidopsis thaliana*. BMC Syst Biol 1, 53. doi: [10.1186/1752-0509-1-53](https://doi.org/10.1186/1752-0509-1-53)
+  + Notebookを参考に自分のデータを解析してみよう。
+

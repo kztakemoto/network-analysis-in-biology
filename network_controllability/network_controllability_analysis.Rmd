@@ -1,0 +1,76 @@
+---
+title: "ネットワーク可制御性解析の例"
+output: html_notebook
+---
+ノードの分類（「不必要」「中立」「不可欠」）とDrug targetの関連性を調査
+
+```{r}
+# igraphパッケージの読み込み
+library(igraph)
+```
+
+### ネットワーク可制御性のための関数を読み込む
+```{r}
+source("../src/functions_network_controllability.R")
+```
+
+### 乳がんタンパク質相互作用ネットワークの読み込み
+  * エッジリスト形式
+  * 有向ネットワーク
+  * Kanhaiya K, Czeizler E, Gratie C, Petre I (2017) Controlling directed protein interaction networks in cancer. Sci Rep 7, 10327. doi: [10.1038/s41598-017-10491-y](https://doi.org/10.1038/s41598-017-10491-y)
+```{r}
+# エッジリストの読み込み
+d <- read.csv("../data/breast_cancer_directed_ppi_Kanhaiya_etal_2017.csv")
+# グラフオブジェクトの作成
+g <- simplify(graph.data.frame(d,directed=T),remove.multiple=T,remove.loops=T)
+# 最大強連結成分の取得（本来は不必要だが，小さなネットワークを得るために実行）
+cls <- clusters(g,"strong")
+g <- delete.vertices(g,subset(V(g),cls$membership!=which(cls$csize==max(cls$csize))[[1]]))
+```
+
+
+### 最大マッチングに基づくネットワーク可制御性に基づくいてノードを分類する
+```{r}
+V(g)$node_class <- node_classification_controllability(g, get_mds = get_mds_matching, relax = F)
+# @param relax: 論理値，バイナリ整数計画問題を線形計画緩和するかどうか。デフォルトはF（しない）。
+```
+
+### Drug targetのリストを読み込む
+アメリカ食品医薬品局が承認した（FDA-approved）薬剤標的タンパク質のリスト
+
+  * Kanhaiya K, Czeizler E, Gratie C, Petre I (2017) Controlling directed protein interaction networks in cancer. Sci Rep 7, 10327. doi: [10.1038/s41598-017-10491-y](https://doi.org/10.1038/s41598-017-10491-y)
+  
+```{r}
+drug_target <- read.csv("../data/drug_target_proteins.csv", stringsAsFactors=F)
+# ノードがDrug targetかそうでないかをまとめる。
+V(g)$target <- ifelse(V(g)$name %in% drug_target$target, "target", "nontarget")
+```
+
+### ノードクラスとDrug targetの関連性評価
+```{r}
+# 混同行列の作成
+conf_table <- table(V(g)$node_class,V(g)$target)
+# 混同行列の出力
+conf_table
+```
+
+### 各ノードクラスにおけるDrug targetの割合を計算し，プロット
+```{r}
+target_ratio <- conf_table[,"target"] / apply(conf_table,1,sum)
+target_ratio
+barplot(target_ratio,col=c("skyblue","pink","gray"))
+```
+
+### 関連性を統計検定（エンリッチメント解析）
+
+```{r}
+fisher.test(conf_table)
+```
+
+# やってみよう
+  + このNotebookを参考にして，別の生物ネットワークを解析してみよう（``data``に様々ある）。
+  + ``get_mds_matching``（最大マッチングに基づく手法）の代わりに，```get_mds_domination``（最小支配集合に基づく手法）を用いた場合，結果はどうなるでしょうか。
+  + ノードのクラスと必須タンパク質には関係性があるでしょうか。具体的にどのような傾向があるでしょうか。
+    + 乳がんにおける必須タンパク質のリスト
+      + Kanhaiya K, Czeizler E, Gratie C, Petre I (2017) Controlling directed protein interaction networks in cancer. Sci Rep 7, 10327. doi: [10.1038/s41598-017-10491-y](https://doi.org/10.1038/s41598-017-10491-y)
+  + Notebookを参考に自分のデータを解析してみよう。
