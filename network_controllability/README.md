@@ -17,14 +17,17 @@
 ```
 network_controllability_matching.Rmd
 ```
+[NotebookをHTMLで見る](https://kztakemoto.github.io/network-analysis-in-biology/network_controllability/network_controllability_matching.nb.html)。
 
 ### 最小支配集合に基づくネットワーク可制御性
 ```
 network_controllability_domination.Rmd
 ```
+[NotebookをHTMLで見る](https://kztakemoto.github.io/network-analysis-in-biology/network_controllability/network_controllability_domination.nb.html)。
 
 ### ネットワーク可制御性解析の例
 ノードのクラス（「不必要」「中立」「不可欠」）と薬剤標的タンパク質の関連性を調査
 ```
 network_controllability_analysis.Rmd
 ```
+[NotebookをHTMLで見る](https://kztakemoto.github.io/network-analysis-in-biology/network_controllability/network_controllability_analysis.nb.html)。

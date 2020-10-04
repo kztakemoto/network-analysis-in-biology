@@ -17,12 +17,15 @@
 ```
 community_detection_topological_overlap.Rmd
 ```
+[NotebookをHTMLで見る](https://kztakemoto.github.io/network-analysis-in-biology/community_detection/community_detection_topological_overlap.nb.html)。
 
 ### モジュラリティ最大化に基づくコミュニティ抽出（コミュニティの重複を考慮しない場合）
 併せて，機能地図作成も実行します。
 ```
 community_detection_modularity_nonoverlap.Rmd
 ```
+[NotebookをHTMLで見る](https://kztakemoto.github.io/network-analysis-in-biology/community_detection/community_detection_modularity_nonoverlap.nb.html)。
+
 #### ここで使う手法
 * [エッジ媒介性（Edge betweenness）に基づく方法](http://samoa.santafe.edu/media/workingpapers/01-12-077.pdf)
 * [貪欲アルゴリズムに基づく方法](https://arxiv.org/abs/cond-mat/0408187)
@@ -34,6 +37,8 @@ community_detection_modularity_nonoverlap.Rmd
 ```
 community_detection_topological_overlap.Rmd
 ```
+[NotebookをHTMLで見る](https://kztakemoto.github.io/network-analysis-in-biology/community_detection/community_detection_modularity_overlap.nb.html)。
+
 #### ここで使う手法
 * [Link Communityアルゴリズムによる方法](https://arxiv.org/abs/0903.3178)
 * [Overlapping Cluster Generator (OCG) アルゴリズムに基づく方法](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3244771/)
