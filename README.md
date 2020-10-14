@@ -19,6 +19,8 @@ Notebookを実行すればすべての解析は完了しますが，自分の解
 * [コミュニティ検出](community_detection)：ネットワークをクラスタリングする
 * [ネットワーク可制御性解析](network_controllability)：ドライバノードを同定する
 
+* [ネットワークモチーフ](network_motifs)
+
 ## 連絡
 質問などは以下からお気軽に。
 * [@kztakemoto](https://twitter.com/kztakemoto)

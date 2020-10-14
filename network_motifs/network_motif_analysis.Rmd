@@ -1,0 +1,127 @@
+---
+title: "ネットワークモチーフ解析"
+output: html_notebook
+---
+
+大腸菌の遺伝子制御ネットワークを例にして，ネットワークモチーフ解析を行います。
+  + ネットワークモチーフを見つける。
+  + 部分ネットワーク・プロファイルを計算する。
+
+# ネットワークモチーフを見つける
+```{r}
+# igraphパッケージの読み込み
+library(igraph)
+```
+
+### 大腸菌の遺伝子制御ネットワークの読み込み
+  + ``../data/ecoli_regDB5.txt``
+  + エッジリスト形式
+  + Salgado H et al. (2006) RegulonDB (version 5.0): Escherichia coli K-12 transcriptional regulatory network, operon organization, and growth conditions. Nucleic Acids Res., 34, pp. D394--D397. https://doi.org/10.1093/nar/gkj156
+  
+```{r}
+# エッジリストの読み込み
+d <- read.table("../data/ecoli_regDB5.txt")
+# グラフオブジェクトの作成（有向ネットワークで読み込む）
+g <- simplify(graph.data.frame(d,directed=T),remove.multiple=T,remove.loops=T)
+
+# 最大連結成分の取得
+cls <- clusters(g,"weak")
+g <- delete.vertices(g,subset(V(g),cls$membership!=which(cls$csize==max(cls$csize))[[1]]))
+```
+
+### ネットワークをランダム化するアルゴリズムの読み込み
+```{r}
+source("../src/edge_swapping_randomization.R")
+```
+
+### 現実のネットワークの3ノードで構成される部分ネットワークの出現頻度を計算
+```{r}
+motif_real <- motifs(g,3)
+```
+
+### 100個のランダムネットワークを100個の3ノード部分ネットワークの出現頻度を計算
+```{r}
+motif_rand <- c()
+for(i in 1:100){
+  g_rand <- edge_swapping_randomization(g)
+  motif_rand <- rbind(motif_rand, motifs(g_rand,3))
+}
+# データフレームに変換
+motif_rand <- as.data.frame(motif_rand)
+```
+
+### Zスコアの計算
+```{r}
+z_motif <- (motif_real - apply(motif_rand, 2 ,mean)) / apply(motif_rand, 2 ,sd)
+# わかりやすいように名前をわり当てる
+names(z_motif) <- paste("motif_3_",0:15,sep="")
+```
+
+#### 内容の確認
+```{r}
+z_motif
+```
+
+``motif_3_7``がネットワークモチーフ（Z>2）であることがわかる。
+
+### 具体的な部分ネットワーク構造を知る
+```{r}
+# motif_3_7 の構造は次のようにして知ることができる。
+plot(graph.isocreate(3,7), layout=layout.circle)
+# motif_3_3: Chain
+# motif_3_7: Feedforward loop (FFL)
+# motif_3_11: Feedback loop (FBL)
+```
+### P値を計算する（両側検定）
+```{r}
+p_motif <- 2 * pnorm(-abs(z_motif))
+```
+
+#### 内容の確認
+```{r}
+p_motif
+```
+
+### ネットワークモチーフを構成するノード集合を得る。
+```{r}
+# 例としてfeedforward loop (motif_3_7)をみてみる。
+graph.get.subisomorphisms.vf2(g,graph.isocreate(3,7))
+```
+
+# 部分ネットワーク・プロファイルを計算する
+
+### 有意性プロファイルを計算する
+```{r}
+z_motif_na_omit <- c(na.omit(z_motif)) # NAを削除
+tsp <- z_motif_na_omit / sqrt(sum(z_motif_na_omit**2))
+```
+
+### 結果をプロットする
+```{r}
+barplot(tsp, las=2)
+```
+
+### 部分ネットワーク比率プロファイルの計算
+```{r}
+# 相対部分ネットワーク比の計算
+tsr_motif <- (motif_real - apply(motif_rand, 2, mean)) / (motif_real + apply(motif_rand, 2, mean) + 4)
+# わかrやすいようにモチーフのIDを割り振る
+names(tsr_motif) <- paste("motif_3_",0:15,sep="")
+# NAを削除する
+tsr_motif_na_omit <- c(na.omit(tsr_motif))
+# 標準化
+tsrp_motif <- tsr_motif_na_omit / sqrt(sum(tsr_motif_na_omit**2))
+```
+
+### 結果をプロットする
+```{r}
+barplot(tsrp_motif, las=2)
+```
+
+# やってみよう
+  + このNotebookを参考にして，生物ネットワークを解析してみよう（``data``に様々ある）。
+    + 代謝ネットワークや食物網が良いだろう（有向ネットワークなので）。
+  + 4ノードのネットワークモチーフを見つけてみよう（計算に時間がかかるの注意）
+    + ``motifs(g,4)``で計算できる。
+  + Notebookを参考に自分のデータを解析してみよう。
+  
