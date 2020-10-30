@@ -12,16 +12,16 @@
 ```
 load_plot_processing.Rmd
 ```
-[NotebookをHTMLで見る](https://kztakemoto.github.io/network-analysis-in-biology/basic/load_plot_processing.nb.html)。
+[Notebookのプレビュー（HTML版）を見る](https://kztakemoto.github.io/network-analysis-in-biology/basic/load_plot_processing.nb.html)。
 
 ### 代表的なネットワーク指標の計算
 ```
 network_property.Rmd
 ```
-[NotebookをHTMLで見る](https://kztakemoto.github.io/network-analysis-in-biology/basic/network_property.nb.html)。
+[Notebookのプレビュー（HTML版）を見る](https://kztakemoto.github.io/network-analysis-in-biology/basic/network_property.nb.html)。
 
 ### 最短経路探索
 ```
 path_finding.Rmd
 ```
-[NotebookをHTMLで見る](https://kztakemoto.github.io/network-analysis-in-biology/basic/path_finding.nb.html)。
+[Notebookのプレビュー（HTML版）を見る](https://kztakemoto.github.io/network-analysis-in-biology/basic/path_finding.nb.html)。

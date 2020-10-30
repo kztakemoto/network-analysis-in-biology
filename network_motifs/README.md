@@ -15,11 +15,11 @@
 ```
 network_motif_analysis.Rmd
 ```
-[NotebookをHTMLで見る](https://kztakemoto.github.io/network-analysis-in-biology/network_motifs/network_motif_analysis.nb.html)。
+[Notebookのプレビュー（HTML版）を見る](https://kztakemoto.github.io/network-analysis-in-biology/network_motifs/network_motif_analysis.nb.html)。
 
 
 ### ランダムネットワークにおける部分ネットワークの出現頻度の理論推定
 ```
 subgraphs_random_networks.Rmd
 ```
-[NotebookをHTMLで見る](https://kztakemoto.github.io/network-analysis-in-biology/network_motifs/subgraphs_random_networks.nb.html)。
+[Notebookのプレビュー（HTML版）を見る](https://kztakemoto.github.io/network-analysis-in-biology/network_motifs/subgraphs_random_networks.nb.html)。
