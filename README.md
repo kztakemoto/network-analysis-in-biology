@@ -3,7 +3,13 @@
 ## はじめに
 [R](https://www.r-project.org)を使って生物ネットワーク解析を行うためのR Notebookが利用可能です。
 [R](https://www.r-project.org)のネットワーク解析用パッケージのひとつである[igraph](https://igraph.org/r/)を主に使います。
-[RStudio](https://rstudio.com)をインストールしてください。
+
+## 準備
+[R](https://www.r-project.org)と[RStudio](https://rstudio.com)をインストールしてください。NotebookはR（ver 4.0.3）とRStudio（ver 1.3.1093）で作成されました。
+[動画による説明](https://www.youtube.com/results?search_query=rstudio+インストール)が役に立つと思います。
+
+Notebookを開くと，パッケージのインストールを要求するメッセージが表示されますので（インストールされていなければ），それに従ってパッケージをあらかじめインストールしてください（ほぼ自動的にインストールされます）。
+部分的にマニュアルでインストールするパッケージもありますのでご注意ください（各トピックのREADMEをご覧ください）。
 
 R Notebookを参考にすれば解析は完了しますが，自分の解析に沿うようにスクリプトを改変するためにはRとigraphの基本的な使い方を習得しておく必要があります。
 以下が参考になりますので，適時ご参照ください。
