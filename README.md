@@ -5,7 +5,7 @@
 [R](https://www.r-project.org)のネットワーク解析用パッケージのひとつである[igraph](https://igraph.org/r/)を主に使います。
 [RStudio](https://rstudio.com)をインストールしてください。
 
-Notebookを実行すればすべての解析は完了しますが，自分の解析に沿うようにスクリプトを改変するためにはRとigraphの基本的な使い方を習得しておく必要があります。
+R Notebookを参考にすれば解析は完了しますが，自分の解析に沿うようにスクリプトを改変するためにはRとigraphの基本的な使い方を習得しておく必要があります。
 以下が参考になりますので，適時ご参照ください。
 * [Rとigraphの基本的な使い方](http://www.nemotos.net/igraph-tutorial/NetSciX_2016_Workshop_ja.html)
 * [igraphの基本的な使い方](https://sites.google.com/site/kztakemoto/r-seminar-on-igraph---supplementary-information)
@@ -13,7 +13,7 @@ Notebookを実行すればすべての解析は完了しますが，自分の解
 
 ## 目次
 以下のトピックを扱います。
-
+* [ネットワーク解析の基礎](basic)：読み込みや描画といった基本的な操作を行う
 * [相関ネットワーク解析](correlation_networks)：データの相関からネットワーク作成する
 * [中心性解析](centrality_analysis)：重要なノードを見つける
 * [コミュニティ検出](community_detection)：ネットワークをクラスタリングする

@@ -41,7 +41,7 @@ g_real <- data[[1]]
 # 分散共分散行列を得る。
 x.cor <- data[[2]] 
 # 分散共分散行列に従い，多変量正規分布で相関した乱数をサンプル数300で作成する。
-x <- mvrnorm(300, rep(5,dim(x.cor)[[1]]), Sigma=nearPD(x.cor, corr = T, keepDiag = T)$mat)
+x <- mvrnorm(500, rep(5,dim(x.cor)[[1]]), Sigma=nearPD(x.cor, corr = T, keepDiag = T)$mat)
 ```
 
 # ペアワイズ相関検定によるネットワーク推定

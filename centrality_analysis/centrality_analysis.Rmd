@@ -16,6 +16,7 @@ library(igraph)
 ```
 
 ### 大腸菌のタンパク質相互作用ネットワークの読み込み
+  + `../data/ecoli_ppi_Hu_etal_2009.txt`
   + エッジリスト形式
   + Hu P, Janga SC, Babu M, Díaz-Mejía JJ, Butland G, et al. Global functional atlas of Escherichia coli encompassing previously uncharacterized proteins. PLoS Biol. 2009 Apr 28;7(4):e96. doi: 10.1371/journal.pbio.1000096.
 ```{r}
@@ -60,10 +61,9 @@ ess <- read.table("../data/ecoli_proteins_essentiality_Baba2006MSB.txt",header=T
 
 ```{r}
 # 中心性指標のデータと必須性のデータをマージする
-d <- merge(ess,nprop,by="gene")
+d <- merge(ess, nprop,by="gene")
 # unknownの遺伝子を除外する。
 d <- d[d$essential!="u",]
-levels(d$essential)[[3]] <- NA
 ```
 
 ### Boxplotの表示

@@ -1,0 +1,133 @@
+---
+title: "代表的なネットワーク指標の計算"
+output: html_notebook
+---
+代表的なネットワーク指標の計算を行います。
+
+```{r}
+# igraphパッケージの読み込み
+library(igraph)
+library(gtools)
+```
+
+### 大腸菌の遺伝子制御ネットワークの読み込み
+  + `../data/yeast_ppi_Batada_etal_2006.txt`
+  + エッジリスト形式
+  + Batada NN et al. (2006) Stratus not altocumulus: a new view of the yeast protein interaction network. PLoS Biol 4, e317. doi: 10.1371/journal.pbio.0040317
+```{r}
+# エッジリストの読み込み
+d <- read.table("../data/yeast_ppi_Batada_etal_2006.txt")
+# グラフオブジェクトの作成
+g <- simplify(graph.data.frame(d,directed=F),remove.multiple=T,remove.loops=T)
+# 仮想的な重みを追加する（対数正規分布由来の乱数を与える）
+E(g)$weight <- rlnorm(ecount(g))
+
+# 最大連結成分の取得
+cls <- clusters(g,"weak")
+g <- delete.vertices(g,subset(V(g),cls$membership!=which(cls$csize==max(cls$csize))[[1]]))
+```
+
+# ネットワークの指標
+### ノード数
+```{r}
+vcount(g)
+```
+
+### エッジ数
+```{r}
+ecount(g)
+```
+
+### 次数
+```{r}
+deg <- degree(g)
+deg
+```
+
+重み付き次数（strength）は次のよう
+```{r}
+strength(g)
+```
+
+### 次数分布
+```{r}
+plot(0:max(deg), degree.distribution(g), xlab="k", ylab="P(k)", log="xy")
+```
+### 次数エントロピー
+```{r}
+dist <- table(degree(g)) / sum(table(degree(g)))
+-sum(dist * log(dist))
+
+```
+
+### クラスタ係数
+各ノードに対するクラスタ係数
+```{r}
+cc <- transitivity(g, type="local", isolates="zero")
+```
+
+平均クラスタ係数
+```{r}
+transitivity(g, type="localaverage", isolates="zero")
+# もしくは
+mean(cc)
+```
+
+重み付きクラスタ係数
+```{r}
+# 各ノードに対する重み付きクラスタ係数
+wcc <- transitivity(g, type="weighted", isolates="zero")
+# 平均重み付きクラスタ係数
+mean(wcc)
+```
+### Assortative coefficient
+重み付きでないことに注意
+```{r}
+assortativity.degree(g)
+```
+
+### 平均最短経路長
+```{r}
+mean_distance(g)
+```
+この関数は重み付きネットワークには対応していない。
+
+重み付きネットワークの場合は
+```{r}
+# 距離行列を計算して
+d_mtx <- distances(g, weights=E(g)$weight)
+# 対角成分を除いた上三角行列の要素の平均を計算する
+mean(d_mtx[upper.tri(d_mtx)])
+```
+
+### 効率性
+#### 大域効率性
+```{r}
+dinv_mtx <- distances(g, weights=NA)**-1
+# d_mtx <- distances(g, weights=E(g)$weight)**-1 # 重み付きネットワークなら
+diag(dinv_mtx) <- 0
+# 各ノードに対する大域効率性
+nodal_global_efficiency <- apply(dinv_mtx,1,sum) / (vcount(g) - 1)
+# 全体的（平均的な）大域効率性
+ave_global_efficiency <- mean(nodal_global_efficiency)
+```
+
+#### 局所効率性
+```{r}
+# 各ノードに対する局所効率性
+nodal_local_efficiency <- c()
+for(i in 1:vcount(g)){
+  nei_idx <- as.vector(neighbors(g,i)) # 隣接ノードのインデックスを取得
+  num_nei <- length(nei_idx)
+  if(num_nei > 1) {
+    nodal_local_efficiency <- c(nodal_local_efficiency, sum(dinv_mtx[permutations(num_nei,2,nei_idx)]) / num_nei / (num_nei - 1))
+    } else {
+      nodal_local_efficiency <- c(nodal_local_efficiency,0)
+    }
+  }
+# 全体的（平均的な）局所効率性
+ave_local_efficiency <- mean(nodal_local_efficiency)
+```
+# やってみよう
+  + このNotebookを参考にして，別の生物ネットワークのネットワーク指標を計算してみよう（``data``に様々ある）。
+  + Notebookを参考に自分のデータを解析してみよう。

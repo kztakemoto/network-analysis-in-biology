@@ -31,10 +31,20 @@ Protein contact networks
   * only used the interactions with confidence score >= 0.7
   * http://cbdm-01.zdv.uni-mainz.de/~mschaefer/hippie/ (version 2.2)
   * https://doi.org/10.1093/nar/gkw985
+* breast_cancer_directed_ppi_Kanhaiya_etal_2017.csv
+  * Human (with breast cancer)
+  * https://doi.org/10.1038/s41598-017-10491-y
+  * Metadata
+    * drug_target_proteins.csv: list of drug targets
+    * breast_cancer_essential_proteins.csv: list of essential genes
 
 # Metabolic Networks (chemical networks)
 * metabolic_ecoli.txt
   * Escherichia coli
+  * https://www.kegg.jp
+  * https://doi.org/10.1093/nar/gky962
+* eco_EM+TCA.txt
+  * Escherichia coli (Glycolysis / Gluconeogenesis and Citrate cycle (TCA cycle))
   * https://www.kegg.jp
   * https://doi.org/10.1093/nar/gky962
 * metabolic_yeast.txt

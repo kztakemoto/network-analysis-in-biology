@@ -3,6 +3,11 @@ title: "閾値化による相関ネットワークの作成と相関ネットワ
 output: html_notebook
 ---
 
+### SpiecEasiのインストール（一度だけでOK）
+```{r}
+library(devtools)
+install_github("zdk123/SpiecEasi")
+```
 
 ### パッケージの読み込み
 ```{r}

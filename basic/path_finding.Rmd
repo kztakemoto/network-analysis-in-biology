@@ -1,0 +1,66 @@
+---
+title: "最短経路探索"
+output: html_notebook
+---
+最短経路を探索します。
+
+```{r}
+# igraphパッケージの読み込み
+library(igraph)
+```
+
+### ネットワークの読み込み
+大腸菌の代謝ネットワークの一部（解糖系・糖新生とTCA回路）を例にします。
+* `../data/eco_EM+TCA.txt`
+* [KEGGデータベース](https://www.kegg.jp)
+* Kanehisa M, Sato Y, Furumichi M, Morishima K, Tanabe M (2019) New approach for understanding genome variations in KEGG. Nucleic Acids Res., 47, pp. D590–D595. https://doi.org/10.1093/nar/gky962
+
+```{r}
+d <- read.table("../data/eco_EM+TCA.txt")
+# 有向ネットワークで読み込む
+g <- graph.data.frame(d, directed=T)
+# 多重エッジや自己ループを削除する。
+g <- simplify(g, remove.multiple=T, remove.loops=T)
+```
+
+
+### 最短経路探索
+全部の最短経路を計算する。
+```{r}
+paths <- all_shortest_paths(g, "D-Glucose","2-Oxoglutarate",mode="out")
+```
+
+### 最短経路を表示
+ノードの並びを得たい場合
+```{r}
+V(g)[paths$res[[1]]]
+```
+
+ノードとエッジの並びを得たい場合
+```{r}
+E(g, path=paths$res[[1]])
+```
+
+2つ以上の経路がある場合は，`res[[1]]`の番号を2，3，…と変更すればよい。
+
+### 最短経路を描画
+```{r}
+# エッジを全部灰色にする
+E(g)$color <- "grey"
+# 最短経路に含まれるエッジを赤色にする。
+E(g, path=paths$res[[1]])$color <- "red"
+# 最短経路に含まれるエッジを太くする。
+E(g,path=paths$res[[1]])$width <- 3
+
+plot(g,
+     vertex.label=V(g)$name,
+     # 最短経路に含まれるノードは赤，そうでないものは白にする。
+     vertex.color=c("red","white")[ifelse(V(g)$name %in% V(g)[paths$res[[1]]]$name,1,2)],
+     vertex.size=10,
+     edge.arrow.size=0.5
+     )
+```
+# やってみよう
+  + 始点と終点を変更して，最短経路を見つけてみよう。
+  + 別の生物ネットワークの最短経路を探索してみよう（``data``に様々ある）。
+  + Notebookを参考に自分のネットワークデータを解析してみよう。

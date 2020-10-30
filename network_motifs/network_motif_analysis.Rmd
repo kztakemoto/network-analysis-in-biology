@@ -39,7 +39,7 @@ source("../src/edge_swapping_randomization.R")
 motif_real <- motifs(g,3)
 ```
 
-### 100個のランダムネットワークを100個の3ノード部分ネットワークの出現頻度を計算
+### 100個のランダムネットワークの3ノード部分ネットワークの出現頻度を計算
 ```{r}
 motif_rand <- c()
 for(i in 1:100){

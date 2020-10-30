@@ -1,0 +1,103 @@
+---
+title: "ネットワークの読み込み，描画，処理"
+output: html_notebook
+---
+ネットワークの読み込み，描画，基本的な処理を行います。
+
+# igraphパッケージの読み込み
+簡単です。
+```{r}
+library(igraph)
+```
+
+# ネットワークの読み込みと描画
+### エッジリスト形式のネットワークデータを読み込む
+大腸菌の代謝ネットワークの一部（解糖系・糖新生とTCA回路）を例にします。
+* `../data/eco_EM+TCA.txt`
+* [KEGGデータベース](https://www.kegg.jp)
+* Kanehisa M, Sato Y, Furumichi M, Morishima K, Tanabe M (2019) New approach for understanding genome variations in KEGG. Nucleic Acids Res., 47, pp. D590–D595. https://doi.org/10.1093/nar/gky962
+
+```{r}
+d <- read.table("../data/eco_EM+TCA.txt")
+```
+
+### グラフオブジェクトに変換する
+```{r}
+# 有向ネットワークで読み込む
+g <- graph.data.frame(d, directed=T)
+# 多重エッジや自己ループを削除する。
+g <- simplify(g, remove.multiple=T, remove.loops=T)
+g
+```
+
+### ネットワークの描画
+基本
+```{r}
+plot(g)
+```
+### もう少し凝ったネットワーク描画
+オプションをいろいろ与えることができます。
+```{r}
+plot(g,
+  vertex.size=8, #ノードの大きさ
+  vertex.shape="square", #ノードの形 names(igraph:::.igraph.shapes) で使える形を確認できる
+  vertex.label=V(g)$name, #ノード属性nameをノードラベルにする。
+  vertex.color="lightblue",
+  vertex.label.color="gray50", #ノードのラベルの色
+  #ノードのラベルのスタイル 1: 普通, 2: 太字, 3: 斜体, 4: 太字斜体, 5: ギリシャ文字
+  vertex.label.font=2,
+  vertex.frame.color="white", #ノードの枠の色
+  vertex.label.cex=0.8, #ノードラベルの文字サイズ
+  edge.width=2, #エッジ属性weightをエッジの太さとする
+  edge.arrow.size=0.5, # 矢印の大きさ
+  edge.color="gray80", #エッジの色
+  # ネットワークのレイアウト手法 help(layout,igraph)で使える手法を確認できる
+  layout=layout.fruchterman.reingold #ネットワークのレイアウト手法
+)
+```
+
+# ネットワークの処理
+### 無向ネットワークに変換する
+グラフオブジェクトを更新していることに注意
+```{r}
+g <- as.undirected(g)
+g
+```
+
+### ノードを削除する
+例として，F6PとGAPを削除する。
+```{r}
+g <- delete_vertices(g, c("F6P", "GAP"))
+```
+
+### エッジを削除する
+例として，2PG--3PGと3PG--BPGのエッジを削除する。
+```{r}
+g <- delete_edges(g, c("2PG|3PG", "3PG|BPG"))
+# ネットワークの描画
+plot(g)
+```
+
+### 連結成分を見つける
+```{r}
+cls <- clusters(g, "weak")
+# 結果
+cls
+```
+
+連結成分で色分け
+```{r}
+plot(g, vertex.color=cls$membership)
+```
+最大連結成分を抽出する。
+```{r}
+# 最大連結成分に属さないノードを削除する
+g <- delete_vertices(g, subset(V(g), cls$membership!=which(cls$csize==max(cls$csize))[[1]]))
+# ネットワークを描画
+plot(g)
+```
+
+# やってみよう
+  + このNotebookを参考にして，別の生物ネットワークを読み込んで描画・処理してみよう（``data``に様々ある）。
+    + ただ，ネットワークが大きすぎると描画に時間がかかるので注意
+  + Notebookを参考に自分のネットワークデータを読み込んで描画・処理してみよう。
