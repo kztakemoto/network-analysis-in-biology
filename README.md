@@ -5,8 +5,9 @@
 [R](https://www.r-project.org)のネットワーク解析用パッケージのひとつである[igraph](https://igraph.org/r/)を主に使います。
 
 ## 準備
-[R](https://www.r-project.org)と[RStudio](https://rstudio.com)をインストールしてください。NotebookはR（ver 4.0.3）とRStudio（ver 1.3.1093）で作成されました。
+[R](https://www.r-project.org)と[RStudio](https://rstudio.com)をインストールしてください。
 [動画による説明](https://www.youtube.com/results?search_query=rstudio+インストール)が役に立つと思います。
+なお，NotebookはR（ver 4.0.3）とRStudio（ver 1.3.1093）で作成されました。
 
 Notebookを開くと，パッケージのインストールを要求するメッセージが表示されますので（インストールされていなければ），それに従ってパッケージをあらかじめインストールしてください（ほぼ自動的にインストールされます）。
 部分的にマニュアルでインストールするパッケージもありますのでご注意ください（各トピックのREADMEをご覧ください）。
