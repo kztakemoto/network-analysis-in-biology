@@ -1898,21 +1898,21 @@ pmtx_rel &lt;- cormtx_rel$P</code></pre>
 <pre class="r"><code>g_pred_abs &lt;- thresholding.p.value(pmtx_abs, p.th=0.05, method=&quot;BH&quot;)
 network_prediction_performance(g_real, g_pred_abs)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiJGBjb25mdXNpb24gbWF0cml4YFxuICAgICAgICBhaWpfcHJlZFxuYWlqX3JlYWwgICAwICAgMVxuICAgICAgIDAgMzMyICA0M1xuICAgICAgIDEgICAxICA1OVxuXG4kYWNjdXJhY3lcblsxXSAwLjg5ODg1MDZcblxuJHByZWNpc2lvblxuWzFdIDAuNTc4NDMxNFxuXG4kcmVjYWxsXG5bMV0gMC45ODMzMzMzXG4ifQ== -->
+<!-- rnb-output-begin eyJkYXRhIjoiJGBjb25mdXNpb24gbWF0cml4YFxuICAgICAgICBhaWpfcHJlZFxuYWlqX3JlYWwgICAwICAgMVxuICAgICAgIDAgMzI4ICA0N1xuICAgICAgIDEgICAwICA2MFxuXG4kYWNjdXJhY3lcblsxXSAwLjg5MTk1NFxuXG4kcHJlY2lzaW9uXG5bMV0gMC41NjA3NDc3XG5cbiRyZWNhbGxcblsxXSAxXG4ifQ== -->
 <pre><code>$`confusion matrix`
         aij_pred
 aij_real   0   1
-       0 332  43
-       1   1  59
+       0 328  47
+       1   0  60
 
 $accuracy
-[1] 0.8988506
+[1] 0.891954
 
 $precision
-[1] 0.5784314
+[1] 0.5607477
 
 $recall
-[1] 0.9833333</code></pre>
+[1] 1</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -1925,21 +1925,21 @@ $recall
 <pre class="r"><code>g_pred_rel &lt;- thresholding.p.value(pmtx_rel, p.th=0.05, method=&quot;BH&quot;)
 network_prediction_performance(g_real, g_pred_rel)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiJGBjb25mdXNpb24gbWF0cml4YFxuICAgICAgICBhaWpfcHJlZFxuYWlqX3JlYWwgICAwICAgMVxuICAgICAgIDAgMzA1ICA3MFxuICAgICAgIDEgICAyICA1OFxuXG4kYWNjdXJhY3lcblsxXSAwLjgzNDQ4MjhcblxuJHByZWNpc2lvblxuWzFdIDAuNDUzMTI1XG5cbiRyZWNhbGxcblsxXSAwLjk2NjY2NjdcbiJ9 -->
+<!-- rnb-output-begin eyJkYXRhIjoiJGBjb25mdXNpb24gbWF0cml4YFxuICAgICAgICBhaWpfcHJlZFxuYWlqX3JlYWwgICAwICAgMVxuICAgICAgIDAgMjkzICA4MlxuICAgICAgIDEgICAwICA2MFxuXG4kYWNjdXJhY3lcblsxXSAwLjgxMTQ5NDNcblxuJHByZWNpc2lvblxuWzFdIDAuNDIyNTM1MlxuXG4kcmVjYWxsXG5bMV0gMVxuIn0= -->
 <pre><code>$`confusion matrix`
         aij_pred
 aij_real   0   1
-       0 305  70
-       1   2  58
+       0 293  82
+       1   0  60
 
 $accuracy
-[1] 0.8344828
+[1] 0.8114943
 
 $precision
-[1] 0.453125
+[1] 0.4225352
 
 $recall
-[1] 0.9666667</code></pre>
+[1] 1</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -1951,30 +1951,30 @@ $recall
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ19wcmVkX2FicyA8LSB0aHJlc2hvbGRpbmcuUk1UKHJtdHhfYWJzKVxuYGBgIn0= -->
 <pre class="r"><code>g_pred_abs &lt;- thresholding.RMT(rmtx_abs)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoidGllcyBzaG91bGQgbm90IGJlIHByZXNlbnQgZm9yIHRoZSBLb2xtb2dvcm92LVNtaXJub3YgdGVzdHRpZXMgc2hvdWxkIG5vdCBiZSBwcmVzZW50IGZvciB0aGUgS29sbW9nb3Jvdi1TbWlybm92IHRlc3R0aWVzIHNob3VsZCBub3QgYmUgcHJlc2VudCBmb3IgdGhlIEtvbG1vZ29yb3YtU21pcm5vdiB0ZXN0dGllcyBzaG91bGQgbm90IGJlIHByZXNlbnQgZm9yIHRoZSBLb2xtb2dvcm92LVNtaXJub3YgdGVzdHRpZXMgc2hvdWxkIG5vdCBiZSBwcmVzZW50IGZvciB0aGUgS29sbW9nb3Jvdi1TbWlybm92IHRlc3R0aWVzIHNob3VsZCBub3QgYmUgcHJlc2VudCBmb3IgdGhlIEtvbG1vZ29yb3YtU21pcm5vdiB0ZXN0dGllcyBzaG91bGQgbm90IGJlIHByZXNlbnQgZm9yIHRoZSBLb2xtb2dvcm92LVNtaXJub3YgdGVzdHRpZXMgc2hvdWxkIG5vdCBiZSBwcmVzZW50IGZvciB0aGUgS29sbW9nb3Jvdi1TbWlybm92IHRlc3R0aWVzIHNob3VsZCBub3QgYmUgcHJlc2VudCBmb3IgdGhlIEtvbG1vZ29yb3YtU21pcm5vdiB0ZXN0dGllcyBzaG91bGQgbm90IGJlIHByZXNlbnQgZm9yIHRoZSBLb2xtb2dvcm92LVNtaXJub3YgdGVzdHRpZXMgc2hvdWxkIG5vdCBiZSBwcmVzZW50IGZvciB0aGUgS29sbW9nb3Jvdi1TbWlybm92IHRlc3R0aWVzIHNob3VsZCBub3QgYmUgcHJlc2VudCBmb3IgdGhlIEtvbG1vZ29yb3YtU21pcm5vdiB0ZXN0dGllcyBzaG91bGQgbm90IGJlIHByZXNlbnQgZm9yIHRoZSBLb2xtb2dvcm92LVNtaXJub3YgdGVzdHRpZXMgc2hvdWxkIG5vdCBiZSBwcmVzZW50IGZvciB0aGUgS29sbW9nb3Jvdi1TbWlybm92IHRlc3R0aWVzIHNob3VsZCBub3QgYmUgcHJlc2VudCBmb3IgdGhlIEtvbG1vZ29yb3YtU21pcm5vdiB0ZXN0dGllcyBzaG91bGQgbm90IGJlIHByZXNlbnQgZm9yIHRoZSBLb2xtb2dvcm92LVNtaXJub3YgdGVzdHRpZXMgc2hvdWxkIG5vdCBiZSBwcmVzZW50IGZvciB0aGUgS29sbW9nb3Jvdi1TbWlybm92IHRlc3R0aWVzIHNob3VsZCBub3QgYmUgcHJlc2VudCBmb3IgdGhlIEtvbG1vZ29yb3YtU21pcm5vdiB0ZXN0dGllcyBzaG91bGQgbm90IGJlIHByZXNlbnQgZm9yIHRoZSBLb2xtb2dvcm92LVNtaXJub3YgdGVzdHRpZXMgc2hvdWxkIG5vdCBiZSBwcmVzZW50IGZvciB0aGUgS29sbW9nb3Jvdi1TbWlybm92IHRlc3R0aWVzIHNob3VsZCBub3QgYmUgcHJlc2VudCBmb3IgdGhlIEtvbG1vZ29yb3YtU21pcm5vdiB0ZXN0XG4ifQ== -->
-<pre><code>ties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov test</code></pre>
+<!-- rnb-output-begin eyJkYXRhIjoidGllcyBzaG91bGQgbm90IGJlIHByZXNlbnQgZm9yIHRoZSBLb2xtb2dvcm92LVNtaXJub3YgdGVzdHRpZXMgc2hvdWxkIG5vdCBiZSBwcmVzZW50IGZvciB0aGUgS29sbW9nb3Jvdi1TbWlybm92IHRlc3R0aWVzIHNob3VsZCBub3QgYmUgcHJlc2VudCBmb3IgdGhlIEtvbG1vZ29yb3YtU21pcm5vdiB0ZXN0dGllcyBzaG91bGQgbm90IGJlIHByZXNlbnQgZm9yIHRoZSBLb2xtb2dvcm92LVNtaXJub3YgdGVzdHRpZXMgc2hvdWxkIG5vdCBiZSBwcmVzZW50IGZvciB0aGUgS29sbW9nb3Jvdi1TbWlybm92IHRlc3R0aWVzIHNob3VsZCBub3QgYmUgcHJlc2VudCBmb3IgdGhlIEtvbG1vZ29yb3YtU21pcm5vdiB0ZXN0dGllcyBzaG91bGQgbm90IGJlIHByZXNlbnQgZm9yIHRoZSBLb2xtb2dvcm92LVNtaXJub3YgdGVzdHRpZXMgc2hvdWxkIG5vdCBiZSBwcmVzZW50IGZvciB0aGUgS29sbW9nb3Jvdi1TbWlybm92IHRlc3R0aWVzIHNob3VsZCBub3QgYmUgcHJlc2VudCBmb3IgdGhlIEtvbG1vZ29yb3YtU21pcm5vdiB0ZXN0dGllcyBzaG91bGQgbm90IGJlIHByZXNlbnQgZm9yIHRoZSBLb2xtb2dvcm92LVNtaXJub3YgdGVzdHRpZXMgc2hvdWxkIG5vdCBiZSBwcmVzZW50IGZvciB0aGUgS29sbW9nb3Jvdi1TbWlybm92IHRlc3R0aWVzIHNob3VsZCBub3QgYmUgcHJlc2VudCBmb3IgdGhlIEtvbG1vZ29yb3YtU21pcm5vdiB0ZXN0dGllcyBzaG91bGQgbm90IGJlIHByZXNlbnQgZm9yIHRoZSBLb2xtb2dvcm92LVNtaXJub3YgdGVzdHRpZXMgc2hvdWxkIG5vdCBiZSBwcmVzZW50IGZvciB0aGUgS29sbW9nb3Jvdi1TbWlybm92IHRlc3R0aWVzIHNob3VsZCBub3QgYmUgcHJlc2VudCBmb3IgdGhlIEtvbG1vZ29yb3YtU21pcm5vdiB0ZXN0dGllcyBzaG91bGQgbm90IGJlIHByZXNlbnQgZm9yIHRoZSBLb2xtb2dvcm92LVNtaXJub3YgdGVzdHRpZXMgc2hvdWxkIG5vdCBiZSBwcmVzZW50IGZvciB0aGUgS29sbW9nb3Jvdi1TbWlybm92IHRlc3R0aWVzIHNob3VsZCBub3QgYmUgcHJlc2VudCBmb3IgdGhlIEtvbG1vZ29yb3YtU21pcm5vdiB0ZXN0dGllcyBzaG91bGQgbm90IGJlIHByZXNlbnQgZm9yIHRoZSBLb2xtb2dvcm92LVNtaXJub3YgdGVzdFxuIn0= -->
+<pre><code>ties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov test</code></pre>
 <!-- rnb-output-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiS1MgZGlzdGFuY2UgPSAwLjEyMzQwODEgKHAgPSAwLjcyMzM5MzQpXG4ifQ== -->
-<pre><code>KS distance = 0.1234081 (p = 0.7233934)</code></pre>
+<!-- rnb-output-begin eyJkYXRhIjoiS1MgZGlzdGFuY2UgPSAwLjE0NzY0OTMgKHAgPSAwLjUwNTQ3MzUpXG4ifQ== -->
+<pre><code>KS distance = 0.1476493 (p = 0.5054735)</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubmV0d29ya19wcmVkaWN0aW9uX3BlcmZvcm1hbmNlKGdfcmVhbCwgZ19wcmVkX2FicylcbmBgYCJ9 -->
 <pre class="r"><code>network_prediction_performance(g_real, g_pred_abs)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiJGBjb25mdXNpb24gbWF0cml4YFxuICAgICAgICBhaWpfcHJlZFxuYWlqX3JlYWwgICAwICAgMVxuICAgICAgIDAgMzY4ICAgN1xuICAgICAgIDEgICA0ICA1NlxuXG4kYWNjdXJhY3lcblsxXSAwLjk3NDcxMjZcblxuJHByZWNpc2lvblxuWzFdIDAuODg4ODg4OVxuXG4kcmVjYWxsXG5bMV0gMC45MzMzMzMzXG4ifQ== -->
+<!-- rnb-output-begin eyJkYXRhIjoiJGBjb25mdXNpb24gbWF0cml4YFxuICAgICAgICBhaWpfcHJlZFxuYWlqX3JlYWwgICAwICAgMVxuICAgICAgIDAgMzQ0ICAzMVxuICAgICAgIDEgICAwICA2MFxuXG4kYWNjdXJhY3lcblsxXSAwLjkyODczNTZcblxuJHByZWNpc2lvblxuWzFdIDAuNjU5MzQwN1xuXG4kcmVjYWxsXG5bMV0gMVxuIn0= -->
 <pre><code>$`confusion matrix`
         aij_pred
 aij_real   0   1
-       0 368   7
-       1   4  56
+       0 344  31
+       1   0  60
 
 $accuracy
-[1] 0.9747126
+[1] 0.9287356
 
 $precision
-[1] 0.8888889
+[1] 0.6593407
 
 $recall
-[1] 0.9333333</code></pre>
+[1] 1</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -1986,30 +1986,30 @@ $recall
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ19wcmVkX3JlbCA8LSB0aHJlc2hvbGRpbmcuUk1UKHJtdHhfcmVsKVxuYGBgIn0= -->
 <pre class="r"><code>g_pred_rel &lt;- thresholding.RMT(rmtx_rel)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoidGllcyBzaG91bGQgbm90IGJlIHByZXNlbnQgZm9yIHRoZSBLb2xtb2dvcm92LVNtaXJub3YgdGVzdHRpZXMgc2hvdWxkIG5vdCBiZSBwcmVzZW50IGZvciB0aGUgS29sbW9nb3Jvdi1TbWlybm92IHRlc3R0aWVzIHNob3VsZCBub3QgYmUgcHJlc2VudCBmb3IgdGhlIEtvbG1vZ29yb3YtU21pcm5vdiB0ZXN0dGllcyBzaG91bGQgbm90IGJlIHByZXNlbnQgZm9yIHRoZSBLb2xtb2dvcm92LVNtaXJub3YgdGVzdHRpZXMgc2hvdWxkIG5vdCBiZSBwcmVzZW50IGZvciB0aGUgS29sbW9nb3Jvdi1TbWlybm92IHRlc3R0aWVzIHNob3VsZCBub3QgYmUgcHJlc2VudCBmb3IgdGhlIEtvbG1vZ29yb3YtU21pcm5vdiB0ZXN0dGllcyBzaG91bGQgbm90IGJlIHByZXNlbnQgZm9yIHRoZSBLb2xtb2dvcm92LVNtaXJub3YgdGVzdHRpZXMgc2hvdWxkIG5vdCBiZSBwcmVzZW50IGZvciB0aGUgS29sbW9nb3Jvdi1TbWlybm92IHRlc3R0aWVzIHNob3VsZCBub3QgYmUgcHJlc2VudCBmb3IgdGhlIEtvbG1vZ29yb3YtU21pcm5vdiB0ZXN0dGllcyBzaG91bGQgbm90IGJlIHByZXNlbnQgZm9yIHRoZSBLb2xtb2dvcm92LVNtaXJub3YgdGVzdHRpZXMgc2hvdWxkIG5vdCBiZSBwcmVzZW50IGZvciB0aGUgS29sbW9nb3Jvdi1TbWlybm92IHRlc3R0aWVzIHNob3VsZCBub3QgYmUgcHJlc2VudCBmb3IgdGhlIEtvbG1vZ29yb3YtU21pcm5vdiB0ZXN0dGllcyBzaG91bGQgbm90IGJlIHByZXNlbnQgZm9yIHRoZSBLb2xtb2dvcm92LVNtaXJub3YgdGVzdHRpZXMgc2hvdWxkIG5vdCBiZSBwcmVzZW50IGZvciB0aGUgS29sbW9nb3Jvdi1TbWlybm92IHRlc3R0aWVzIHNob3VsZCBub3QgYmUgcHJlc2VudCBmb3IgdGhlIEtvbG1vZ29yb3YtU21pcm5vdiB0ZXN0dGllcyBzaG91bGQgbm90IGJlIHByZXNlbnQgZm9yIHRoZSBLb2xtb2dvcm92LVNtaXJub3YgdGVzdHRpZXMgc2hvdWxkIG5vdCBiZSBwcmVzZW50IGZvciB0aGUgS29sbW9nb3Jvdi1TbWlybm92IHRlc3R0aWVzIHNob3VsZCBub3QgYmUgcHJlc2VudCBmb3IgdGhlIEtvbG1vZ29yb3YtU21pcm5vdiB0ZXN0dGllcyBzaG91bGQgbm90IGJlIHByZXNlbnQgZm9yIHRoZSBLb2xtb2dvcm92LVNtaXJub3YgdGVzdHRpZXMgc2hvdWxkIG5vdCBiZSBwcmVzZW50IGZvciB0aGUgS29sbW9nb3Jvdi1TbWlybm92IHRlc3R0aWVzIHNob3VsZCBub3QgYmUgcHJlc2VudCBmb3IgdGhlIEtvbG1vZ29yb3YtU21pcm5vdiB0ZXN0dGllcyBzaG91bGQgbm90IGJlIHByZXNlbnQgZm9yIHRoZSBLb2xtb2dvcm92LVNtaXJub3YgdGVzdHRpZXMgc2hvdWxkIG5vdCBiZSBwcmVzZW50IGZvciB0aGUgS29sbW9nb3Jvdi1TbWlybm92IHRlc3R0aWVzIHNob3VsZCBub3QgYmUgcHJlc2VudCBmb3IgdGhlIEtvbG1vZ29yb3YtU21pcm5vdiB0ZXN0XG4ifQ== -->
-<pre><code>ties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov test</code></pre>
+<!-- rnb-output-begin eyJkYXRhIjoidGllcyBzaG91bGQgbm90IGJlIHByZXNlbnQgZm9yIHRoZSBLb2xtb2dvcm92LVNtaXJub3YgdGVzdHRpZXMgc2hvdWxkIG5vdCBiZSBwcmVzZW50IGZvciB0aGUgS29sbW9nb3Jvdi1TbWlybm92IHRlc3R0aWVzIHNob3VsZCBub3QgYmUgcHJlc2VudCBmb3IgdGhlIEtvbG1vZ29yb3YtU21pcm5vdiB0ZXN0dGllcyBzaG91bGQgbm90IGJlIHByZXNlbnQgZm9yIHRoZSBLb2xtb2dvcm92LVNtaXJub3YgdGVzdHRpZXMgc2hvdWxkIG5vdCBiZSBwcmVzZW50IGZvciB0aGUgS29sbW9nb3Jvdi1TbWlybm92IHRlc3R0aWVzIHNob3VsZCBub3QgYmUgcHJlc2VudCBmb3IgdGhlIEtvbG1vZ29yb3YtU21pcm5vdiB0ZXN0dGllcyBzaG91bGQgbm90IGJlIHByZXNlbnQgZm9yIHRoZSBLb2xtb2dvcm92LVNtaXJub3YgdGVzdHRpZXMgc2hvdWxkIG5vdCBiZSBwcmVzZW50IGZvciB0aGUgS29sbW9nb3Jvdi1TbWlybm92IHRlc3R0aWVzIHNob3VsZCBub3QgYmUgcHJlc2VudCBmb3IgdGhlIEtvbG1vZ29yb3YtU21pcm5vdiB0ZXN0dGllcyBzaG91bGQgbm90IGJlIHByZXNlbnQgZm9yIHRoZSBLb2xtb2dvcm92LVNtaXJub3YgdGVzdHRpZXMgc2hvdWxkIG5vdCBiZSBwcmVzZW50IGZvciB0aGUgS29sbW9nb3Jvdi1TbWlybm92IHRlc3R0aWVzIHNob3VsZCBub3QgYmUgcHJlc2VudCBmb3IgdGhlIEtvbG1vZ29yb3YtU21pcm5vdiB0ZXN0dGllcyBzaG91bGQgbm90IGJlIHByZXNlbnQgZm9yIHRoZSBLb2xtb2dvcm92LVNtaXJub3YgdGVzdHRpZXMgc2hvdWxkIG5vdCBiZSBwcmVzZW50IGZvciB0aGUgS29sbW9nb3Jvdi1TbWlybm92IHRlc3R0aWVzIHNob3VsZCBub3QgYmUgcHJlc2VudCBmb3IgdGhlIEtvbG1vZ29yb3YtU21pcm5vdiB0ZXN0dGllcyBzaG91bGQgbm90IGJlIHByZXNlbnQgZm9yIHRoZSBLb2xtb2dvcm92LVNtaXJub3YgdGVzdHRpZXMgc2hvdWxkIG5vdCBiZSBwcmVzZW50IGZvciB0aGUgS29sbW9nb3Jvdi1TbWlybm92IHRlc3RcbiJ9 -->
+<pre><code>ties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov test</code></pre>
 <!-- rnb-output-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiS1MgZGlzdGFuY2UgPSAwLjEzMDU4NDMgKHAgPSAwLjY1ODIzMDMpXG4ifQ== -->
-<pre><code>KS distance = 0.1305843 (p = 0.6582303)</code></pre>
+<!-- rnb-output-begin eyJkYXRhIjoiS1MgZGlzdGFuY2UgPSAwLjA5NjU1MzM3IChwID0gMC45MjU3OTE4KVxuIn0= -->
+<pre><code>KS distance = 0.09655337 (p = 0.9257918)</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubmV0d29ya19wcmVkaWN0aW9uX3BlcmZvcm1hbmNlKGdfcmVhbCwgZ19wcmVkX3JlbClcbmBgYCJ9 -->
 <pre class="r"><code>network_prediction_performance(g_real, g_pred_rel)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiJGBjb25mdXNpb24gbWF0cml4YFxuICAgICAgICBhaWpfcHJlZFxuYWlqX3JlYWwgICAwICAgMVxuICAgICAgIDAgMzU2ICAxOVxuICAgICAgIDEgICA3ICA1M1xuXG4kYWNjdXJhY3lcblsxXSAwLjk0MDIyOTlcblxuJHByZWNpc2lvblxuWzFdIDAuNzM2MTExMVxuXG4kcmVjYWxsXG5bMV0gMC44ODMzMzMzXG4ifQ== -->
+<!-- rnb-output-begin eyJkYXRhIjoiJGBjb25mdXNpb24gbWF0cml4YFxuICAgICAgICBhaWpfcHJlZFxuYWlqX3JlYWwgICAwICAgMVxuICAgICAgIDAgMzc1ICAgMFxuICAgICAgIDEgIDI5ICAzMVxuXG4kYWNjdXJhY3lcblsxXSAwLjkzMzMzMzNcblxuJHByZWNpc2lvblxuWzFdIDFcblxuJHJlY2FsbFxuWzFdIDAuNTE2NjY2N1xuIn0= -->
 <pre><code>$`confusion matrix`
         aij_pred
 aij_real   0   1
-       0 356  19
-       1   7  53
+       0 375   0
+       1  29  31
 
 $accuracy
-[1] 0.9402299
+[1] 0.9333333
 
 $precision
-[1] 0.7361111
+[1] 1
 
 $recall
-[1] 0.8833333</code></pre>
+[1] 0.5166667</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -2043,21 +2043,21 @@ m &lt;- ifelse(is.nan(m),1,m)
 g_pred_rel &lt;- thresholding.p.value(m, p.th=0.05, method=&quot;BH&quot;)
 network_prediction_performance(g_real, g_pred_rel)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiJGBjb25mdXNpb24gbWF0cml4YFxuICAgICAgICBhaWpfcHJlZFxuYWlqX3JlYWwgICAwICAgMVxuICAgICAgIDAgMzcxICAgNFxuICAgICAgIDEgICA3ICA1M1xuXG4kYWNjdXJhY3lcblsxXSAwLjk3NDcxMjZcblxuJHByZWNpc2lvblxuWzFdIDAuOTI5ODI0NlxuXG4kcmVjYWxsXG5bMV0gMC44ODMzMzMzXG4ifQ== -->
+<!-- rnb-output-begin eyJkYXRhIjoiJGBjb25mdXNpb24gbWF0cml4YFxuICAgICAgICBhaWpfcHJlZFxuYWlqX3JlYWwgICAwICAgMVxuICAgICAgIDAgMzczICAgMlxuICAgICAgIDEgIDExICA0OVxuXG4kYWNjdXJhY3lcblsxXSAwLjk3MDExNDlcblxuJHByZWNpc2lvblxuWzFdIDAuOTYwNzg0M1xuXG4kcmVjYWxsXG5bMV0gMC44MTY2NjY3XG4ifQ== -->
 <pre><code>$`confusion matrix`
         aij_pred
 aij_real   0   1
-       0 371   4
-       1   7  53
+       0 373   2
+       1  11  49
 
 $accuracy
-[1] 0.9747126
+[1] 0.9701149
 
 $precision
-[1] 0.9298246
+[1] 0.9607843
 
 $recall
-[1] 0.8833333</code></pre>
+[1] 0.8166667</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -2077,30 +2077,30 @@ m &lt;- ifelse(is.nan(m),0,m)
 # 閾値化と評価
 g_pred_rel &lt;- thresholding.RMT(m)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoidGllcyBzaG91bGQgbm90IGJlIHByZXNlbnQgZm9yIHRoZSBLb2xtb2dvcm92LVNtaXJub3YgdGVzdHRpZXMgc2hvdWxkIG5vdCBiZSBwcmVzZW50IGZvciB0aGUgS29sbW9nb3Jvdi1TbWlybm92IHRlc3R0aWVzIHNob3VsZCBub3QgYmUgcHJlc2VudCBmb3IgdGhlIEtvbG1vZ29yb3YtU21pcm5vdiB0ZXN0dGllcyBzaG91bGQgbm90IGJlIHByZXNlbnQgZm9yIHRoZSBLb2xtb2dvcm92LVNtaXJub3YgdGVzdHRpZXMgc2hvdWxkIG5vdCBiZSBwcmVzZW50IGZvciB0aGUgS29sbW9nb3Jvdi1TbWlybm92IHRlc3R0aWVzIHNob3VsZCBub3QgYmUgcHJlc2VudCBmb3IgdGhlIEtvbG1vZ29yb3YtU21pcm5vdiB0ZXN0dGllcyBzaG91bGQgbm90IGJlIHByZXNlbnQgZm9yIHRoZSBLb2xtb2dvcm92LVNtaXJub3YgdGVzdHRpZXMgc2hvdWxkIG5vdCBiZSBwcmVzZW50IGZvciB0aGUgS29sbW9nb3Jvdi1TbWlybm92IHRlc3R0aWVzIHNob3VsZCBub3QgYmUgcHJlc2VudCBmb3IgdGhlIEtvbG1vZ29yb3YtU21pcm5vdiB0ZXN0dGllcyBzaG91bGQgbm90IGJlIHByZXNlbnQgZm9yIHRoZSBLb2xtb2dvcm92LVNtaXJub3YgdGVzdHRpZXMgc2hvdWxkIG5vdCBiZSBwcmVzZW50IGZvciB0aGUgS29sbW9nb3Jvdi1TbWlybm92IHRlc3R0aWVzIHNob3VsZCBub3QgYmUgcHJlc2VudCBmb3IgdGhlIEtvbG1vZ29yb3YtU21pcm5vdiB0ZXN0dGllcyBzaG91bGQgbm90IGJlIHByZXNlbnQgZm9yIHRoZSBLb2xtb2dvcm92LVNtaXJub3YgdGVzdHRpZXMgc2hvdWxkIG5vdCBiZSBwcmVzZW50IGZvciB0aGUgS29sbW9nb3Jvdi1TbWlybm92IHRlc3R0aWVzIHNob3VsZCBub3QgYmUgcHJlc2VudCBmb3IgdGhlIEtvbG1vZ29yb3YtU21pcm5vdiB0ZXN0dGllcyBzaG91bGQgbm90IGJlIHByZXNlbnQgZm9yIHRoZSBLb2xtb2dvcm92LVNtaXJub3YgdGVzdHRpZXMgc2hvdWxkIG5vdCBiZSBwcmVzZW50IGZvciB0aGUgS29sbW9nb3Jvdi1TbWlybm92IHRlc3R0aWVzIHNob3VsZCBub3QgYmUgcHJlc2VudCBmb3IgdGhlIEtvbG1vZ29yb3YtU21pcm5vdiB0ZXN0dGllcyBzaG91bGQgbm90IGJlIHByZXNlbnQgZm9yIHRoZSBLb2xtb2dvcm92LVNtaXJub3YgdGVzdFxuIn0= -->
-<pre><code>ties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov test</code></pre>
+<!-- rnb-output-begin eyJkYXRhIjoidGllcyBzaG91bGQgbm90IGJlIHByZXNlbnQgZm9yIHRoZSBLb2xtb2dvcm92LVNtaXJub3YgdGVzdHRpZXMgc2hvdWxkIG5vdCBiZSBwcmVzZW50IGZvciB0aGUgS29sbW9nb3Jvdi1TbWlybm92IHRlc3R0aWVzIHNob3VsZCBub3QgYmUgcHJlc2VudCBmb3IgdGhlIEtvbG1vZ29yb3YtU21pcm5vdiB0ZXN0dGllcyBzaG91bGQgbm90IGJlIHByZXNlbnQgZm9yIHRoZSBLb2xtb2dvcm92LVNtaXJub3YgdGVzdHRpZXMgc2hvdWxkIG5vdCBiZSBwcmVzZW50IGZvciB0aGUgS29sbW9nb3Jvdi1TbWlybm92IHRlc3R0aWVzIHNob3VsZCBub3QgYmUgcHJlc2VudCBmb3IgdGhlIEtvbG1vZ29yb3YtU21pcm5vdiB0ZXN0dGllcyBzaG91bGQgbm90IGJlIHByZXNlbnQgZm9yIHRoZSBLb2xtb2dvcm92LVNtaXJub3YgdGVzdHRpZXMgc2hvdWxkIG5vdCBiZSBwcmVzZW50IGZvciB0aGUgS29sbW9nb3Jvdi1TbWlybm92IHRlc3R0aWVzIHNob3VsZCBub3QgYmUgcHJlc2VudCBmb3IgdGhlIEtvbG1vZ29yb3YtU21pcm5vdiB0ZXN0dGllcyBzaG91bGQgbm90IGJlIHByZXNlbnQgZm9yIHRoZSBLb2xtb2dvcm92LVNtaXJub3YgdGVzdHRpZXMgc2hvdWxkIG5vdCBiZSBwcmVzZW50IGZvciB0aGUgS29sbW9nb3Jvdi1TbWlybm92IHRlc3R0aWVzIHNob3VsZCBub3QgYmUgcHJlc2VudCBmb3IgdGhlIEtvbG1vZ29yb3YtU21pcm5vdiB0ZXN0dGllcyBzaG91bGQgbm90IGJlIHByZXNlbnQgZm9yIHRoZSBLb2xtb2dvcm92LVNtaXJub3YgdGVzdHRpZXMgc2hvdWxkIG5vdCBiZSBwcmVzZW50IGZvciB0aGUgS29sbW9nb3Jvdi1TbWlybm92IHRlc3RcbiJ9 -->
+<pre><code>ties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov testties should not be present for the Kolmogorov-Smirnov test</code></pre>
 <!-- rnb-output-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiS1MgZGlzdGFuY2UgPSAwLjA4NjM0NTE3IChwID0gMC45NjkxMzI3KVxuIn0= -->
-<pre><code>KS distance = 0.08634517 (p = 0.9691327)</code></pre>
+<!-- rnb-output-begin eyJkYXRhIjoiS1MgZGlzdGFuY2UgPSAwLjE0MzU2NTkgKHAgPSAwLjU0MDk2NSlcbiJ9 -->
+<pre><code>KS distance = 0.1435659 (p = 0.540965)</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubmV0d29ya19wcmVkaWN0aW9uX3BlcmZvcm1hbmNlKGdfcmVhbCwgZ19wcmVkX3JlbClcbmBgYCJ9 -->
 <pre class="r"><code>network_prediction_performance(g_real, g_pred_rel)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiJGBjb25mdXNpb24gbWF0cml4YFxuICAgICAgICBhaWpfcHJlZFxuYWlqX3JlYWwgICAwICAgMVxuICAgICAgIDAgMzU5ICAxNlxuICAgICAgIDEgIDEzICA0N1xuXG4kYWNjdXJhY3lcblsxXSAwLjkzMzMzMzNcblxuJHByZWNpc2lvblxuWzFdIDAuNzQ2MDMxN1xuXG4kcmVjYWxsXG5bMV0gMC43ODMzMzMzXG4ifQ== -->
+<!-- rnb-output-begin eyJkYXRhIjoiJGBjb25mdXNpb24gbWF0cml4YFxuICAgICAgICBhaWpfcHJlZFxuYWlqX3JlYWwgICAwICAgMVxuICAgICAgIDAgMzM4ICAzN1xuICAgICAgIDEgICA1ICA1NVxuXG4kYWNjdXJhY3lcblsxXSAwLjkwMzQ0ODNcblxuJHByZWNpc2lvblxuWzFdIDAuNTk3ODI2MVxuXG4kcmVjYWxsXG5bMV0gMC45MTY2NjY3XG4ifQ== -->
 <pre><code>$`confusion matrix`
         aij_pred
 aij_real   0   1
-       0 359  16
-       1  13  47
+       0 338  37
+       1   5  55
 
 $accuracy
-[1] 0.9333333
+[1] 0.9034483
 
 $precision
-[1] 0.7460317
+[1] 0.5978261
 
 $recall
-[1] 0.7833333</code></pre>
+[1] 0.9166667</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -2132,21 +2132,21 @@ done</code></pre>
 <pre class="r"><code>g_pred_rel &lt;- adj2igraph(getRefit(se))
 network_prediction_performance(g_real, g_pred_rel)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiJGBjb25mdXNpb24gbWF0cml4YFxuICAgICAgICBhaWpfcHJlZFxuYWlqX3JlYWwgICAwICAgMVxuICAgICAgIDAgMzcxICAgNFxuICAgICAgIDEgICA4ICA1MlxuXG4kYWNjdXJhY3lcblsxXSAwLjk3MjQxMzhcblxuJHByZWNpc2lvblxuWzFdIDAuOTI4NTcxNFxuXG4kcmVjYWxsXG5bMV0gMC44NjY2NjY3XG4ifQ== -->
+<!-- rnb-output-begin eyJkYXRhIjoiJGBjb25mdXNpb24gbWF0cml4YFxuICAgICAgICBhaWpfcHJlZFxuYWlqX3JlYWwgICAwICAgMVxuICAgICAgIDAgMzc0ICAgMVxuICAgICAgIDEgICA3ICA1M1xuXG4kYWNjdXJhY3lcblsxXSAwLjk4MTYwOTJcblxuJHByZWNpc2lvblxuWzFdIDAuOTgxNDgxNVxuXG4kcmVjYWxsXG5bMV0gMC44ODMzMzMzXG4ifQ== -->
 <pre><code>$`confusion matrix`
         aij_pred
 aij_real   0   1
-       0 371   4
-       1   8  52
+       0 374   1
+       1   7  53
 
 $accuracy
-[1] 0.9724138
+[1] 0.9816092
 
 $precision
-[1] 0.9285714
+[1] 0.9814815
 
 $recall
-[1] 0.8666667</code></pre>
+[1] 0.8833333</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->

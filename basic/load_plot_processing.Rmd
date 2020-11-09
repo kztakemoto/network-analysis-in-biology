@@ -13,9 +13,10 @@ library(igraph)
 # ネットワークの読み込みと描画
 ### エッジリスト形式のネットワークデータを読み込む
 大腸菌の代謝ネットワークの一部（解糖系・糖新生とTCA回路）を例にします。
-* `../data/eco_EM+TCA.txt`
-* [KEGGデータベース](https://www.kegg.jp)
-* Kanehisa M, Sato Y, Furumichi M, Morishima K, Tanabe M (2019) New approach for understanding genome variations in KEGG. Nucleic Acids Res., 47, pp. D590–D595. https://doi.org/10.1093/nar/gky962
+
++ `../data/eco_EM+TCA.txt`
++ [KEGGデータベース](https://www.kegg.jp)
++ Kanehisa M, Sato Y, Furumichi M, Morishima K, Tanabe M (2019) New approach for understanding genome variations in KEGG. Nucleic Acids Res., 47, pp. D590–D595. https://doi.org/10.1093/nar/gky962
 
 ```{r}
 d <- read.table("../data/eco_EM+TCA.txt")

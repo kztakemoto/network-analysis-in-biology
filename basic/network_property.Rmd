@@ -10,7 +10,7 @@ library(igraph)
 library(gtools)
 ```
 
-### 大腸菌の遺伝子制御ネットワークの読み込み
+### 酵母のタンパク質相互作用ネットワークの読み込み
   + `../data/yeast_ppi_Batada_etal_2006.txt`
   + エッジリスト形式
   + Batada NN et al. (2006) Stratus not altocumulus: a new view of the yeast protein interaction network. PLoS Biol 4, e317. doi: 10.1371/journal.pbio.0040317
