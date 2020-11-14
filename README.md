@@ -30,7 +30,8 @@ R Notebookを参考にすれば解析は完了しますが，自分の解析に�
 * 予備：[ネットワークモチーフ](network_motifs)：ネットワークから重要な部分ネットワークを見つけます
 
 ## 参考書籍
-* [ネットワーク科学: ひと・もの・ことの関係性をデータから解き明かす新しいアプローチ](https://www.amazon.co.jp/dp/4320124472/ref=cm_sw_r_tw_dp_x_ag4RFb65A3X6N) [英語のオンライン版（全文読めます）](http://networksciencebook.com)
+* [ネットワーク科学: ひと・もの・ことの関係性をデータから解き明かす新しいアプローチ](https://www.amazon.co.jp/dp/4320124472/ref=cm_sw_r_tw_dp_x_ag4RFb65A3X6N)
+  * [英語のオンライン版（全文読めます）](http://networksciencebook.com)
 * [複雑ネットワーク：基礎から応用まで](https://www.amazon.co.jp/dp/4764903636/ref=cm_sw_r_tw_dp_ph4RFb6XKK3M2?_x_encoding=UTF8&psc=1)
 * [ネットワーク分析 (Rで学ぶデータサイエンス 8)](https://www.amazon.co.jp/dp/4320019288/ref=cm_sw_r_tw_dp_x_qi4RFbJGM8RF8)
 * [複雑ネットワークとその構造](https://www.amazon.co.jp/dp/4320110536/ref=cm_sw_r_tw_dp_x_aj4RFb2WW2EVW)
