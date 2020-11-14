@@ -34,7 +34,7 @@ community_detection_modularity_nonoverlap.Rmd
 
 ### モジュラリティ最大化に基づくコミュニティ抽出（コミュニティの重複を考慮する場合）
 ```
-community_detection_topological_overlap.Rmd
+community_detection_modularity_overlap.Rmd
 ```
 [Notebookのプレビュー（HTML版）を見る](https://kztakemoto.github.io/network-analysis-in-biology/community_detection/community_detection_modularity_overlap.nb.html)。
 
