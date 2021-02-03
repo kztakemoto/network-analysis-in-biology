@@ -98,6 +98,7 @@ cat("次数中心性（degree centrality）
     中央値　必須：",median(ess_nprop$degree),"非必須：",median(noness_nprop$degree),"\n")
 wilcox.test(ess_nprop$degree,noness_nprop$degree)
 ```
+
 ```{r}
 cat("固有ベクトル中心性（eigenvector centraliry）
     中央値　必須：",median(ess_nprop$eigen),"非必須：",median(noness_nprop$eigen),"\n")
