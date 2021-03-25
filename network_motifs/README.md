@@ -9,12 +9,6 @@
 これはネットワークの基本的な構成要素と解釈され，ネットワークの構成原理や機能についての洞察を得ることができます。
 
 ## Notebook
-### ネットワーク指標の統計解析：基礎編
-```
-network_statistical_analysis.Rmd
-```
-[Notebookのプレビュー（HTML版）を見る](https://kztakemoto.github.io/network-analysis-in-biology/network_motifs/network_statistical_analysis.nb.html)。
-
 ### ネットワークモチーフ解析
 * [ネットワークモチーフ](https://science.sciencemag.org/content/298/5594/824)を見つけます。
 * [部分ネットワーク・プロファイル](https://science.sciencemag.org/content/303/5663/1538)を計算します。

@@ -1,0 +1,207 @@
+---
+title: "基本的なネットワーク指標の計算"
+output: html_notebook
+---
+
+```{r}
+# igraphパッケージの読み込み
+library(igraph)
+library(gtools) #追加のパッケージ（局所効率性の計算で使う）
+```
+
+### 大腸菌の転写制御因子ネットワークの読み込み
+```{r}
+# エッジリストの読み込み
+d <- read.table("../data/ecoli_regDB5.txt")
+# グラフオブジェクトの作成（有向ネットワークで読み込む）
+g_dir <- simplify(graph.data.frame(d,directed=T),remove.multiple=T,remove.loops=T)
+# 仮想的な重みを追加する（対数正規分布由来の乱数を与える）
+E(g_dir)$weight <- rlnorm(ecount(g_dir))
+
+# 最大連結成分の取得
+cls <- clusters(g_dir,"weak")
+g_dir <- delete.vertices(g_dir,subset(V(g_dir),cls$membership!=which(cls$csize==max(cls$csize))[[1]]))
+
+# 無向ネットワークのオブジェクトの作成
+g <- as.undirected(g_dir)
+```
+
+# ネットワーク指標
+## ノード数
+```{r}
+vcount(g)
+```
+
+## エッジ数
+```{r}
+ecount(g)
+```
+
+## 次数（無向ネットワーク）
+```{r}
+deg <- degree(g)
+deg
+```
+
+握手の補題が成り立つことを確認する。
+```{r}
+sum(deg)
+2 * ecount(g)
+```
+
+## 次数（有向ネットワーク）
+### 入次数
+```{r}
+deg_in <- degree(g_dir, mode="in")
+```
+
+### 出次数
+```{r}
+deg_out <- degree(g_dir, mode="out")
+```
+
+有向ネットワークの握手の補題［式(2.6)］が成り立つことを確認する。
+```{r}
+sum(deg_in)
+sum(deg_out)
+ecount(g_dir)
+```
+
+## 平均次数
+### 無向ネットワークの場合
+```{r}
+mean(degree(g))
+```
+式(2.3)の確かめ
+```{r}
+2*ecount(g)/vcount(g)
+```
+
+### 有向ネットワークの場合
+```{r}
+mean(degree(g_dir, mode="in"))
+```
+これは以下とも等しくなる。
+```{r}
+mean(degree(g_dir, mode="in"))
+ecount(g_dir) / vcount(g)
+```
+
+## 重み付き次数（strength）
+無向ネットワークの場合
+```{r}
+strength(g)
+```
+
+無向ネットワークの場合
+```{r}
+strength(g_dir, mode="in")
+strength(g_dir, mode="out")
+```
+
+## 次数分布
+```{r}
+k <- 0:max(deg)
+plot(k, degree.distribution(g), xlab="k", ylab="P(k)", log="xy")
+```
+次数分布を使っても平均次数を求められる。
+```{r}
+sum(k * degree.distribution(g))
+```
+
+
+## 同類度係数
+### 無向ネットワークの場合（重みなし）式(2.8)
+```{r}
+assortativity.degree(g)
+```
+
+### 有向ネットワークの場合［式(2.10)］
+```{r}
+el <- get.edgelist(g_dir)
+# 出次数-出次数
+cor.test(deg_out[el[,1]], deg_out[el[,2]])
+# 出次数-入次数
+cor.test(deg_out[el[,1]], deg_in[el[,2]])
+# 入次数-出次数
+cor.test(deg_in[el[,1]], deg_out[el[,2]])
+# 入次数-入次数
+cor.test(deg_in[el[,1]], deg_in[el[,2]])
+```
+
+## クラスタ係数
+### 各ノードに対するクラスタ係数
+```{r}
+cc <- transitivity(g, type="local", isolates="zero")
+```
+
+### 平均クラスタ係数
+```{r}
+transitivity(g, type="localaverage", isolates="zero")
+# もしくは
+mean(cc)
+```
+
+## 重み付きクラスタ係数
+```{r}
+# 各ノードに対する重み付きクラスタ係数
+wcc <- transitivity(g, type="weighted", isolates="zero")
+# 平均重み付きクラスタ係数
+mean(wcc)
+```
+
+## 最短経路
+### 最短経路長行列
+各ノード間の距離行列に対応する。
+```{r}
+distances(g)
+```
+
+### 平均最短経路長
+```{r}
+mean_distance(g)
+```
+この関数は重み付きネットワークには対応していない。
+
+### 重み付きネットワークの場合の平均最短経路長
+```{r}
+# 距離行列を計算して
+d_mtx <- distances(g, weights=E(g)$weight)
+# 対角成分を除いた上三角行列の要素の平均を計算する
+mean(d_mtx[upper.tri(d_mtx)])
+```
+
+## 効率性
+### 大域効率性
+```{r}
+dinv_mtx <- distances(g, weights=NA)**-1
+# d_mtx <- distances(g, weights=E(g)$weight)**-1 # 重み付きネットワークなら
+diag(dinv_mtx) <- 0
+# 各ノードに対する大域効率性
+nodal_global_efficiency <- apply(dinv_mtx,1,sum) / (vcount(g) - 1)
+# 全体的（平均的な）大域効率性
+ave_global_efficiency <- mean(nodal_global_efficiency)
+# 出力
+ave_global_efficiency
+```
+
+###（おまけ）局所効率性
+```{r}
+# 各ノードに対する局所効率性
+nodal_local_efficiency <- c()
+for(i in 1:vcount(g)){
+  nei_idx <- as.vector(neighbors(g,i)) # 隣接ノードのインデックスを取得
+  num_nei <- length(nei_idx)
+  if(num_nei > 1) {
+    nodal_local_efficiency <- c(nodal_local_efficiency, sum(dinv_mtx[permutations(num_nei,2,nei_idx)]) / num_nei / (num_nei - 1))
+    } else {
+      nodal_local_efficiency <- c(nodal_local_efficiency,0)
+    }
+  }
+# 全体的（平均的な）局所効率性
+ave_local_efficiency <- mean(nodal_local_efficiency)
+```
+
+# やってみよう
+  + このNotebookを参考にして，別の生物ネットワークのネットワーク指標を計算してみよう（``data``に様々ある）。
+  + Notebookを参考に自分のデータを解析してみよう。

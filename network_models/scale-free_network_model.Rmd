@@ -1,0 +1,101 @@
+---
+title: "スケール・フリーネットワークモデル"
+output: html_notebook
+---
+3つの代表的なスケール・フリーネットワークモデルを紹介します。
+
+
+```{r}
+# igraphパッケージの読み込み
+library(igraph)
+```
+
+# Barabasi-Albertモデル
+### ネットワークの描画
+```{r}
+# barabasi.game(N, power, m, directed=F)
+# power: 非線形優先接続に対する指数。1とすることで式(3.7)と同じ意味になる。
+# directed: Tとすれば，有向ネットワークになる。
+g <- barabasi.game(30, 1, 2, directed=F)
+# 描画
+plot(g)
+```
+
+### 次数分布
+```{r}
+# モデルネットワークの生成
+g <- g <- barabasi.game(5000, 1, 2, directed=F)
+# 次数の範囲（0から最大次数）
+k <- 0:max(degree(g))
+# 次数分布の描画
+plot(k, degree.distribution(g), xlab="k", ylab="P(k)", log="xy")
+
+# 理論線
+f <- function(k,m){
+  return(2*m*k**(-3))
+}
+# 理論線の描画
+lines(k, f(k, 2))
+```
+# Chung-Luモデル
+### ネットワークの描画
+```{r}
+# static.power.law.game(N, L, gamma)。
+# gamma = 1 + 1 / xi
+g <- static.power.law.game(30, 60, 2.5, finite.size.correction = T)
+# 描画
+plot(g)
+```
+### 次数分布の描画
+```{r}
+# モデルネットワークの生成
+g <- static.power.law.game(5000, 10000, 2.5, finite.size.correction = T)
+# 次数の範囲（0から最大次数）
+k <- 0:max(degree(g))
+# 次数分布の描画
+plot(k, degree.distribution(g), xlab="k", ylab="P(k)", log="xy")
+```
+
+# コンフィギュレーションモデル
+### 現実の生物ネットワークの次数分布を得る。
+大腸菌のタンパク質相互作用ネットワークの読み込み
+```{r}
+# エッジリストの読み込み
+d <- read.table("../data/ecoli_ppi_Hu_etal_2009.txt")
+# グラフオブジェクトの作成
+g <- simplify(graph.data.frame(d,directed=F),remove.multiple=T,remove.loops=T)
+
+# 最大連結成分の取得
+cls <- clusters(g,"weak")
+g <- delete.vertices(g,subset(V(g),cls$membership!=which(cls$csize==max(cls$csize))[[1]]))
+
+# 次数のベクトルを取得
+deg <- degree(g)
+```
+
+### コンフィギュレーションモデルの作成
+```{r}
+g_rand <- degree.sequence.game(deg, method="vl") 
+```
+
+### 次数の比較
+次数は変わっていないことがわかる。
+```{r}
+plot(degree(g), degree(g_rand), xlab="k in real network", ylab="k in model network")
+abline(0,1)
+```
+### 平均クラスタ係数の比較
+クタスタ係数は変化する。
+```{r}
+# 実際のネットワーク
+c_ave_real <- transitivity(g,type="localaverage",isolates="zero")
+# コンフィギュレーションモデル
+c_ave_rand <- transitivity(g_rand,type="localaverage",isolates="zero")
+# 出力
+cat("実際：",c_ave_real,"コンフィギュレーション：",c_ave_rand,"\n")
+```
+
+# やってみよう
+  + 平均次数やノード数を変えて，モデルネットワークを描画してみよう。
+  + Notebookを参考に，別の生物ネットワークを読み込んでコンフィギュレーションモデルのネットワーク指標と比較してみよう（``data``に様々ある）。
+  + Notebookを参考に，自分のネットワークを使ってコンフィギュレーションモデルでランダムネットワークを作ってみよう。

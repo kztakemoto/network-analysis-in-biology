@@ -1,0 +1,85 @@
+---
+title: "格子ネットワークとWatts-Strogatzモデル"
+output: html_notebook
+---
+格子ネットワークを生成して，基本的なネットワーク指標を計算します。
+
+
+```{r}
+# igraphパッケージの読み込み
+library(igraph)
+```
+
+# 格子ネットワーク
+### 格子ネットワークの生成と描画
+```{r}
+# watts.strogatz.game(次元, N, k/2, p)
+g <- watts.strogatz.game(1, 14, 2, 0)
+# 描画
+plot(g, layout=layout_in_circle)
+```
+### 平均最短経路長
+```{r}
+d_ave <- c()
+N_seq <- seq(500,10000,500) # 調査対象のノード数
+# 各ノード数における平均最短経路長を計算
+for(N in N_seq){
+  g <- g <- watts.strogatz.game(1,N,2,0)
+  d_ave <- c(d_ave, mean_distance(g))
+}
+# ノード数Nと平均最短経路長<d>の関係をプロット
+plot(N_seq, d_ave, xlab="N", ylab="<d>", ylim=c(0,1300))
+
+# 理論線：式(3.4)
+f <- function(x){return(x/8)}
+# 重ねて描画
+plot(f, add=T, xlim=c(500, 10000), lty=1, ylim=c(0,1300))
+
+# Erdos-Renyiのランダムネットワークの理論線：式(3.4)
+f <- function(x){return(log(x)/log(4))}
+# 重ねて描画
+plot(f, add=T, xlim=c(500, 10000), lty=2, ylim=c(0,1300))
+```
+# Watts-Strogatzモデル
+### Watts-Strogatzモデルネットワークの描画
+```{r}
+# watts.strogatz.game(次元, N, k/2, p)
+g <- watts.strogatz.game(1, 14, 2, 0.1)
+# 描画
+plot(g, layout=layout_in_circle)
+```
+### スモールワールドの検証（図3.9の再現）
+```{r}
+N <- 1000 # ノード数
+k <- 4 # 1次元格子におけるノード次数
+
+# エッジの張り替え確率
+p_set <- c(0,0.0001, 0.0005, 0.001, 0.005, 0.01, 0.05, 0.1, 0.5, 1)
+
+set.seed(3)
+data <- c()
+for(p in p_set){
+    # Watts Strogatzモデルネットワークの作成
+    g <- watts.strogatz.game(size=N, nei=k/2, dim=1, p=p)
+    # 平均クラスタ係数
+    c_ave <- transitivity(g,type="localaverage",isolates="zero")
+    # 平均最短経路長
+    d_ave <- mean_distance(g)
+
+    if(p == 0){
+        c_ave_base <- c_ave
+        d_ave_base <- d_ave
+    } else{
+        data <- rbind(data, c(p, c_ave/c_ave_base, d_ave/d_ave_base))
+    }
+}
+
+# p vs <C>_p / <C>_0 (赤)
+plot(data[,1], data[,2], type="b", col="red", log="x", xlab="p", ylab="<C>p/<C>0 or <d>p/<d>0")
+# p vs <d>_p / <d>_0（緑）
+points(data[,1], data[,3], type="b", col="green")
+```
+
+# やってみよう
+  + 平均次数やノード数を変えて，ネットワークを描画してみよう。
+  + 平均次数やノード数を変えて，スモールワールド性を検証してみよう。

@@ -3,7 +3,7 @@ title: "ネットワーク指標の統計解析"
 output: html_notebook
 ---
 
-大腸菌のタンパク質相互作用ネットワークを例にして次のネットワーク指標の統計的有意性の評価を行います。
+ランダム化ネットワークを使って，大腸菌のタンパク質相互作用ネットワークを例にして次のネットワーク指標の統計的有意性の評価を行います。
   + 平均クラスタ係数
   + 平均最短経路長
 
@@ -28,7 +28,7 @@ cls <- clusters(g,"weak")
 g <- delete.vertices(g,subset(V(g),cls$membership!=which(cls$csize==max(cls$csize))[[1]]))
 ```
 
-### ネットワークをランダム化するアルゴリズムの読み込み
+### ランダム化ネットワークを作成するためのソースコードの読み込み
 ```{r}
 source("../src/edge_swapping_randomization.R")
 ```
@@ -44,7 +44,8 @@ apl_real <- mean_distance(g)
 ```
 
 ### 100個のランダムネットワークを作成して，ネットワーク指標を計算する。
-平均クラスタ係数と平均最短経路長。
+平均クラスタ係数と平均最短経路長
+時間がかかります。
 ```{r}
 # 次数の計算（configuration modelのため）
 deg <- degree(g)
@@ -54,15 +55,13 @@ cc_null <- c()
 apl_null <- c()
 
 for(i in 1:100){
-  # ランダムネットワークの作成（次の三つからひとつを選ぶ）
-  # 1) Edge switching algorithm (simple version)
-  #g_null <- rewire(g, with=keeping_degseq(niter=ecount(g)*(50+log(ecount(g)))/2,loops=F))
+  # ランダムネットワークの作成（次のふたつからひとつを選ぶ）
+  # 1) Edge switching algorithm [R. Milo et al., Science 298, 824 (2002)] doi:10.1126/science.298.5594.824
+  # ランダム化ネットワーク
+  g_null <- edge_swapping_randomization(g)
 
-  # 2) Edge switching algorithm [R. Milo et al., Science 298, 824 (2002)] doi:10.1126/science.298.5594.824
-  #g_null <- edge_swapping_randomization(g)
-
-  # 3) Configuration model
-  g_null <- degree.sequence.game(deg,m="vl")
+  # 2) コンフィギュレーションモデル（代わりにこちらを使うこともできる）
+  #g_null <- degree.sequence.game(deg,m="vl")
 
   # 平均クラスタ係数
   cc_null <- c(cc_null, transitivity(g_null, type="localaverage", isolates="zero"))
@@ -83,14 +82,14 @@ z_apl <- (apl_real - mean(apl_null)) / sd(apl_null)
 ### 帰無分布と観測値（平均クラスタ係数）
 ```{r}
 # ヒストグラム
-hist(cc_null, xlim=c(min(cc_null), cc_real))
+hist(cc_null, xlim=c(min(cc_null), cc_real), xlab="<C>", m="")
 # 観測値を赤線で示す
 abline(v=cc_real, col="red")
 ```
 ### 帰無分布と観測値（平均最短経路長）
 ```{r}
 # ヒストグラム
-hist(apl_null, xlim=c(min(apl_null), apl_real))
+hist(apl_null, xlim=c(min(apl_null), apl_real), xlab="<d>", m="")
 # 観測値を赤線で示す
 abline(v=apl_real, col="red")
 ```
@@ -119,6 +118,6 @@ cc_real * mean(apl_null) / apl_real / mean(cc_null)
 ```
 
 # やってみよう
-  + このNotebookを参考にして，生物ネットワークを解析してみよう（``data``に様々ある）。
+  + このNotebookを参考にして，別の生物ネットワークを解析してみよう（``data``に様々ある）。
   + Notebookを参考に自分のデータを解析してみよう。
   

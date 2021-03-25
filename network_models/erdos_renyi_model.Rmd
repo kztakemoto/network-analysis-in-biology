@@ -1,0 +1,161 @@
+---
+title: "Erdos-Renyのランダムネットワーク"
+output: html_notebook
+---
+Erdos-Renyのランダムネットワークを生成して，基本的なネットワーク指標を計算します。
+
+
+```{r}
+# igraphパッケージの読み込み
+library(igraph)
+```
+
+### Erdos-Renyのランダムネットワークの生成と描画
+```{r}
+# erdos.renyi.game(N, p)
+g <- erdos.renyi.game(10, 0.2)
+# 描画
+plot(g, layout=layout_in_circle)
+```
+
+### 次数分布
+```{r}
+# モデルネットワークの生成
+g <- erdos.renyi.game(1000, 0.005)
+# 次数の範囲（0から最大次数）
+k <- 0:max(degree(g))
+# 次数分布の描画
+plot(k, degree.distribution(g), xlab="k", ylab="P(k)")
+
+# 理論線：式(3.2)
+f <- function(k,N,p){
+  return(choose(N-1,k) * p**k * (1-p)**(N-1-k))
+}
+# 理論線の描画
+lines(k, f(k,1000,0.005))
+```
+
+### 平均最短経路長
+```{r}
+k_ave <- 4 # 平均次数
+d_ave <- c()
+N_seq <- seq(500,10000,500) # 調査対象のノード数
+# 各ノード数における平均最短経路長を計算
+for(N in N_seq){
+  g <- erdos.renyi.game(N, k_ave/(N-1))
+  d_ave <- c(d_ave, mean_distance(g))
+}
+# ノード数Nと平均最短経路長<d>の関係をプロット
+plot(N_seq, d_ave, xlab="N", ylab="<d>")
+
+# 理論線：式(3.4)
+f <- function(x){return(log(x)/log(k_ave))}
+# 重ねて描画
+plot(f, add=T, xlim=c(500, 10000), lty=1)
+```
+
+### 平均クラスタ係数
+```{r}
+k_ave <- 4 # 平均次数
+C_ave <- c()
+N_seq <- seq(500,10000,500) # 調査対象のノード数
+# 各ノード数における平均クラスタ係数を計算
+for(N in N_seq){
+  g <- erdos.renyi.game(N, k_ave/(N-1))
+  C_ave <- c(C_ave, transitivity(g, type="localaverage", isolates="zero"))
+}
+# ノード数Nと平均クラスタ係数<C>の関係をプロット
+plot(N_seq, C_ave, xlab="N", ylab="<C>")
+
+# 理論線：式(3.6)
+f <- function(x){return(k_ave/(x-1))}
+# 重ねて描画
+plot(f, add=T, xlim=c(500, 10000), lty=1)
+```
+### 現実の生物ネットワークと Erdos–Renyi のランダムネットワークの次数分布の比較
+大腸菌のタンパク質相互作用ネットワークの読み込み
+```{r}
+# エッジリストの読み込み
+d <- read.table("../data/ecoli_ppi_Hu_etal_2009.txt")
+# グラフオブジェクトの作成
+g <- simplify(graph.data.frame(d,directed=F),remove.multiple=T,remove.loops=T)
+
+# 最大連結成分の取得
+cls <- clusters(g,"weak")
+g <- delete.vertices(g,subset(V(g),cls$membership!=which(cls$csize==max(cls$csize))[[1]]))
+```
+
+次数分布の比較
+```{r}
+# 大腸菌のタンパク質相互作用ネットワークの次数分布のプロット
+k <- 0:max(degree(g))
+plot(k, degree.distribution(g), xlab="k", ylab="P(k)", log="xy")
+
+# Erdos-Renyiのランダムネットワークの次数分布の理論式：式(3.2)
+f <- function(k,N,p){
+  return(choose(N-1,k) * p**k * (1-p)**(N-1-k))
+}
+# 理論線の描画
+N <- vcount(g)
+p <- mean(degree(g)) / (N-1)
+lines(k, f(k, N, p))
+```
+
+### 現実の生物ネットワークと Erdos–Renyi のランダムネットワークの平均最短経路長と平均クラスタ係数の比較
+```{r}
+# 調査するネットワーク（のファイル名）の指定
+files <- c("ecoli_regDB5.txt",
+           "protein_structure_1A6N_A.txt",
+           "protein_structure_1BKS_A.txt",
+           "protein_structure_2VIK_A.txt",
+           "ecoli_ppi_Hu_etal_2009.txt",
+           "yeast_ppi_Batada_etal_2006.txt",
+           "human_ppi_hippie_v2.2.txt",
+           "metabolic_ecoli.txt",
+           "metabolic_yeast.txt",
+           "metabolic_human.txt",
+           "human_structural_brain_network_Ardesch_2019.txt",
+           "human_functional_brain_network_1000_Functional_Connectomes.txt",
+           "marine_food_web_pnas_102_15_5443_01562.txt",
+           "terrestrial_food_web_caribbean.txt"
+           )
+
+# それぞれのネットワークの指標を計算してデータフレームに格納
+df <- data.frame()
+for(file in files){
+    # エッジリストの読み込み
+    d <- read.table(paste("../data/",file,sep=""), header=F)
+    # グラフオブジェクトの作成
+    g <- simplify(graph.data.frame(d[1:2], directed=F), remove.multiple=T, remove.loops=T)
+    # 最大連結成分の取得
+    cls <- clusters(g,"weak")
+    g <- delete.vertices(g,subset(V(g),cls$membership!=which(cls$csize==max(cls$csize))[[1]]))
+    
+    # ノード数
+    N <- vcount(g)
+    # 平均次数
+    k_ave <- mean(degree(g))
+    # 平均最短経路長
+    d_ave <- mean_distance(g)
+    # 平均クラスタ係数
+    c_ave <- transitivity(g,type="localaverage",isolates="zero")
+    # 表示
+    df <- rbind(df, c(file, 
+                      N,
+                      k_ave,
+                      d_ave,
+                      log(N) / log(k_ave),
+                      c_ave,
+                      k_ave / (N-1)
+                      )
+                )
+}
+
+# データフレームの出力
+names(df) <- c("Network","N","<k>","d_ave","d_ave_ER","C_ave","C_ave_ER")
+df
+```
+
+# やってみよう
+  + このNotebookを参考にして，別の生物ネットワークを読み込んでErdos-Renyiのランダムネットワークと比較してみよう（``data``に様々ある）。
+  + Notebookを参考に自分のネットワークデータをErdos-Renyiのランダムネットワークと比較してみよう。
