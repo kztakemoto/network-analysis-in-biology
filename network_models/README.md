@@ -23,10 +23,10 @@ lattice_Watts-Strogatz_model.Rmd
 ```
 scale-free_network_model.Rmd
 ```
-[Notebookのプレビュー（HTML版）を見る](https://kztakemoto.github.io/network-analysis-in-biology/network_models/lattice_Watts-Strogatz_model.nb.html)。
+[Notebookのプレビュー（HTML版）を見る](https://kztakemoto.github.io/network-analysis-in-biology/network_models/scale-free_network_model.nb.html)。
 
 ### ランダムネットワークを用いたネットワーク指標の統計解析
 ```
-scale-free_network_model.Rmd
+network_statistical_analysis.Rmd
 ```
-[Notebookのプレビュー（HTML版）を見る](https://kztakemoto.github.io/network-analysis-in-biology/network_models/lattice_Watts-Strogatz_model.nb.html)。
+[Notebookのプレビュー（HTML版）を見る](https://kztakemoto.github.io/network-analysis-in-biology/network_models/network_statistical_analysis.nb.html)。
