@@ -3,12 +3,7 @@ title: "Topological Overlap Matrixに基づくコミュニティ抽出"
 output: html_notebook
 ---
 
-空手クラブのネットワークを例にして，コミュニティ検出を行います。
-
-  + ``../data/karate.GraphML``
-  + GraphML形式
-  + ノード属性Factionは実際のグループ分けに対応
-  + Zachary WW (1977) An information flow model for conflict and fission in small Groups. J Anthropol Res 33, 452-473. http://www.jstor.org/stable/3629752
+代謝ネットワークの一部（解糖系・糖新生とTCA回路）を例にして，コミュニティ検出を行います。
 
 ```{r}
 # igraphパッケージの読み込み
@@ -17,10 +12,12 @@ library(igraph)
 
 ### ネットワークの読み込み
 ```{r}
-# 空手クラブのネットワークを（無向きなしネットワークで）読み込む
-g <- as.undirected(read.graph("../data/karate.GraphML",format="graphml"))
-# エッジの重みを無効にする（ここでは使わないため）
-if(!is.null(get.edge.attribute(g,"weight"))) g <- delete_edge_attr(g, "weight")
+# エッジリスト形式のネットワークデータを読み込む
+d <- read.table("../data/eco_EM+TCA.txt")
+# 無向ネットワークで読み込む
+g <- graph.data.frame(d, directed=F)
+# 多重エッジや自己ループを削除する。
+g <- simplify(g, remove.multiple=T, remove.loops=T)
 ```
 
 ### Topological overlap score matrixの計算
@@ -66,8 +63,35 @@ mem
 ```{r}
 # コミュニティのメンバシップにしたがってノードを色付け
 V(g)$color <- mem
-# ネットワークを描画。ノードの形が実際のメンバーシップに対応します。
-plot(g,vertex.size=10, vertex.label=V(g)$name, vertex.shape=c("circle","square")[V(g)$Faction])
+# ネットワークを描画。
+set.seed(5)
+plot(g,vertex.size=10, vertex.label=V(g)$name)
+```
+### モジュラリティ最大化による最適分割の決定
+```{r}
+q_max <- -Inf
+nc_opt <- 1
+nc_vs_q <- c() 
+for(nc in 1:vcount(g)){
+  mem <- cutree(res, k=nc)
+  q <- modularity(g, mem)
+  nc_vs_q  <- rbind(nc_vs_q, c(nc, q))
+  if(q_max < q){
+    nc_opt <- nc
+    q_max <- q
+  }
+}
+# コミュニティ数ncとその場合のモジュラリティQをプロット
+plot(n_c_vs_q, xlab="# of communities (nc)", ylab="Modularity Q")
+```
+```{r}
+# モジュラリティQが最大となる分割を得る。
+mem <- cutree(res, k=nc_opt)
+# コミュニティのメンバシップにしたがってノードを色付け
+V(g)$color <- mem
+# ネットワークを描画。
+set.seed(5)
+plot(g,vertex.size=10, vertex.label=V(g)$name)
 ```
 
 # やってみよう

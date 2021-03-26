@@ -26,7 +26,6 @@ g_dir <- delete.vertices(g_dir,subset(V(g_dir),cls$membership!=which(cls$csize==
 g <- as.undirected(g_dir)
 ```
 
-# ネットワーク指標
 ## ノード数
 ```{r}
 vcount(g)
@@ -185,7 +184,7 @@ ave_global_efficiency <- mean(nodal_global_efficiency)
 ave_global_efficiency
 ```
 
-###（おまけ）局所効率性
+### 局所効率性
 ```{r}
 # 各ノードに対する局所効率性
 nodal_local_efficiency <- c()
@@ -200,6 +199,7 @@ for(i in 1:vcount(g)){
   }
 # 全体的（平均的な）局所効率性
 ave_local_efficiency <- mean(nodal_local_efficiency)
+ave_local_efficiency
 ```
 
 # やってみよう

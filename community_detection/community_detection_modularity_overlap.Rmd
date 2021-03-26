@@ -3,12 +3,7 @@ title: "モジュラリティ最大化に基づくコミュニティ抽出（コ
 output: html_notebook
 ---
 
-空手クラブのネットワークを例にして，コミュニティ検出を行います。
-
-  + ``../data/karate.GraphML``
-  + GraphML形式
-  + ノード属性Factionは実際のグループ分けに対応
-  + Zachary WW (1977) An information flow model for conflict and fission in small Groups. J Anthropol Res 33, 452-473. http://www.jstor.org/stable/3629752
+代謝ネットワークの一部（解糖系・糖新生とTCA回路）を例にして，コミュニティ検出を行います。
 
 ```{r}
 # パッケージの読み込み
@@ -18,12 +13,12 @@ library(linkcomm)
 
 ### ネットワークの読み込み
 ```{r}
-# 空手クラブのネットワークを（無向きなしネットワークで）読み込む
-g <- as.undirected(read.graph("../data/karate.GraphML",format="graphml"))
-# エッジの重みを無効にする（ここでは使わないため）
-if(!is.null(get.edge.attribute(g,"weight"))) g <- delete_edge_attr(g, "weight")
-# 後のわかりやすさのためノードに実際のコミュニティ番号を追加
-V(g)$name <- paste(V(g)$name,V(g)$Faction,sep=":")
+# エッジリスト形式のネットワークデータを読み込む
+d <- read.table("../data/eco_EM+TCA.txt")
+# 無向ネットワークで読み込む
+g <- graph.data.frame(d, directed=F)
+# 多重エッジや自己ループを削除する。
+g <- simplify(g, remove.multiple=T, remove.loops=T)
 # エッジリストを取得
 el <- get.edgelist(g)
 # スペースをアンダーバーに置き換え（linkcommパッケージはスペースを許さない）
@@ -38,6 +33,7 @@ linkcomm <- getLinkCommunities(el, hcmethod="average", use.all.edges=T)
 ```
 #### コミュニティ検出の結果を表示
 ```{r}
+set.seed(5)
 plot(linkcomm, type="graph")
 ```
 #### メンバーシップを表示。ひとつのコミュニティのみに属すエッジは出力されないことに注意。
@@ -47,6 +43,8 @@ plot(linkcomm, type="members")
 ### 適当な閾値でコミュニティ抽出（クラスタ）を決定する場合
 ```{r}
 linkcomm_at <- newLinkCommsAt(linkcomm, cutat=0.9)
+set.seed(5)
+plot(linkcomm_at, type="graph")
 ```
 
 ## Overlapping Cluster Generator (OCG) アルゴリズムに基づく方法

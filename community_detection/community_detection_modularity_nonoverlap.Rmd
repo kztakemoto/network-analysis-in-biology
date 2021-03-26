@@ -3,12 +3,7 @@ title: "モジュラリティ最大化に基づくコミュニティ抽出（コ
 output: html_notebook
 ---
 
-空手クラブのネットワークを例にして，コミュニティ検出を行います。
-
-  + ``../data/karate.GraphML``
-  + GraphML形式
-  + ノード属性Factionは実際のグループ分けに対応
-  + Zachary WW (1977) An information flow model for conflict and fission in small Groups. J Anthropol Res 33, 452-473. http://www.jstor.org/stable/3629752
+代謝ネットワークの一部（解糖系・糖新生とTCA回路）を例にして，コミュニティ検出を行います。
 
 ```{r}
 # パッケージの読み込み
@@ -18,10 +13,12 @@ library(rnetcarto)
 
 ### ネットワークの読み込み
 ```{r}
-# 空手クラブのネットワークを（無向きなしネットワークで）読み込む
-g <- as.undirected(read.graph("../data/karate.GraphML",format="graphml"))
-# エッジの重みを無効にする（ここでは使わないため）
-if(!is.null(get.edge.attribute(g,"weight"))) g <- delete_edge_attr(g, "weight")
+# エッジリスト形式のネットワークデータを読み込む
+d <- read.table("../data/eco_EM+TCA.txt")
+# 無向ネットワークで読み込む
+g <- graph.data.frame(d, directed=F)
+# 多重エッジや自己ループを削除する。
+g <- simplify(g, remove.multiple=T, remove.loops=T)
 ```
 
 ### 貪欲アルゴリズムに基づく方法
@@ -36,6 +33,7 @@ data$membership
 # デンドログラムの表示
 dendPlot(data)
 # コミュニティ検出の結果
+set.seed(5)
 plot(data, g)
 ```
 ### スペクトル法（固有ベクトルに基づく方法）に基づく方法
@@ -50,6 +48,7 @@ data$membership
 # デンドログラムをプロット
 dendPlot(data)
 # コミュニティ検出の結果
+set.seed(5)
 plot(data, g)
 ```
 ### 焼きなまし法に基づく方法（rnetcartoパッケージで計算）
@@ -72,6 +71,7 @@ data <- list(membership = table$module, modularity=c(res[[2]]))
 # ネットワークを表示
 V(g)$community <- data$membership
 colrs <- adjustcolor( c("gray50", "tomato", "gold", "yellowgreen"), alpha=.6) # 色付け
+set.seed(5)
 plot(g, vertex.color=colrs[V(g)$community])
 ```
 
