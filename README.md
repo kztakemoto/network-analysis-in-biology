@@ -19,7 +19,7 @@ R Notebookを参考にすれば解析は完了しますが，自分の解析に�
   * [スライド](https://www.slideshare.net/kztakemoto/r-seminar-on-igraph)
 
 ## 目次
-* 1章：生物ネットワーク解析の基礎
+* 1章：[生物ネットワーク解析の基礎](introduction)
 * 2章：[基本的なネットワーク指標](network_property)：基本的なネットワーク指標を計算します。
 * 3章：[ネットワークモデル](network_models)：様々なネットワークモデルからネットワークを生成し，それを用いたネットワーク指標の統計解析を行います。
   * 参考：[ネットワークモチーフ](network_motifs)：ネットワークから重要な部分構造を見つけます。

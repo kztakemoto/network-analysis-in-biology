@@ -53,6 +53,7 @@ E(g, path=paths$res[[1]])$color <- "red"
 # 最短経路に含まれるエッジを太くする。
 E(g,path=paths$res[[1]])$width <- 3
 
+set.seed(5)
 plot(g,
      vertex.label=V(g)$name,
      # 最短経路に含まれるノードは赤，そうでないものは白にする。

@@ -31,14 +31,20 @@ g <- simplify(g, remove.multiple=T, remove.loops=T)
 g
 ```
 
+### 隣接行列をえる
+```{r}
+get.adjacency(g, sparse = F)
+```
 ### ネットワークの描画
 基本
 ```{r}
+set.seed(5)
 plot(g)
 ```
 ### もう少し凝ったネットワーク描画
 オプションをいろいろ与えることができます。
 ```{r}
+set.seed(5)
 plot(g,
   vertex.size=8, #ノードの大きさ
   vertex.shape="square", #ノードの形 names(igraph:::.igraph.shapes) で使える形を確認できる

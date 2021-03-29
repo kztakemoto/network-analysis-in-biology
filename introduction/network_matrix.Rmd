@@ -1,0 +1,94 @@
+---
+title: "色々なネットワークとその行列行限"
+output: html_notebook
+---
+ネットワーク解析の基礎を学びます。
+
+# igraphパッケージの読み込み
+簡単です。
+```{r}
+library(igraph)
+```
+
+# ネットワークの例と描画
+ネットワークはノードと点の集合です。
+## 無向ネットワーク
+```{r}
+# ネットワークの定義
+g <- graph(edges=c(1,2, 2,3, 3,4, 4,5, 5,1), directed=F) 
+# ネットワークの描画
+plot(g)
+```
+### ノード数: ネットワークサイズ
+```{r}
+vcount(g)
+```
+### エッジ数
+```{r}
+ecount(g)
+```
+
+## 有向ネットワーク
+```{r}
+# ネットワークの定義
+g <- graph(edges=c(1,2, 2,3, 3,4, 4,5, 5,1), directed=T) 
+# ネットワークの描画
+plot(g)
+```
+
+## 重み付きネットワーク
+```{r}
+# ネットワークの定義
+g <- graph(edges=c(1,2, 2,3, 3,4, 4,5, 5,1), directed=F)
+# エッジに乱数で重みを割り振る
+E(g)$weight <- sample(1:10, ecount(g))
+# ネットワークの描画
+plot(g, edge.width=E(g)$weight)
+```
+## 2部ネットワーク
+```{r}
+# ネットワークの定義 最初の01ベクトルはノードのグループを表す
+g <- make_bipartite_graph( c(0,1,0,1,0), c(1,2, 1,4, 3,2, 3,4, 5,2, 5,4))
+# ネットワークの描画
+plot(g, layout = layout_as_bipartite)
+```
+
+# 隣接行列
+## 無向ネットワークの場合
+```{r}
+# ネットワークの定義
+g <- graph(edges=c(1,2, 2,3, 3,4, 4,5, 5,1), directed=F) 
+# 隣接行列
+get.adjacency(g, sparse = F)
+```
+
+## 有向ネットワークの場合
+```{r}
+# ネットワークの定義
+g <- graph(edges=c(1,2, 2,3, 3,4, 4,5, 5,1), directed=T) 
+# 隣接行列
+get.adjacency(g, sparse = F)
+```
+
+## 重み付きネットワークの場合
+```{r}
+# ネットワークの定義
+g <- graph(edges=c(1,2, 2,3, 3,4, 4,5, 5,1), directed=F)
+# エッジに乱数で重みを割り振る
+E(g)$weight <- sample(1:10, ecount(g))
+# 隣接行列
+get.adjacency(g, attr = "weight", sparse = F)
+```
+
+## 2部ネットワーク
+```{r}
+# ネットワークの定義
+g <- make_bipartite_graph( c(0,1,0,1,0), c(1,2, 1,4, 3,2, 3,4, 5,2, 5,4))
+# 接続行列
+get.incidence(g)
+# 隣接行列
+mtx <- get.adjacency(g, sparse = F)
+# 接続行列と隣接行列の関係がわかりやすいようにノードの順番を入れ替える
+mtx[c(1,3,5,2,4), c(1,3,5,2,4)]
+```
+
