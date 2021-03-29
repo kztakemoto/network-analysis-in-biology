@@ -20,5 +20,5 @@ path_finding.Rmd
 ```
 [Notebookのプレビュー（HTML版）を見る](https://kztakemoto.github.io/network-analysis-in-biology/introduction/path_finding.nb.html)。
 
-###　様々な生物ネットワーク
+### 様々な生物ネットワーク
 [このレポジトリのデータディレクトリ](../data)で様々な生物ネットワークがエッジリスト形式で利用可能である。
