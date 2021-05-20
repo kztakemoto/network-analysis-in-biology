@@ -15,7 +15,7 @@ library(gtools) #追加のパッケージ（局所効率性の計算で使う）
 d <- read.table("../data/ecoli_regDB5.txt")
 # グラフオブジェクトの作成（有向ネットワークで読み込む）
 g_dir <- simplify(graph.data.frame(d,directed=T),remove.multiple=T,remove.loops=T)
-# 仮想的な重みを追加する（対数正規分布由来の乱数を与える）
+# 仮想的な重みを追加する（ここでは対数正規分布由来の乱数を与えている）
 E(g_dir)$weight <- rlnorm(ecount(g_dir))
 
 # 最大連結成分の取得
@@ -82,7 +82,7 @@ mean(degree(g_dir, mode="in"))
 ```
 これは以下とも等しくなる。
 ```{r}
-mean(degree(g_dir, mode="in"))
+mean(degree(g_dir, mode="out"))
 ecount(g_dir) / vcount(g)
 ```
 
@@ -103,6 +103,12 @@ strength(g_dir, mode="out")
 k <- 0:max(deg)
 plot(k, degree.distribution(g), xlab="k", ylab="P(k)", log="xy")
 ```
+
+累積分布で表示する場合
+```{r}
+plot(k, degree.distribution(g, cumulative=T), xlab="k", ylab="P(k)", log="xy")
+```
+
 次数分布を使っても平均次数を求められる。
 ```{r}
 sum(k * degree.distribution(g))
