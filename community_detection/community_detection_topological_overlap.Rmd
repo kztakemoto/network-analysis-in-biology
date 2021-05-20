@@ -82,7 +82,7 @@ for(nc in 1:vcount(g)){
   }
 }
 # コミュニティ数ncとその場合のモジュラリティQをプロット
-plot(n_c_vs_q, xlab="# of communities (nc)", ylab="Modularity Q")
+plot(nc_vs_q, xlab="# of communities (nc)", ylab="Modularity Q")
 ```
 ```{r}
 # モジュラリティQが最大となる分割を得る。
