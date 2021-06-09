@@ -5,7 +5,7 @@ thresholding.p.value <- function(pmtx, p.th=0.05, method="lfdr"){
         pmtx <- fdrtool(pmtx, statistic="pvalue")$lfdr
     } else if(method %in% p.adjust.methods){
         pmtx <- p.adjust(pmtx, method=method)
-    } else if(method == F){
+    } else {
         stop("method is invalid")
     }
     pmtx_bin <- ifelse(pmtx < p.th, 1, 0)
@@ -14,5 +14,5 @@ thresholding.p.value <- function(pmtx, p.th=0.05, method="lfdr"){
     mtx_bin[lower.tri(mtx_bin)] <- pmtx_bin
 
     g <- graph.adjacency(mtx_bin, mode="undirected")
-	return(g)
+    return(g)
 }
