@@ -90,6 +90,7 @@ network_prediction_performance(g_real, g_pred)
 ```
 ### ランダム行列理論による閾値化
 ```{r}
+options(warn=-1) # 本質的でないwarningが出るので抑制
 g_pred <- thresholding.RMT(rmtx)
 network_prediction_performance(g_real, g_pred)
 ```
@@ -109,6 +110,7 @@ network_prediction_performance(g_real, g_pred)
 
 ### ランダム行列理論による閾値化
 ```{r}
+options(warn=-1) # 本質的でないwarningが出るので抑制
 rmtx_pcor <- pcormtx$estimate
 g_pred <- thresholding.RMT(rmtx_pcor)
 network_prediction_performance(g_real, g_pred)

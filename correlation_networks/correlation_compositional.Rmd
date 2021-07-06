@@ -79,12 +79,14 @@ network_prediction_performance(g_real, g_pred_rel)
 
 ### ランダム行列理論による閾値化：絶対量データの場合
 ```{r}
+options(warn=-1) # 本質的でないwarningが出るので抑制
 g_pred_abs <- thresholding.RMT(rmtx_abs)
 network_prediction_performance(g_real, g_pred_abs)
 ```
 
 ### ランダム行列理論による閾値化：相対量データの場合
 ```{r}
+options(warn=-1) # 本質的でないwarningが出るので抑制
 g_pred_rel <- thresholding.RMT(rmtx_rel)
 network_prediction_performance(g_real, g_pred_rel)
 ```
@@ -93,7 +95,7 @@ network_prediction_performance(g_real, g_pred_rel)
 ```{r}
 spboot <- sparccboot(x_abs, R=100, ncpus=2)
 # @param R Bootstrap数
-# @param ncpus 並列に使うCPUの数
+# @param ncpus 並列計算に使うCPUの数
 ```
 
 
@@ -108,6 +110,7 @@ m <- m + t(m)
 diag(m) <- 1
 m <- ifelse(is.nan(m),1,m)
 # 閾値化と評価
+options(warn=-1) # 本質的でないwarningが出るので抑制
 g_pred_rel <- thresholding.p.value(m, p.th=0.05, method="BH")
 network_prediction_performance(g_real, g_pred_rel)
 ```
@@ -122,6 +125,7 @@ m <- m + t(m)
 diag(m) <- 1
 m <- ifelse(is.nan(m),0,m)
 # 閾値化と評価
+options(warn=-1) # 本質的でないwarningが出るので抑制
 g_pred_rel <- thresholding.RMT(m)
 network_prediction_performance(g_real, g_pred_rel)
 ```

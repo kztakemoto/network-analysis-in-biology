@@ -8,7 +8,7 @@
 相関ネットワークとは，データの相関から作成されたネットワークのことを指します。
 
 ## 準備
-SpiecEasiパッケージをマニュアルで[インストール](https://www.rdocumentation.org/packages/SpiecEasi/versions/0.1.4)してください。
+SpiecEasiパッケージをマニュアルで[インストール](https://www.rdocumentation.org/packages/SpiecEasi/)してください。
 ```
 install.packages("devtools") # インストールされていなければ
 library(devtools)
