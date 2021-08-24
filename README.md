@@ -1,8 +1,9 @@
 # 生物ネットワーク解析
 
 ## はじめに
-[R](https://www.r-project.org)を使って生物ネットワーク解析を行うためのR Notebookが利用可能です。
-[R](https://www.r-project.org)のネットワーク解析用パッケージのひとつである[igraph](https://igraph.org/r/)を主に使います。
+このレポジトリでは、書籍『[生物ネットワーク解析](https://www.coronasha.co.jp/np/isbn/9784339027327/)』の補足資料が利用可能です。
+書籍で紹介する手法や解析などを、統計解析ソフトウェア[R](https://www.r-project.org)とそのネットワーク解析用パッケージの[igraph](https://igraph.org/r/)を用いることで体験することができます。
+資料はR Notebookとしてまとめられています。
 
 ## 準備
 [R](https://www.r-project.org)と[RStudio](https://rstudio.com)をインストールしてください。
