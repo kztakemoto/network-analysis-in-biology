@@ -46,7 +46,6 @@ community_detection_modularity_nonoverlap.Rmd
 [Notebookのプレビュー（HTML版）を見る](https://kztakemoto.github.io/network-analysis-in-biology/community_detection/community_detection_modularity_nonoverlap.nb.html)。
 
 #### ここで使う手法
-* [エッジ媒介性（Edge betweenness）に基づく方法](http://samoa.santafe.edu/media/workingpapers/01-12-077.pdf)
 * [貪欲アルゴリズムに基づく方法](https://arxiv.org/abs/cond-mat/0408187)
 * [スペクトル法（固有ベクトルに基づく方法）に基づく方法](https://arxiv.org/abs/physics/0602124)
 * [焼きなまし法に基づく方法](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2175124/)
