@@ -55,10 +55,8 @@ plot(data, g)
 
 これはigraphではなく、rnetcartoパッケージを使います。CRANレポジトリから削除されている（2022年1月16日現在）ので、以下のようにしてソースからインストールします。これにはGNU Scientific Library (GSL)が必要です。[コミュニティ検出のREADME](https://github.com/kztakemoto/network-analysis-in-biology/tree/main/community_detection)の「準備」に従って、GSLを事前にインストールしておいてください。
 ```{r}
-install.packages(
-  "http://takemoto08.bio.kyutech.ac.jp/rnetcarto_0.2.4.tar.gz", 
-  repos = NULL, type = "source", INSTALL_opts = "--no-mltiarch"
-)
+library(devtools)
+install_github("cran/rnetcarto", INSTALL_opts=c("--no-multiarch"))
 ```
 
 rnetcartoパッケージの読み込み
