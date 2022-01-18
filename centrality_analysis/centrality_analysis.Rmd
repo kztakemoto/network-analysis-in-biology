@@ -27,7 +27,7 @@ g <- simplify(graph.data.frame(d,directed=F),remove.multiple=T,remove.loops=T)
 
 # 最大連結成分の取得
 cls <- clusters(g,"weak")
-g <- delete.vertices(g,subset(V(g),cls$membership!=which(cls$csize==max(cls$csize))[[1]]))
+g <- induced_subgraph(g, V(g)$name[cls$membership==which(cls$csize==max(cls$csize))[[1]]])
 ```
 
 ### 中心性指標の計算
@@ -96,29 +96,29 @@ noness_nprop <- d[d$essential=="N",]
 ```{r}
 cat("次数中心性（degree centrality）
     中央値　必須：",median(ess_nprop$degree),"非必須：",median(noness_nprop$degree),"\n")
-wilcox.test(ess_nprop$degree,noness_nprop$degree)
+wilcox.test(ess_nprop$degree, noness_nprop$degree)
 ```
 
 ```{r}
 cat("固有ベクトル中心性（eigenvector centraliry）
     中央値　必須：",median(ess_nprop$eigen),"非必須：",median(noness_nprop$eigen),"\n")
-wilcox.test(ess_nprop$eigen,noness_nprop$eigen)
+wilcox.test(ess_nprop$eigen, noness_nprop$eigen)
 
 cat("PageRank
     中央値　必須：",median(ess_nprop$page),"非必須：",median(noness_nprop$page),"\n")
-wilcox.test(ess_nprop$page,noness_nprop$page)
+wilcox.test(ess_nprop$page, noness_nprop$page)
 
 cat("近接中心性（closeness centrality）
     中央値　必須：",median(ess_nprop$closen),"非必須：",median(noness_nprop$closen),"\n")
-wilcox.test(ess_nprop$closen,noness_nprop$closen)
+wilcox.test(ess_nprop$closen, noness_nprop$closen)
 
 cat("媒介中心性（betweenness centrality）
     中央値　必須：",median(ess_nprop$between),"非必須：",median(noness_nprop$between),"\n")
-wilcox.test(ess_nprop$between,noness_nprop$between)
+wilcox.test(ess_nprop$between, noness_nprop$between)
 
 cat("サブグラフ中心性（subgraph centrality）
     中央値　必須：",median(ess_nprop$subgraph),"非必須：",median(noness_nprop$subgraph),"\n")
-wilcox.test(ess_nprop$subgraph,noness_nprop$subgraph)
+wilcox.test(ess_nprop$subgraph, noness_nprop$subgraph)
 ```
 
 # 単一の中心性指標を用いて必須タンパク質を判別する
