@@ -98,8 +98,8 @@ plot(g, vertex.color=cls$membership)
 ```
 最大連結成分を抽出する。
 ```{r}
-# 最大連結成分に属さないノードを削除する
-g <- delete_vertices(g, subset(V(g), cls$membership!=which(cls$csize==max(cls$csize))[[1]]))
+# 最大連結成分にを抽出
+g <- induced_subgraph(g, V(g)$name[cls$membership==which(cls$csize==max(cls$csize))[[1]]])
 # ネットワークを描画
 plot(g)
 ```
