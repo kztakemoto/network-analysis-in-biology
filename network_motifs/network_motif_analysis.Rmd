@@ -26,7 +26,7 @@ g <- simplify(graph.data.frame(d,directed=T),remove.multiple=T,remove.loops=T)
 
 # 最大連結成分の取得
 cls <- clusters(g,"weak")
-g <- delete.vertices(g,subset(V(g),cls$membership!=which(cls$csize==max(cls$csize))[[1]]))
+g <- induced_subgraph(g, V(g)$name[cls$membership==which(cls$csize==max(cls$csize))[[1]]])
 ```
 
 ### ネットワークをランダム化するアルゴリズムの読み込み
