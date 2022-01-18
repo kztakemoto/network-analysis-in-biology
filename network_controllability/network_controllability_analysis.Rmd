@@ -26,9 +26,8 @@ d <- read.csv("../data/breast_cancer_directed_ppi_Kanhaiya_etal_2017.csv")
 g <- simplify(graph.data.frame(d,directed=T),remove.multiple=T,remove.loops=T)
 # 最大強連結成分の取得（本来は不必要だが，小さなネットワークを得るために実行）
 cls <- clusters(g,"strong")
-g <- delete.vertices(g,subset(V(g),cls$membership!=which(cls$csize==max(cls$csize))[[1]]))
+g <- induced_subgraph(g, V(g)$name[cls$membership==which(cls$csize==max(cls$csize))[[1]]])
 ```
-
 
 ### 最大マッチングに基づくネットワーク可制御性に基づくいてノードを分類する
 ```{r}
@@ -36,6 +35,10 @@ V(g)$node_class <- node_classification_controllability(g, get_mds = get_mds_matc
 # @param relax: 論理値，バイナリ整数計画問題を線形計画緩和するかどうか。デフォルトはF（しない）。
 ```
 
+### 各ノード分類の次数の比較
+```{r}
+boxplot(log(degree(g))~V(g)$node_class, col=c("skyblue","pink","gray"), xlab="Node class", ylab="log(node degree)")
+```
 ### Drug targetのリストを読み込む
 アメリカ食品医薬品局が承認した（FDA-approved）薬剤標的タンパク質のリスト
 
