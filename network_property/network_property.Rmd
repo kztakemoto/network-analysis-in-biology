@@ -20,7 +20,7 @@ E(g_dir)$weight <- rlnorm(ecount(g_dir))
 
 # 最大連結成分の取得
 cls <- clusters(g_dir,"weak")
-g_dir <- delete.vertices(g_dir,subset(V(g_dir),cls$membership!=which(cls$csize==max(cls$csize))[[1]]))
+g_dir <- induced_subgraph(g_dir, V(g_dir)$name[cls$membership==which(cls$csize==max(cls$csize))[[1]]])
 
 # 無向ネットワークのオブジェクトの作成
 g <- as.undirected(g_dir)
@@ -71,6 +71,7 @@ ecount(g_dir)
 ```{r}
 mean(degree(g))
 ```
+
 式(2.3)の確かめ
 ```{r}
 2*ecount(g)/vcount(g)
@@ -80,6 +81,7 @@ mean(degree(g))
 ```{r}
 mean(degree(g_dir, mode="in"))
 ```
+
 これは以下とも等しくなる。
 ```{r}
 mean(degree(g_dir, mode="out"))
