@@ -14,8 +14,8 @@ edge_swapping_randomization <- function(g){
     is_directed <- 0
   }
 
-  g_one_way <- delete.edges(g,subset(E(g),is.mutual(g,es=E(g))==T))
-  g_mutual <- delete.edges(g,subset(E(g),is.mutual(g,es=E(g))==F))
+  g_one_way <- delete.edges(g,subset(E(g),which_mutual(g,eids=E(g))==T))
+  g_mutual <- delete.edges(g,subset(E(g),which_mutual(g,eids=E(g))==F))
 
   m_rand <- as.matrix(get.adjacency(g))
   mutual_list <- as.data.frame(get.edgelist(as.undirected(g_mutual),names=F))
