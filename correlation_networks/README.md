@@ -7,14 +7,6 @@
 ## 相関ネットワーク解析
 相関ネットワークとは，データの相関から作成されたネットワークのことを指します。
 
-## 準備
-SpiecEasiパッケージをマニュアルで[インストール](https://www.rdocumentation.org/packages/SpiecEasi/)してください。Windowsを使用している方は [Rtools4](https://cran.r-project.org/bin/windows/Rtools/rtools40.html)を事前にインストールしてください。
-```
-install.packages("devtools") # インストールされていなければ
-library(devtools)
-install_github("zdk123/SpiecEasi")
-```
-
 ## Notebook
 ### 閾値化による相関ネットワークの作成と相関ネットワークの予測性能評価（絶対量データを用いる場合）
 ```
