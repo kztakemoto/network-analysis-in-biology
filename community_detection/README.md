@@ -12,17 +12,12 @@
 
 ## 準備
 [rnetcarto](https://cran.r-project.org/web/packages/rnetcarto/index.html)というパッケージを一部で利用します。
-CRANレポジトリから削除されている（2022年1月16日現在）ので、ソースからインストールします（詳細はNotebookを参照）。
+CRANレポジトリから削除されていることがあるので、ソースからインストールします（詳細はNotebookを参照）。
 これにはGNU Scientific Library (GSL)が必要です。
 以下に従って、GSLをインストールしてください。
 
 ### Windowsの場合
-1. [Rtools4](https://cran.r-project.org/bin/windows/Rtools/rtools40.html)をインストールしてください。
-1. Rtools Bashを開きます（スタートメニュー >> Rtools 4.0 >> Rtools Bash）
-1. 以下を実行してください。
-```
-pacman -S mingw-w64-x86_64-gsl
-```
+[Rtools42](https://cran.r-project.org/bin/windows/Rtools/rtools42/rtools.html)をインストールしてください。
 
 ### Mac OSXの場合
 1. [Homebrew](https://brew.sh/index_ja)をインストールしてください。
