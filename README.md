@@ -8,12 +8,12 @@
 ## 準備
 [R](https://www.r-project.org)と[RStudio](https://rstudio.com)をインストールしてください。
 [動画による説明](https://www.youtube.com/results?search_query=rstudio+インストール)が役に立つと思います。
-Windowsを使用している方は、[Rtools42](https://cran.r-project.org/bin/windows/Rtools/rtools42/rtools.html)もインストールしてください。
+<!-- Windowsを使用している方は、[Rtools42](https://cran.r-project.org/bin/windows/Rtools/rtools42/rtools.html)もインストールしてください。-->
 
 各ディレクトリのNotebook（拡張子がRmd）のファイルを開くと，パッケージのインストールを要求するメッセージが表示されますので（インストールされていなければ），それに従ってパッケージをあらかじめインストールしてください（ほぼ自動的にインストールされます）。
 部分的にマニュアルでインストールするパッケージもありますのでご注意ください（各トピックのREADMEやNotebookをご覧ください）。
 
-NotebookはR（ver 4.2.2），RStudio（ver 2022.07.2），igraph（ver 1.3.5）で動作確認されています。
+NotebookはR（ver 4.4.1），RStudio（ver 2024.04.2），igraph（ver 2.0.3）で動作確認されています。
 
 R Notebookを参考にすれば解析は完了しますが，自分の解析に沿うようにスクリプトを改変するためにはRとigraphの基本的な使い方を習得しておく必要があります。
 以下が参考になりますので，適時ご参照ください。
