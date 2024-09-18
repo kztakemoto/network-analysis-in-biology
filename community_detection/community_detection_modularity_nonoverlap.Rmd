@@ -15,7 +15,7 @@ library(igraph)
 # エッジリスト形式のネットワークデータを読み込む
 d <- read.table("../data/eco_EM+TCA.txt")
 # 無向ネットワークで読み込む
-g <- graph.data.frame(d, directed=F)
+g <- graph_from_data_frame(d, directed=F)
 # 多重エッジや自己ループを削除する。
 g <- simplify(g, remove.multiple=T, remove.loops=T)
 ```
@@ -68,7 +68,7 @@ library(rnetcarto)
 rnetcartoによるコミュニティ検出と機能地図作成
 ```{r}
 # 隣接行列を取得
-mtx <- get.adjacency(g, sparse=F)
+mtx <- as_adjacency_matrix(g, sparse=F)
 # コミュニティ抽出を実行
 res <- netcarto(mtx)
 # 出力結果
@@ -96,12 +96,12 @@ table$role
 ```
 
 ### [参考] 他の方法（igraphパッケージ）
-  + 辺媒介性に基づくアルゴリズム ``edge.betweenness.community(g)``（[Girvan & Newman, 2002](https://arxiv.org/abs/cond-mat/0112110)）
-  + ランダムウォークに基づくアルゴリズム ``walktrap.community(g, modularity=TRUE)``（[Pons & Latapy, 2006](http://www.leonidzhukov.net/hse/2015/sna/papers/PonsLatapy2006.10.2.pdf)）
-  + 多段階最適化に基づくアルゴリズム ``multilevel.community(g)``（[Blondel et al., 2008](https://arxiv.org/abs/0803.0476)）
-  + スピングラスに基づくアルゴリズム ``spinglass.community(g)``（[Reichardt & Bornholdt, 2006](http://www.itp.uni-bremen.de/complex/pdf/pre016110.pdf)）
-  + ラベル伝播法に基づくアルゴリズム ``label.propagation.community(g)``（[Raghavan et al., 2007](https://arxiv.org/abs/0709.2938)）
-  + Infomap法に基づくアルゴリズム ``infomap.community(g)``（[Rosvall & Bergstorm, 2008](https://arxiv.org/abs/0707.0609)）
+  + 辺媒介性に基づくアルゴリズム ``cluster_edge_betweenness(g)``（[Girvan & Newman, 2002](https://arxiv.org/abs/cond-mat/0112110)）
+  + ランダムウォークに基づくアルゴリズム ``cluster_walktrap(g, modularity=TRUE)``（[Pons & Latapy, 2006](http://www.leonidzhukov.net/hse/2015/sna/papers/PonsLatapy2006.10.2.pdf)）
+  + 多段階最適化に基づくアルゴリズム ``cluster_louvain(g)``（[Blondel et al., 2008](https://arxiv.org/abs/0803.0476)）
+  + スピングラスに基づくアルゴリズム ``cluster_spinglass(g)``（[Reichardt & Bornholdt, 2006](http://www.itp.uni-bremen.de/complex/pdf/pre016110.pdf)）
+  + ラベル伝播法に基づくアルゴリズム ``cluster_label_prop(g)``（[Raghavan et al., 2007](https://arxiv.org/abs/0709.2938)）
+  + Infomap法に基づくアルゴリズム ``cluster_infomap(g)``（[Rosvall & Bergstorm, 2008](https://arxiv.org/abs/0707.0609)）
   
 # やってみよう
   + このNotebookを参考にして，生物ネットワークを解析してみよう（``data``に様々ある）。

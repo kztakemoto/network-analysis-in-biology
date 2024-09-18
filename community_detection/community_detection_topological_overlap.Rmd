@@ -15,7 +15,7 @@ library(igraph)
 # エッジリスト形式のネットワークデータを読み込む
 d <- read.table("../data/eco_EM+TCA.txt")
 # 無向ネットワークで読み込む
-g <- graph.data.frame(d, directed=F)
+g <- graph_from_data_frame(d, directed=F)
 # 多重エッジや自己ループを削除する。
 g <- simplify(g, remove.multiple=T, remove.loops=T)
 ```
@@ -23,7 +23,7 @@ g <- simplify(g, remove.multiple=T, remove.loops=T)
 ### Topological overlap score matrixの計算
 ```{r}
 # 隣接行列（Aij）を得る
-A_ij <- get.adjacency(g,sparse=F)
+A_ij <- as_adjacency_matrix(g,sparse=F)
 # Jijの計算
 J_ij <- cocitation(g)
 # min(ki,kj)の計算

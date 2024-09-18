@@ -16,11 +16,11 @@ library(linkcomm)
 # エッジリスト形式のネットワークデータを読み込む
 d <- read.table("../data/eco_EM+TCA.txt")
 # 無向ネットワークで読み込む
-g <- graph.data.frame(d, directed=F)
+g <- graph_from_data_frame(d, directed=F)
 # 多重エッジや自己ループを削除する。
 g <- simplify(g, remove.multiple=T, remove.loops=T)
 # エッジリストを取得
-el <- get.edgelist(g)
+el <- as_edgelist(g)
 # スペースをアンダーバーに置き換え（linkcommパッケージはスペースを許さない）
 el <- gsub(" ","_",el)
 ```
