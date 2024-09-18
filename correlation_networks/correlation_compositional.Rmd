@@ -1,14 +1,17 @@
 ---
-title: "閾値化による相関ネットワークの作成と相関ネットワークの予測性能評価（絶対量データを用いる場合）"
+title: "閾値化による相関ネットワークの作成と相関ネットワークの予測性能評価（相対量データを用いる場合）"
 output: html_notebook
 ---
 
-SpiecEasiで要求されるpulsarパッケージがCRANレポジトリから削除されているので（2022年12月9日現在）、ソースからインストールしておく。
+SpiecEasiで要求されるpulsarパッケージを読み込んでおく。CRANレポジトリ
+から削除されていることがあるので、その場合はマニュアルでインストールしておく。
 ```{r}
-install.packages("https://cran.r-project.org/src/contrib/Archive/pulsar/pulsar_0.3.8.tar.gz", repos=NULL)
+#install.packages("https://cran.r-project.org/src/contrib/Archive/pulsar/pulsar_0.3.11.tar.gz", repos=NULL)
+library(pulsar)
 ```
 
 ### SpiecEasiのインストール（一度だけでOK）
+パッケージの更新を訊かれたら、Noneを選択してください。
 ```{r}
 library(devtools)
 install_github("zdk123/SpiecEasi")
