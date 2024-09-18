@@ -23,10 +23,10 @@ library(igraph)
 # エッジリストの読み込み
 d <- read.table("../data/ecoli_ppi_Hu_etal_2009.txt")
 # グラフオブジェクトの作成
-g <- simplify(graph.data.frame(d,directed=F),remove.multiple=T,remove.loops=T)
+g <- simplify(graph_from_data_frame(d,directed=F),remove.multiple=T,remove.loops=T)
 
 # 最大連結成分の取得
-cls <- clusters(g,"weak")
+cls <- components(g,"weak")
 g <- induced_subgraph(g, V(g)$name[cls$membership==which(cls$csize==max(cls$csize))[[1]]])
 ```
 
@@ -35,15 +35,15 @@ g <- induced_subgraph(g, V(g)$name[cls$membership==which(cls$csize==max(cls$csiz
 # 次数中心性（degree centrality）
 degree <- degree(g)
 # 固有ベクトル中心性（eigenvector centraliry）
-eigen <- evcent(g)$vector
+eigen <- eigen_centrality(g)$vector
 # PageRank
-page <- page.rank(g)$vector
+page <- page_rank(g)$vector
 # 近接中心性（closeness centrality）
 closen <- closeness(g)
 # 媒介中心性（betweenness centrality）
 between <- betweenness(g)
 # サブグラフ中心性（subgraph centrality）
-subgraph <- subgraph.centrality(g)
+subgraph <- subgraph_centrality(g)
 ```
 
 ```{r}
