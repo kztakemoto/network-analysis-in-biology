@@ -14,12 +14,12 @@ library(gtools) #追加のパッケージ（局所効率性の計算で使う）
 # エッジリストの読み込み
 d <- read.table("../data/ecoli_regDB5.txt")
 # グラフオブジェクトの作成（有向ネットワークで読み込む）
-g_dir <- simplify(graph.data.frame(d,directed=T),remove.multiple=T,remove.loops=T)
+g_dir <- simplify(graph_from_data_frame(d,directed=T),remove.multiple=T,remove.loops=T)
 # 仮想的な重みを追加する（ここでは対数正規分布由来の乱数を与えている）
 E(g_dir)$weight <- rlnorm(ecount(g_dir))
 
 # 最大連結成分の取得
-cls <- clusters(g_dir,"weak")
+cls <- components(g_dir,"weak")
 g_dir <- induced_subgraph(g_dir, V(g_dir)$name[cls$membership==which(cls$csize==max(cls$csize))[[1]]])
 
 # 無向ネットワークのオブジェクトの作成
@@ -120,12 +120,12 @@ sum(k * degree.distribution(g))
 ## 同類度係数
 ### 無向ネットワークの場合（重みなし）式(2.8)
 ```{r}
-assortativity.degree(g)
+assortativity_degree(g)
 ```
 
 ### 有向ネットワークの場合［式(2.10)］
 ```{r}
-el <- get.edgelist(g_dir)
+el <- as_edgelist(g_dir)
 # 出次数-出次数
 cor.test(deg_out[el[,1]], deg_out[el[,2]])
 # 出次数-入次数
@@ -165,24 +165,21 @@ distances(g)
 ```
 
 ### 平均最短経路長
+エッジの重みが考慮して計算される。
 ```{r}
 mean_distance(g)
 ```
-この関数は重み付きネットワークには対応していない。
+エッジの重みを無視したい場合は次のよう
 
-### 重み付きネットワークの場合の平均最短経路長
 ```{r}
-# 距離行列を計算して
-d_mtx <- distances(g, weights=E(g)$weight)
-# 対角成分を除いた上三角行列の要素の平均を計算する
-mean(d_mtx[upper.tri(d_mtx)])
+mean_distance(g, weights=NA)
 ```
 
 ## 効率性
 ### 大域効率性
 ```{r}
-dinv_mtx <- distances(g, weights=NA)**-1
-# d_mtx <- distances(g, weights=E(g)$weight)**-1 # 重み付きネットワークなら
+dinv_mtx <- distances(g)**-1
+# d_mtx <- distances(g, weights=NA)**-1 # 重みを無視するなら
 diag(dinv_mtx) <- 0
 # 各ノードに対する大域効率性
 nodal_global_efficiency <- apply(dinv_mtx,1,sum) / (vcount(g) - 1)
