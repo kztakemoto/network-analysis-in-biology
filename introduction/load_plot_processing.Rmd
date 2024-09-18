@@ -25,7 +25,7 @@ d <- read.table("../data/eco_EM+TCA.txt")
 ### グラフオブジェクトに変換する
 ```{r}
 # 有向ネットワークで読み込む
-g <- graph.data.frame(d, directed=T)
+g <- graph_from_data_frame(d, directed=T)
 # 多重エッジや自己ループを削除する。
 g <- simplify(g, remove.multiple=T, remove.loops=T)
 g
@@ -33,7 +33,7 @@ g
 
 ### 隣接行列をえる
 ```{r}
-get.adjacency(g, sparse = F)
+as_adjacency_matrix(g, sparse = F)
 ```
 ### ネットワークの描画
 基本
@@ -87,7 +87,7 @@ plot(g)
 
 ### 連結成分を見つける
 ```{r}
-cls <- clusters(g, "weak")
+cls <- components(g, "weak")
 # 結果
 cls
 ```

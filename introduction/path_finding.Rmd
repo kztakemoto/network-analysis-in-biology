@@ -19,7 +19,7 @@ library(igraph)
 ```{r}
 d <- read.table("../data/eco_EM+TCA.txt")
 # 有向ネットワークで読み込む
-g <- graph.data.frame(d, directed=T)
+g <- graph_from_data_frame(d, directed=T)
 # 多重エッジや自己ループを削除する。
 g <- simplify(g, remove.multiple=T, remove.loops=T)
 ```
