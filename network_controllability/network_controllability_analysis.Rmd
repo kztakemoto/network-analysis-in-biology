@@ -23,9 +23,9 @@ source("../src/functions_network_controllability.R")
 # エッジリストの読み込み
 d <- read.csv("../data/breast_cancer_directed_ppi_Kanhaiya_etal_2017.csv")
 # グラフオブジェクトの作成
-g <- simplify(graph.data.frame(d,directed=T),remove.multiple=T,remove.loops=T)
+g <- simplify(graph_from_data_frame(d,directed=T),remove.multiple=T,remove.loops=T)
 # 最大強連結成分の取得（本来は不必要だが，小さなネットワークを得るために実行）
-cls <- clusters(g,"strong")
+cls <- components(g,"strong")
 g <- induced_subgraph(g, V(g)$name[cls$membership==which(cls$csize==max(cls$csize))[[1]]])
 ```
 

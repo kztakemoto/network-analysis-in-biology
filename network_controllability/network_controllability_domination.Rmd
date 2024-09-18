@@ -18,7 +18,7 @@ source("../src/functions_network_controllability.R")
 ### ネットワークの読み込み
 ```{r}
 # モデルネットワークを例にする。
-g <- static.power.law.game(50,70,2.1,2.1)
+g <- sample_fitness_pl(50,70,2.1,2.1)
 # ネットワークの表示
 plot(g, vertex.size=10, edge.arrow.size=0.5, vertex.label=NA)
 ```
