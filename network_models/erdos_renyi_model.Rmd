@@ -25,7 +25,7 @@ g <- erdos.renyi.game(1000, 0.005)
 # 次数の範囲（0から最大次数）
 k <- 0:max(degree(g))
 # 次数分布の描画
-plot(k, degree.distribution(g), xlab="k", ylab="P(k)")
+plot(k, degree_distribution(g), xlab="k", ylab="P(k)")
 
 # 理論線：式(3.2)
 f <- function(k,N,p){
@@ -78,18 +78,18 @@ plot(f, add=T, xlim=c(500, 10000), lty=1)
 # エッジリストの読み込み
 d <- read.table("../data/ecoli_ppi_Hu_etal_2009.txt")
 # グラフオブジェクトの作成
-g <- simplify(graph.data.frame(d,directed=F),remove.multiple=T,remove.loops=T)
+g <- simplify(graph_from_data_frame(d,directed=F),remove.multiple=T,remove.loops=T)
 
 # 最大連結成分の取得
-cls <- clusters(g,"weak")
-g <- delete.vertices(g,subset(V(g),cls$membership!=which(cls$csize==max(cls$csize))[[1]]))
+cls <- components(g,"weak")
+g <- delete_vertices(g,subset(V(g),cls$membership!=which(cls$csize==max(cls$csize))[[1]]))
 ```
 
 次数分布の比較
 ```{r}
 # 大腸菌のタンパク質相互作用ネットワークの次数分布のプロット
 k <- 0:max(degree(g))
-plot(k, degree.distribution(g), xlab="k", ylab="P(k)", log="xy")
+plot(k, degree_distribution(g), xlab="k", ylab="P(k)", log="xy")
 
 # Erdos-Renyiのランダムネットワークの次数分布の理論式：式(3.2)
 f <- function(k,N,p){
@@ -126,10 +126,10 @@ for(file in files){
     # エッジリストの読み込み
     d <- read.table(paste("../data/",file,sep=""), header=F)
     # グラフオブジェクトの作成
-    g <- simplify(graph.data.frame(d[1:2], directed=F), remove.multiple=T, remove.loops=T)
+    g <- simplify(graph_from_data_frame(d[1:2], directed=F), remove.multiple=T, remove.loops=T)
     # 最大連結成分の取得
-    cls <- clusters(g,"weak")
-    g <- delete.vertices(g,subset(V(g),cls$membership!=which(cls$csize==max(cls$csize))[[1]]))
+    cls <- components(g,"weak")
+    g <- delete_vertices(g,subset(V(g),cls$membership!=which(cls$csize==max(cls$csize))[[1]]))
     
     # ノード数
     N <- vcount(g)

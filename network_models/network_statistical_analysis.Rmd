@@ -21,10 +21,10 @@ library(igraph)
 # エッジリストの読み込み
 d <- read.table("../data/ecoli_ppi_Hu_etal_2009.txt")
 # グラフオブジェクトの作成
-g <- simplify(graph.data.frame(d,directed=F),remove.multiple=T,remove.loops=T)
+g <- simplify(graph_from_data_frame(d,directed=F),remove.multiple=T,remove.loops=T)
 
 # 最大連結成分の取得
-cls <- clusters(g,"weak")
+cls <- components(g,"weak")
 g <- induced_subgraph(g, V(g)$name[cls$membership==which(cls$csize==max(cls$csize))[[1]]])
 ```
 
@@ -61,7 +61,7 @@ for(i in 1:100){
   g_null <- edge_swapping_randomization(g)
 
   # 2) コンフィギュレーションモデル（代わりにこちらを使うこともできる）
-  #g_null <- degree.sequence.game(deg,m="vl")
+  #g_null <- sample_degseq(deg,m="vl")
 
   # 平均クラスタ係数
   cc_null <- c(cc_null, transitivity(g_null, type="localaverage", isolates="zero"))

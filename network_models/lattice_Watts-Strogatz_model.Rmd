@@ -13,8 +13,8 @@ library(igraph)
 # 格子ネットワーク
 ### 格子ネットワークの生成と描画
 ```{r}
-# watts.strogatz.game(次元, N, k/2, p)
-g <- watts.strogatz.game(1, 14, 2, 0)
+# sample_smallworld(次元, N, k/2, p)
+g <- sample_smallworld(1, 14, 2, 0)
 # 描画
 plot(g, layout=layout_in_circle)
 ```
@@ -24,7 +24,7 @@ d_ave <- c()
 N_seq <- seq(500,10000,500) # 調査対象のノード数
 # 各ノード数における平均最短経路長を計算
 for(N in N_seq){
-  g <- g <- watts.strogatz.game(1,N,2,0)
+  g <- g <- sample_smallworld(1,N,2,0)
   d_ave <- c(d_ave, mean_distance(g))
 }
 # ノード数Nと平均最短経路長<d>の関係をプロット
@@ -43,8 +43,8 @@ plot(f, add=T, xlim=c(500, 10000), lty=2, ylim=c(0,1300))
 # Watts-Strogatzモデル
 ### Watts-Strogatzモデルネットワークの描画
 ```{r}
-# watts.strogatz.game(次元, N, k/2, p)
-g <- watts.strogatz.game(1, 14, 2, 0.1)
+# sample_smallworld(次元, N, k/2, p)
+g <- sample_smallworld(1, 14, 2, 0.1)
 # 描画
 plot(g, layout=layout_in_circle)
 ```
@@ -60,7 +60,7 @@ set.seed(3)
 data <- c()
 for(p in p_set){
     # Watts Strogatzモデルネットワークの作成
-    g <- watts.strogatz.game(size=N, nei=k/2, dim=1, p=p)
+    g <- sample_smallworld(size=N, nei=k/2, dim=1, p=p)
     # 平均クラスタ係数
     c_ave <- transitivity(g,type="localaverage",isolates="zero")
     # 平均最短経路長
