@@ -35,7 +35,7 @@ thresholding.RMT <- function(mtx){
     
     cat("KS distance = ",ks_opt," (p = ",p.value_opt,")\n",sep="")
     mtx_opt <- ifelse(mtx_opt > 0,1,0)
-    g <- graph.adjacency(mtx_opt,mode="undirected",weighted=NULL)
+    g <- graph_from_adjacency_matrix(mtx_opt,mode="max",weighted=NULL)
     
     return(g)
 }

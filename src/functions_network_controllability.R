@@ -16,7 +16,7 @@ get_mds_matching <- function(g, relax = F){
 		V(g)$name <- 1:vcount(g)
 	}
 
-	edge_list <- get.edgelist(g)
+	edge_list <- as_edgelist(g)
 
 	n_col <- nrow(edge_list)
 	f.con <- matrix(0,nrow=vcount(g)*2,ncol=n_col)
@@ -51,7 +51,7 @@ get_mds_matching <- function(g, relax = F){
 # finding minimum dominating set (network controllability based on domination)
 get_mds_domination <- function(g, relax = F){
 	#　generate a matrix for integer programming
-	m_g <- t(as.matrix(get.adjacency(g)))
+	m_g <- t(as.matrix(as_adjacency_matrix(g)))
 	diag(m_g) <- 1
 
 	f.dir <- rep(">=", vcount(g))

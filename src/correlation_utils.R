@@ -26,7 +26,7 @@ generate_covariance_matrix <- function(nn=100,k_ave=4,type.network="random",sd.m
   if(type.network == "random"){
     g <- erdos.renyi.game(nn,nl,type="gnm")
   } else if(type.network == "sf"){
-    g <- static.power.law.game(nn,nl,2.1,-1,loops = F,multiple = F,finite.size.correction = T)
+    g <- sample_fitness_pl(nn,nl,2.1,-1,loops = F,multiple = F,finite.size.correction = T)
   } else if(type.network == "sw") {
     g <- sample_smallworld(1, nn, round(k_ave / 2), 0.05, loops=F, multiple=F)
   } else if(type.network == "bipar") {
@@ -35,7 +35,7 @@ generate_covariance_matrix <- function(nn=100,k_ave=4,type.network="random",sd.m
     stop("netwotk type is invalid")
   }
   # get edge list
-  edgelist <- get.edgelist(g)
+  edgelist <- as_edgelist(g)
 
   # generate A
   A <- matrix(0,nrow=nn,ncol = nn)
@@ -108,8 +108,8 @@ random.rewiring.correlation.mtx <- function(x.cor, niter = 10, sd.min=0.3, sd.ma
 
 ############################################################################
 network_prediction_performance <- function(g_real,g_pred){
-    aij_real <- get.adjacency(g_real, type="both", sparse=F)
-    aij_pred <- get.adjacency(g_pred, type="both", sparse=F)
+    aij_real <- as_adjacency_matrix(g_real, type="both", sparse=F)
+    aij_pred <- as_adjacency_matrix(g_pred, type="both", sparse=F)
 
     aij_real <- aij_real[lower.tri(aij_real)]
     aij_pred <- aij_pred[lower.tri(aij_pred)]

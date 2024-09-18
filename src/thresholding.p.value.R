@@ -13,6 +13,6 @@ thresholding.p.value <- function(pmtx, p.th=0.05, method="lfdr"){
     mtx_bin <- matrix(0, n, n)
     mtx_bin[lower.tri(mtx_bin)] <- pmtx_bin
 
-    g <- graph.adjacency(mtx_bin, mode="undirected")
+    g <- graph_from_adjacency_matrix(mtx_bin, mode="max")
     return(g)
 }
