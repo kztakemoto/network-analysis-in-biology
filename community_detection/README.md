@@ -10,10 +10,9 @@
 ネットワークをクラスタリングすることに対応します。
 より詳しい内容については[SlideShareに公開されるスライドの43枚目から](https://www.slideshare.net/kztakemoto/r-seminar-on-igraph)をご覧ください。
 
-<!--
 ## 準備
 [rnetcarto](https://cran.r-project.org/web/packages/rnetcarto/index.html)というパッケージを一部で利用します。
-CRANレポジトリから削除されていることがあるので、ソースからインストールします（詳細はNotebookを参照）。
+CRANレポジトリから削除されていることがあるので、ソースからインストールします（詳細はNotebookを参照；2024年9月18日現在この準備は必要ありません）。
 これにはGNU Scientific Library (GSL)が必要です。
 以下に従って、GSLをインストールしてください。
 
@@ -26,7 +25,6 @@ CRANレポジトリから削除されていることがあるので、ソース�
 ```
 brew install gsl
 ```
--->
 
 ## Notebook
 ### Topological Overlap Matrixに基づくコミュニティ抽出
