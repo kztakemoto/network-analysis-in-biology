@@ -22,10 +22,10 @@ library(igraph)
 # エッジリストの読み込み
 d <- read.table("../data/ecoli_regDB5.txt")
 # グラフオブジェクトの作成（有向ネットワークで読み込む）
-g <- simplify(graph.data.frame(d,directed=T),remove.multiple=T,remove.loops=T)
+g <- simplify(graph_from_data_frame(d,directed=T),remove.multiple=T,remove.loops=T)
 
 # 最大連結成分の取得
-cls <- clusters(g,"weak")
+cls <- components(g,"weak")
 g <- induced_subgraph(g, V(g)$name[cls$membership==which(cls$csize==max(cls$csize))[[1]]])
 ```
 

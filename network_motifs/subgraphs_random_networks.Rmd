@@ -29,7 +29,7 @@ nb_fbl_theory <- c() # 近似式から推定されたFBLの数（予測値）が
 
 for(L in L_seq){
   # Chung-Luモデルネットワークの作成
-  g <- static.power.law.game(N, L, 2.1, 2.1)
+  g <- sample_fitness_pl(N, L, 2.1, 2.1)
   
   # 単方向エッジのみのネットワークを作成
   g_one_way <- delete_edges(g, E(g)[which_mutual(g)==T])
