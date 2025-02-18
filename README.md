@@ -3,7 +3,7 @@
 ## はじめに
 このレポジトリでは、書籍『[生物ネットワーク解析](https://www.coronasha.co.jp/np/isbn/9784339027327/)』の補足資料が利用可能です。
 書籍で紹介する手法や解析などを、統計解析ソフトウェア[R](https://www.r-project.org)とそのネットワーク解析用パッケージの[igraph](https://igraph.org/r/)を用いることで体験することができます。
-資料はR Notebookとしてまとめられています。
+資料はR Notebookとしてまとめられています。また、その一部は、Jupyter Notebook (Python) でも実行できます。
 
 ## 準備
 [R](https://www.r-project.org)と[RStudio](https://rstudio.com)をインストールしてください。
