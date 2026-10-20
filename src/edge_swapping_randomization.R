@@ -10,7 +10,7 @@ edge_swapping_randomization <- function(g){
   g <- simplify(g,remove.multiple=T,remove.loops=T)
   
   if(is_directed(g) == F) {
-    g <- as.directed(g)
+    g <- as_directed(g)
     is_directed_bool <- 0
   }
   
@@ -18,7 +18,7 @@ edge_swapping_randomization <- function(g){
   g_mutual <- delete_edges(g,subset(E(g),which_mutual(g,eids=E(g))==F))
   
   m_rand <- as.matrix(as_adjacency_matrix(g))
-  mutual_list <- as.data.frame(as_edgelist(as.undirected(g_mutual),names=F))
+  mutual_list <- as.data.frame(as_edgelist(as_undirected(g_mutual),names=F))
   one_way_list <- as.data.frame(as_edgelist(g_one_way,names=F))
   
   # for swapping mutual links
@@ -90,7 +90,7 @@ edge_swapping_randomization <- function(g){
   g_rand <- graph_from_adjacency_matrix(m_rand)
   
   if(is_directed_bool == 0){
-    return(as.undirected(g_rand))
+    return(as_undirected(g_rand))
   }
   else {
     return(g_rand)
