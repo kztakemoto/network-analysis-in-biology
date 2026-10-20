@@ -67,7 +67,7 @@ plot(g,
 ### 無向ネットワークに変換する
 グラフオブジェクトを更新していることに注意
 ```{r}
-g <- as.undirected(g)
+g <- as_undirected(g)
 g
 ```
 
