@@ -9,6 +9,8 @@ output: html_notebook
 # パッケージの読み込み
 library(igraph)
 library(linkcomm)
+# install.packages("remotes")
+# remotes::install_local("linkcomm_1.0-14.tar.gz", dependencies = TRUE)
 ```
 
 ### ネットワークの読み込み

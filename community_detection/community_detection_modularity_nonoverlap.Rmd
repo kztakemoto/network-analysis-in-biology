@@ -30,7 +30,7 @@ data$membership
 
 ```{r}
 # デンドログラムの表示
-dendPlot(data)
+plot_dendrogram(data)
 # コミュニティ検出の結果
 set.seed(5)
 plot(data, g)
@@ -45,7 +45,7 @@ data$membership
 
 ```{r}
 # デンドログラムをプロット
-dendPlot(data)
+plot_dendrogram(data)
 # コミュニティ検出の結果
 set.seed(5)
 plot(data, g)
