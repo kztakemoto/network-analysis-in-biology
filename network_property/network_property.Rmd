@@ -23,7 +23,7 @@ cls <- components(g_dir,"weak")
 g_dir <- induced_subgraph(g_dir, V(g_dir)$name[cls$membership==which(cls$csize==max(cls$csize))[[1]]])
 
 # 無向ネットワークのオブジェクトの作成
-g <- as.undirected(g_dir)
+g <- as_undirected(g_dir)
 ```
 
 ## ノード数
